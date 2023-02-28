@@ -1,36 +1,10 @@
 * {
     font-size: 1.5rem;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Tahoma, sans-serif;
 }
-.container {
-    margin: 0;
-    display: grid;
-    grid-template-columns: 100vw;
-    grid-template-rows: 5vh 95vh;
-}
-.nav{
-    background-color: rgb(209, 209, 209);
-    height: 100%;
+.container-fluid{
+    padding: 0;
 }
 .content {
-    height: 100%;
     background-color: gold;
-}
-
-ul {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    gap: 10%;
-    list-style: none;
-}
-li {
-    padding: 15px;
-}
-li:hover a {
-    color: rgb(19, 19, 19);
-}
-a {
-    text-decoration: none;
-    color: rgb(37, 37, 37)
 }

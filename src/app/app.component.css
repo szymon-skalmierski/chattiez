@@ -1,5 +1,5 @@
 * {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-family: Verdana, Tahoma, sans-serif;
 }
 .container-fluid{
@@ -7,4 +7,26 @@
 }
 .content {
     background-color: gold;
+}
+.nav-item.dropdown a span {
+    display: block;
+    width: 30px;
+    height: 4px;
+    background-color: black;
+    margin: 4px 0;
+    transition: 0.1s;
+}
+.nav-item.dropdown ul li a {
+    font-size: 1rem;
+}
+.nav-link.show span:nth-child(1) {
+  transform: translate(0, 8px) rotate(-45deg);
+}
+
+.nav-link.show span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-link.show span:nth-child(3) {
+  transform: translate(0, -8px) rotate(45deg);
 }

@@ -4,12 +4,14 @@ import { HomePageComponent } from './home-page/home-page.component';
 
 const routes: Routes = [
   {
-    path: '', component: HomePageComponent
-  }
+    path: '',
+    component: HomePageComponent,
+  },
+  { path: 'chat', loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule) },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

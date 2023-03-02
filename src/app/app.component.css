@@ -2,11 +2,14 @@
     font-size: 1.3rem;
     font-family: Verdana, Tahoma, sans-serif;
 }
+nav {
+  height: 6%;
+}
 .container-fluid{
     padding: 0;
 }
 .content {
-    background-color: gold;
+    height: 94%;
 }
 .nav-item.dropdown a span {
     display: block;

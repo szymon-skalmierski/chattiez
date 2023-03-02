@@ -1,0 +1,93 @@
+._container {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.box {
+  min-width: 300px;
+  width: 60vw;
+  min-height: 70vh;
+  background-color: rgb(255, 255, 255);
+  border-radius: 28px;
+  position: relative;
+  box-shadow: 0px 0px 14px 0px rgba(98, 99, 103, 0.724);
+  padding: 0 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form-box{
+    width: 50%;
+}
+form {
+    display: grid;
+}
+
+.form__group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 1%;
+  width: 100%;
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #9b9b9b;
+  outline: 0;
+  font-size: 1.3rem;
+  color: rgb(94, 94, 94);
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.form__field::placeholder {
+  color: transparent;
+}
+
+.form__field:placeholder-shown ~ .form__label {
+  font-size: 1.3rem;
+  cursor: text;
+  top: 20px;
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #9b9b9b;
+}
+
+.form__field:focus {
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #1c7aaa, #388def);
+  border-image-slice: 1;
+}
+.form__field:focus ~ .form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #1c7aaa;
+  font-weight: 700;
+}
+
+.form__field:required,
+.form__field:invalid {
+  box-shadow: none;
+}
+.btn.btn-secondary[type="submit"] {
+  place-self: end;
+  width: 30%;
+  min-width: 90px;
+}

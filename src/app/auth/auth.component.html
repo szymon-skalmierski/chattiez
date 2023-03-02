@@ -1,1 +1,23 @@
-<p>auth works!</p>
+<div class="_container">
+    <div class="box">
+        <div class="form-box">
+            <form #form="ngForm">
+                <div class="form__group field">
+                    <input class="form__field" type="text" name="email" id="email" placeholder="Email"
+                        required email ngModel>
+                    <label class="form__label" for="email">Email</label>
+                </div>
+                <div class="form__group field">
+                    <input class="form__field" type="password" name="password" id="password"
+                        placeholder="Password" required ngModel>
+                    <label class="form__label" for="password">Password</label>
+                </div>
+                <button class="btn btn-secondary my-4" type="submit">{{ authType | uppercase }}</button>
+            </form>
+            <button type="button" class="btn btn-sm btn-secondary" [routerLink]="['/auth/signup']"
+            *ngIf="authType == 'signup'">LOGIN</button>
+            <button type="button" class="btn btn-sm btn-secondary" [routerLink]="['/auth/signup']"
+            *ngIf="authType == 'login'">CREATE AN ACCOUNT</button>
+        </div>
+    </div>
+</div>

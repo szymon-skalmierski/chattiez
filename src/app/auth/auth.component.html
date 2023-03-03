@@ -14,7 +14,7 @@
                 </div>
                 <button class="btn btn-secondary my-4" type="submit">{{ authType | uppercase }}</button>
             </form>
-            <button type="button" class="btn btn-sm btn-secondary" [routerLink]="['/auth/signup']"
+            <button type="button" class="btn btn-sm btn-secondary" [routerLink]="['/auth/login']"
             *ngIf="authType == 'signup'">LOGIN</button>
             <button type="button" class="btn btn-sm btn-secondary" [routerLink]="['/auth/signup']"
             *ngIf="authType == 'login'">CREATE AN ACCOUNT</button>

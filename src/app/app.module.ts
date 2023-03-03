@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { AuthComponent } from './auth/auth.component';
 import { ChatModule } from './chat/chat.module';
+import { ChatGuard } from './chat/chat.guard';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { ChatModule } from './chat/chat.module';
     AppRoutingModule,
     ChatModule
   ],
-  providers: [],
+  providers: [ChatGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

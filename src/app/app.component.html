@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand navbar-light bg-light">
     <div class="container-fluid">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav w-100">
           <li class="nav-item mx-3">
             <a
               class="nav-link"
@@ -14,22 +14,23 @@
             >
           </li>
           <li class="nav-item mx-3">
-            <!-- <a
+            <a
               class="nav-link"
               [routerLink]="['/about']"
               routerLinkActive="active"
               >About</a
-            > -->
+            >
           </li>
           <li class="nav-item mx-3">
             <a
+              *ngIf="userStatus"
               class="nav-link"
               routerLink='/chat'
               routerLinkActive="active"
               >Chat</a
             >
           </li>
-          <li class="nav-item dropdown" style="position: absolute; right: 10px">
+          <li class="nav-item dropdown ms-auto mx-3">
             <a
               class="nav-link"
               role="button"
@@ -50,7 +51,7 @@
       </div>
     </div>
   </nav>
-  <div class="container-fluid content">
+  <div class="container-fluid d-flex justify-content-center align-items-center w-100 content">
     <router-outlet></router-outlet>
   </div>
 </div>

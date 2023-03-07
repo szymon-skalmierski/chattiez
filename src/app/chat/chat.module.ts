@@ -5,6 +5,7 @@ import { ChatRoutingModule } from './chat-routing.module';
 import { ChatComponent } from './chat.component';
 import { ChatRoomListComponent } from './chat-room-list/chat-room-list.component';
 import { ChatRoomComponent } from './chat-room/chat-room.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ChatRoomComponent } from './chat-room/chat-room.component';
   ],
   imports: [
     CommonModule,
-    ChatRoutingModule
+    ChatRoutingModule,
+    HttpClientModule
   ]
 })
 export class ChatModule { }

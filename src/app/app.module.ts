@@ -8,6 +8,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { AuthComponent } from './auth/auth.component';
 import { ChatModule } from './chat/chat.module';
 import { ChatGuard } from './chat/chat.guard';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ChatGuard } from './chat/chat.guard';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    ChatModule
+    ChatModule,
+    CommonModule
   ],
   providers: [ChatGuard],
   bootstrap: [AppComponent]

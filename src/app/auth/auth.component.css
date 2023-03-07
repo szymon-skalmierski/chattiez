@@ -86,7 +86,7 @@ form {
 .form__field:invalid {
   box-shadow: none;
 }
-.btn.btn-secondary[type="submit"] {
+.btn.btn-success {
   place-self: end;
   width: 30%;
   min-width: 90px;

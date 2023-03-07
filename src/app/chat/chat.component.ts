@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 import { ChatService } from './chat.service';
 
 @Component({
@@ -12,10 +13,9 @@ import { ChatService } from './chat.service';
 })
 export class ChatComponent implements OnInit {
 
-  constructor(private chatService: ChatService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.chatService.doit()
   }
 
 }

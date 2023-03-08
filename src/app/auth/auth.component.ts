@@ -23,22 +23,22 @@ export class AuthComponent implements OnInit {
       } else {
         this.authType = params.get('type') || 'login';
       }
+      this.checkIfLoggedIn();
     });
+  }
+  checkIfLoggedIn(){
+    if(localStorage.getItem('username') && localStorage.getItem('token')){
+      this.router.navigate(['/chat']);
+    }
   }
   getUserFromServer(userId: any, token: any) {
     this.authService.connect(userId, token, (user: any, error: any) => {
-      if (error) {
-        this.connectionError = true;
-      } else {
-        this.connectionError = false;
+      if (!!error) {
+        this.connectionError = error.message;
       }
-      if(!error){
-        this.authService.loggedIn = true;
-        this.router.navigate(['/chat'])
-      }
+      this.router.navigate(['/']);
+      localStorage.setItem('username', userId);
+      localStorage.setItem('token', token);
     });
-  }
-  a() {
-    console.log('asdfasdf');
   }
 }

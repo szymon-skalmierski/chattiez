@@ -1,5 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import * as SendBird from 'sendbird';
 import { environment } from 'src/environments/environment';
 
@@ -7,8 +7,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  loggedIn = false;
-  sb:any;
+  loggedIn = localStorage.getItem('username') && localStorage.getItem('token');
+  sb: any;
 
   constructor(private http: HttpClient) { 
     this.sb = new SendBird({appId: environment.APP_ID});
@@ -27,5 +27,10 @@ export class AuthService {
 
   getConnectedUser(){
       return this.sb && this.sb.currentUser ? this.sb.currentUser : null;
+  }
+
+  signout(){
+    localStorage.removeItem('username');
+    localStorage.removeItem('token');
   }
 }

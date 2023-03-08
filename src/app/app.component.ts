@@ -10,5 +10,21 @@ export class AppComponent {
   title = 'angular-chat';
   constructor(private authService: AuthService){
   }
-  userStatus = this.authService.loggedIn
+  ngOnInit(){
+    if(localStorage.getItem('username')){
+      this.authService.connect(localStorage.getItem('username')!, localStorage.getItem('token'), ()=>{})
+    }
+  }
+
+  getStatus(){
+    return this.authService.loggedIn;
+  }
+  
+  getUsername(){
+    return this.authService.getConnectedUser()?.nickname
+  }
+
+  signout(){
+    this.authService.signout();
+  }
 }

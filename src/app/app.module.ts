@@ -9,12 +9,15 @@ import { AuthComponent } from './auth/auth.component';
 import { ChatModule } from './chat/chat.module';
 import { ChatGuard } from './chat/chat.guard';
 import { CommonModule } from '@angular/common';
+import { AboutComponent } from './about/about.component';
+import { AuthGuard } from './auth/auth.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
     AuthComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
@@ -23,7 +26,7 @@ import { CommonModule } from '@angular/common';
     ChatModule,
     CommonModule
   ],
-  providers: [ChatGuard],
+  providers: [ChatGuard, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

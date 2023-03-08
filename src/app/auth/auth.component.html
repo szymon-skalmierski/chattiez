@@ -1,7 +1,7 @@
 <div class="_container">
     <div class="box">
         <div class="form-box">
-            <p class="alert alert-danger text-center" *ngIf="connectionError">Failed to log in.</p>
+            <p class="alert alert-danger text-center" *ngIf="connectionError">{{ connectionError }}</p>
             <form #form="ngForm">
                 <div class="form__group field">
                     <input class="form__field" type="text" name="userid" id="useid" placeholder="userid"

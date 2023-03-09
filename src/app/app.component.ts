@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 
 @Component({
@@ -8,23 +9,12 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent {
   title = 'angular-chat';
-  constructor(private authService: AuthService){
-  }
-  ngOnInit(){
-    if(localStorage.getItem('username')){
-      this.authService.connect(localStorage.getItem('username')!, localStorage.getItem('token'), ()=>{})
-    }
-  }
-
-  getStatus(){
-    return this.authService.loggedIn;
-  }
   
-  getUsername(){
-    return this.authService.getConnectedUser()?.nickname
+  constructor(private authService: AuthService){
+    this.authService.autoLogin()
   }
 
-  signout(){
-    this.authService.signout();
+  logout(){
+    this.authService.logout()
   }
 }

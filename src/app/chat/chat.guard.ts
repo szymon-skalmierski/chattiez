@@ -8,7 +8,7 @@ export class ChatGuard implements CanActivate {
     constructor(private authService:AuthService, private router: Router){
     }
 
-    userStatus = this.authService.loggedIn
+    userStatus = this.authService.user
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
         if(this.userStatus) return true;

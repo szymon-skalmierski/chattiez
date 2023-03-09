@@ -23,7 +23,6 @@
           </li>
           <li class="nav-item mx-3">
             <a
-              *ngIf="getStatus()"
               class="nav-link"
               routerLink='/chat'
               routerLinkActive="active"
@@ -31,7 +30,7 @@
             >
           </li>
           <li class="nav-item dropdown ms-auto mx-3 position-relative">
-            <div *ngIf="getStatus()">{{ getUsername() }}</div>
+            <!-- <div *ngIf="getStatus()">{{ getUsername() }}</div> -->
             <a
               class="nav-link"
               role="button"
@@ -41,13 +40,13 @@
             ></a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
-                <a class="dropdown-item" [routerLink]="['auth', 'login']" *ngIf="!getStatus()">Login</a>
+                <a class="dropdown-item" [routerLink]="['auth', 'login']">Login</a>
               </li>
               <li>
-                <a class="dropdown-item" [routerLink]="['auth', 'signup']" *ngIf="!getStatus()">Sign up</a>
+                <a class="dropdown-item" [routerLink]="['auth', 'signup']">Sign up</a>
               </li>
               <li>
-                <a class="dropdown-item" [routerLink]="['/']" *ngIf="getStatus()" (click)="signout()">Sign Out</a>
+                <a class="dropdown-item" [routerLink]="['/']" (click)="logout()">Sign Out</a>
               </li>
             </ul>
           </li>

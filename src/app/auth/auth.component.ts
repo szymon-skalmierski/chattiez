@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { AuthService } from './auth.service';
+import { User } from './user.model';
 
 @Component({
   selector: 'app-auth',
@@ -8,6 +10,7 @@ import { AuthService } from './auth.service';
   styleUrls: ['./auth.component.css'],
 })
 export class AuthComponent implements OnInit {
+
   authType = 'login';
   connectionError = false;
   constructor(
@@ -23,22 +26,32 @@ export class AuthComponent implements OnInit {
       } else {
         this.authType = params.get('type') || 'login';
       }
-      this.checkIfLoggedIn();
     });
   }
+
   checkIfLoggedIn(){
-    if(localStorage.getItem('username') && localStorage.getItem('token')){
+    if(localStorage.getItem('userData')){
       this.router.navigate(['/chat']);
     }
   }
-  getUserFromServer(userId: any, token: any) {
-    this.authService.connect(userId, token, (user: any, error: any) => {
-      if (!!error) {
-        this.connectionError = error.message;
-      }
-      this.router.navigate(['/']);
-      localStorage.setItem('username', userId);
-      localStorage.setItem('token', token);
-    });
+
+  login(userid:any, token:any){
+    this.authService.connect(userid, token);
   }
+
+  logout(){
+    this.authService.logout();
+  }
+
+  // getUserFromServer(userId: any, token: any) {
+  //   this.authService.connect(userId, token, (user: any, error: any) => {
+  //     if (error) {
+  //       this.connectionError = error.message;
+  //     }
+  //     this.router.navigate(['/']);
+  //     localStorage.setItem('userData', JSON.stringify({userId: userId, token: token}));
+  //   });
+  // }
+
+
 }

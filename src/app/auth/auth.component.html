@@ -13,7 +13,8 @@
                         placeholder="Password" required ngModel #token>
                     <label class="form__label" for="password">Access Token</label>
                 </div>
-                <button class="btn btn-success my-4" type="button" (click)="getUserFromServer(userid.value, token.value)">{{ authType | uppercase }}</button>
+                <button class="btn btn-success my-4" type="button" >{{ authType | uppercase }}</button>
+                <button class="btn btn-danger" (click)="login(userid.value, token.value)">asdfas</button>
             </form>
         </div>
     </div>

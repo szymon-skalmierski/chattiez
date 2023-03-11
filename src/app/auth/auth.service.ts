@@ -26,6 +26,8 @@ export class AuthService {
         const expirationDate = new Date(new Date().getTime() + 60 * 60 * 1000);
         const userData = new User(userId, token, expirationDate)
         localStorage.setItem('userData', JSON.stringify(userData))
+        this.user.next(userData)
+        this.router.navigate(['/chat']);
       }
     });
   }

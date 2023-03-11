@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { AuthService } from './auth.service';
-import { User } from './user.model';
 
 @Component({
   selector: 'app-auth',
@@ -10,14 +8,14 @@ import { User } from './user.model';
   styleUrls: ['./auth.component.css'],
 })
 export class AuthComponent implements OnInit {
-
   authType = 'login';
   connectionError = false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {

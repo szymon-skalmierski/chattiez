@@ -13,7 +13,7 @@ export class AuthService {
   private tokenExpiratonTimer: any;
   user = new BehaviorSubject<User | null>(null);
 
-  sb: any;
+  sb: SendBird.SendBirdInstance;
 
   constructor(private http: HttpClient, private router: Router) { 
     this.sb = new SendBird({appId: environment.APP_ID});
@@ -76,6 +76,7 @@ export class AuthService {
     this.user.next(null);
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
+    this.sb.disconnect()
     if (this.tokenExpiratonTimer) {
       clearTimeout(this.tokenExpiratonTimer);
     }

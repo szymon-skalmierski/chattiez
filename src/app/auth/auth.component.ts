@@ -27,12 +27,6 @@ export class AuthComponent implements OnInit {
     });
   }
 
-  checkIfLoggedIn(){
-    if(localStorage.getItem('userData')){
-      this.router.navigate(['/chat']);
-    }
-  }
-
   login(userid:any, token:any){
     this.authService.connect(userid, token);
   }
@@ -40,16 +34,4 @@ export class AuthComponent implements OnInit {
   logout(){
     this.authService.logout();
   }
-
-  // getUserFromServer(userId: any, token: any) {
-  //   this.authService.connect(userId, token, (user: any, error: any) => {
-  //     if (error) {
-  //       this.connectionError = error.message;
-  //     }
-  //     this.router.navigate(['/']);
-  //     localStorage.setItem('userData', JSON.stringify({userId: userId, token: token}));
-  //   });
-  // }
-
-
 }

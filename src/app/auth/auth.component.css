@@ -19,11 +19,11 @@
   justify-content: center;
   align-items: center;
 }
-.form-box{
-    width: 50%;
+.form-box {
+  width: 50%;
 }
 form {
-    display: grid;
+  display: grid;
 }
 
 .form__group {

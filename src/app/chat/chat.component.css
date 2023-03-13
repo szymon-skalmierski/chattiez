@@ -1,11 +1,11 @@
-.chat-component{
-    width: 100%;
-    height: 100%;
+.chat-component {
+  width: 100%;
+  height: 100%;
 }
 .chat-component .container-fluid {
-    display: grid;
-    grid-template-columns: 20% 80%;
+  display: grid;
+  grid-template-columns: 20% 80%;
 }
 .chat-component :is(.left, .right) {
-    background-color: rgb(246, 246, 246);
+  background-color: rgb(246, 246, 246);
 }

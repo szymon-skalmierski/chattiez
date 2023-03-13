@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { User } from './user.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private tokenExpiratonTimer: any;
@@ -15,31 +15,31 @@ export class AuthService {
 
   sb: SendBird.SendBirdInstance;
 
-  constructor(private http: HttpClient, private router: Router) { 
-    this.sb = new SendBird({appId: environment.APP_ID});
+  constructor(private http: HttpClient, private router: Router) {
+    this.sb = new SendBird({ appId: environment.APP_ID });
     SendBird.setLogLevel(SendBird.LogLevel.ERROR);
   }
 
   connect(userId: string, token: any) {
     this.sb.connect(userId, token, (user: any, error: any) => {
-      if(user){
+      if (user) {
         const expirationDate = new Date(new Date().getTime() + 60 * 60 * 1000);
-        const userData = new User(userId, token, expirationDate)
+        const userData = new User(userId, token, expirationDate);
 
-        if(!localStorage.getItem('userData')){
+        if (!localStorage.getItem('userData')) {
           this.router.navigate(['/chat']);
-          localStorage.setItem('userData', JSON.stringify(userData))
-          this.user.next(userData)
+          localStorage.setItem('userData', JSON.stringify(userData));
+          this.user.next(userData);
         }
       }
     });
   }
 
-  isConnected(){
+  isConnected() {
     return this.sb && this.sb.currentUser && this.sb.currentUser.userId;
   }
 
-  getConnectedUser(){
+  getConnectedUser() {
     return this.sb && this.sb.currentUser ? this.sb.currentUser : null;
   }
 
@@ -54,9 +54,9 @@ export class AuthService {
       userData._token,
       new Date(userData._tokenExpirationDate)
     );
-    
+
     if (loadedUser.token) {
-      this.connect(loadedUser.userId, loadedUser.token)
+      this.connect(loadedUser.userId, loadedUser.token);
       this.user.next(loadedUser);
 
       const expirationDuration = new Date(
@@ -76,7 +76,7 @@ export class AuthService {
     this.user.next(null);
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
-    this.sb.disconnect()
+    this.sb.disconnect();
     if (this.tokenExpiratonTimer) {
       clearTimeout(this.tokenExpiratonTimer);
     }

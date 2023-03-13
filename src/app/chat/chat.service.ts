@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import * as SendBird from 'sendbird';
-import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
-@Injectable({providedIn: 'root'})
-
+@Injectable({ providedIn: 'root' })
 export class ChatService {
-    constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) {}
 }

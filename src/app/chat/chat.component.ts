@@ -1,21 +1,17 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { ChatService } from './chat.service';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   host: {
-    class:'chat-component'
+    class: 'chat-component',
   },
   styleUrls: ['./chat.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class ChatComponent implements OnInit {
+  constructor(private authService: AuthService) {}
 
-  constructor(private authService: AuthService) { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

@@ -14,8 +14,7 @@ export class AuthComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -27,11 +26,11 @@ export class AuthComponent implements OnInit {
     });
   }
 
-  login(userid:any, token:any){
+  login(userid: any, token: any) {
     this.authService.connect(userid, token);
   }
 
-  logout(){
+  logout() {
     this.authService.logout();
   }
 }

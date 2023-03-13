@@ -23,8 +23,9 @@
           </li>
           <li class="nav-item mx-3">
             <a
+              *ngIf="(isConnected | async) == true"
               class="nav-link"
-              routerLink='/chat'
+              routerLink="/chat"
               routerLinkActive="active"
               >Chat</a
             >
@@ -40,13 +41,29 @@
             ></a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
-                <a class="dropdown-item" [routerLink]="['auth', 'login']" *ngIf="(isConnected | async) !== true">Login</a>
+                <a
+                  class="dropdown-item"
+                  [routerLink]="['auth', 'login']"
+                  *ngIf="(isConnected | async) !== true"
+                  >Login</a
+                >
               </li>
               <li>
-                <a class="dropdown-item" [routerLink]="['auth', 'signup']" *ngIf="(isConnected | async) !== true">Sign up</a>
+                <a
+                  class="dropdown-item"
+                  [routerLink]="['auth', 'signup']"
+                  *ngIf="(isConnected | async) !== true"
+                  >Sign up</a
+                >
               </li>
               <li>
-                <a class="dropdown-item" [routerLink]="['/']" (click)="logout()" *ngIf="isConnected | async">Sign Out</a>
+                <a
+                  class="dropdown-item"
+                  [routerLink]="['/']"
+                  (click)="logout()"
+                  *ngIf="isConnected | async"
+                  >Sign Out</a
+                >
               </li>
             </ul>
           </li>
@@ -54,7 +71,9 @@
       </div>
     </div>
   </nav>
-  <div class="container-fluid d-flex justify-content-center align-items-center w-100 content">
+  <div
+    class="container-fluid d-flex justify-content-center align-items-center w-100 content"
+  >
     <router-outlet></router-outlet>
   </div>
 </div>

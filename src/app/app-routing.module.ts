@@ -13,13 +13,19 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    redirectTo: 'auth/login'
+    redirectTo: 'auth/login',
   },
   {
-    path: 'auth/:type', component: AuthComponent, canActivate: [AuthGuard]
+    path: 'auth/:type',
+    component: AuthComponent,
+    canActivate: [AuthGuard],
   },
-  { path: 'chat', canActivate: [ChatGuard],loadChildren: () => import('./chat/chat.module').then(m => m.ChatModule) },
-  { path: 'about', component: AboutComponent}
+  {
+    path: 'chat',
+    canActivate: [ChatGuard],
+    loadChildren: () => import('./chat/chat.module').then((m) => m.ChatModule),
+  },
+  { path: 'about', component: AboutComponent },
 ];
 
 @NgModule({

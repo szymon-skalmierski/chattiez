@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import * as SendBird from 'sendbird';
+import { ChatService } from './chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -11,7 +12,21 @@ import { AuthService } from '../auth/auth.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class ChatComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+  channels: any
 
-  ngOnInit(): void {}
+
+  constructor(private chatService: ChatService) {}
+
+  ngOnInit(): void {
+    this.onClicked()
+  }
+
+  async onClicked(){
+    this.channels = await this.chatService.getMyGroupChannels()
+    this.c()
+  }
+
+  c(){
+    console.log(this.channels)
+  }
 }

@@ -10,10 +10,11 @@ import { User } from './user.model';
   providedIn: 'root',
 })
 export class AuthService {
+  sb: SendBird.SendBirdInstance;
+  
   private tokenExpiratonTimer: any;
   user = new BehaviorSubject<User | null>(null);
 
-  sb: SendBird.SendBirdInstance;
 
   constructor(private http: HttpClient, private router: Router) {
     this.sb = new SendBird({ appId: environment.APP_ID });

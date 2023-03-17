@@ -9,3 +9,20 @@
 .chat-component :is(.left, .right) {
   background-color: rgb(246, 246, 246);
 }
+.channel {
+  margin-bottom: 5px;
+  background-color: rgba(0, 0, 0, 0.048);
+  
+}
+.channel span {
+  font-size: clamp(1rem, 1vw, 3rem);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+img[alt='cover'] {
+  width: clamp(40px, 15%, 100px);
+  margin: 0 5px;
+  clip-path: circle();
+}

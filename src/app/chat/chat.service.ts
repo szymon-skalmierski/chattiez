@@ -14,7 +14,7 @@ export class ChatService {
     this.listQuery.includeEmpty = true;
     this.listQuery.memberStateFilter = 'joined_only';
     this.listQuery.order = 'latest_last_message';
-    this.listQuery.limit = 15; // The value of pagination limit could be set up to 100.
+    this.listQuery.limit = 15;
     if (this.listQuery.hasNext) {
       await this.listQuery.next((groupChannel:any, error:any)=>{
         channel = groupChannel
@@ -27,7 +27,6 @@ export class ChatService {
     const listQuery = groupChannel.createPreviousMessageListQuery();
     listQuery.limit = 10;
     listQuery.includeMetaArray = true;
-    // Retrieving previous messages.
     listQuery.load((messages, error) => {
       console.log(messages)
     });

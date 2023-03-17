@@ -1,6 +1,9 @@
 <div class="container-fluid p-3 bg-body w-100 h-100">
   <div class="left p-3 w-100">
-    <button class="btn btn-success" (click)="c()">click for groups</button>
+    <div class="channel   d-flex align-items-center" *ngFor="let channel of channels">
+      <img [src]="channel.coverUrl" alt="cover">
+      <span>{{ channel.name }}</span>
+    </div>
     <app-chat-room-list></app-chat-room-list>
   </div>
   <div class="right p-3 w-100">

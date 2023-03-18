@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/auth/auth.service';
+import { ChatService } from '../chat.service';
 
 @Component({
   selector: 'app-chat-room-list',
@@ -7,13 +7,19 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./chat-room-list.component.css']
 })
 export class ChatRoomListComponent implements OnInit {
-  channelHandler  = new this.authService.sb.ChannelHandler()
+  // channelHandler  = new this.authService.sb.ChannelHandler()
+  channels: any
 
-  constructor(private authService: AuthService) { }
+  constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
+    this.fetchGroupChannels()
   }
 
-  
+  fetchGroupChannels(){
+    this.chatService.getMyGroupChannels((channels: any)=>{
+      this.channels = channels
+    });
+  }
 
 }

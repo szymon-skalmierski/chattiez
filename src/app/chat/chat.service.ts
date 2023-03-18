@@ -9,18 +9,16 @@ export class ChatService {
     this.listQuery = this.authService.sb.GroupChannel.createMyGroupChannelListQuery();
   }
 
-  async getMyGroupChannels() {
-    let channel = null
+  async getMyGroupChannels(callback: Function) {
     this.listQuery.includeEmpty = true;
     this.listQuery.memberStateFilter = 'joined_only';
     this.listQuery.order = 'latest_last_message';
     this.listQuery.limit = 15;
     if (this.listQuery.hasNext) {
       await this.listQuery.next((groupChannel:any, error:any)=>{
-        channel = groupChannel
+        callback(groupChannel)
       });
     }
-    return channel
   }
 
   getMessagesFromChannel(groupChannel: SendBird.GroupChannel) {

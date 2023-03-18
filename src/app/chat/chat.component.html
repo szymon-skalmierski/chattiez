@@ -1,12 +1,8 @@
 <div class="container-fluid p-3 bg-body w-100 h-100">
-  <div class="left p-3 w-100">
-    <div class="channel   d-flex align-items-center" *ngFor="let channel of channels">
-      <img [src]="channel.coverUrl" alt="cover">
-      <span>{{ channel.name }}</span>
-    </div>
+  <div class="left p-3 w-100" style="overflow-y: scroll;">
     <app-chat-room-list></app-chat-room-list>
   </div>
   <div class="right p-3 w-100">
-    <app-chat-room></app-chat-room>
+    <router-outlet></router-outlet>
   </div>
 </div>

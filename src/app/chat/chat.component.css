@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
 }
-.chat-component .container-fluid {
+.chat-component>.container-fluid {
   display: grid;
   grid-template-columns: minmax(270px, 320px) 1fr;
 }

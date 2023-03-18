@@ -22,12 +22,15 @@ export class ChatRoomComponent implements OnInit {
       this.channel = this.authService.sb.GroupChannel.getChannel(this.groupUrl);
       clearInterval(this.msgInterval)
       this.channel.then((channel:any)=>{
-        this.chatService.getMessagesFromChannel(channel, (messages:any)=>this.messages = messages)
-        this.msgInterval = setInterval(()=>{
-          this.chatService.getMessagesFromChannel(channel, (messages:any)=>this.messages = messages)
-        }, 1000)
+        this.chatService.getMessagesFromChannel(channel, (messages:any)=>{this.messages = messages; console.log(messages)})
+        // this.msgInterval = setInterval(()=>{
+        //   this.chatService.getMessagesFromChannel(channel, (messages:any)=>this.messages = messages)
+        // }, 1000)
       })
     });
   }
 
+  getUserId(){
+    this.authService.isConnected();
+  }
 }

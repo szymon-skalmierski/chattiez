@@ -1,3 +1,6 @@
-<div *ngFor="let message of messages">
-    {{ message?.message }}
+<div class="container-fluid w-100 h-100">
+    <div *ngFor="let message of messages" [ngClass]="{'message-wrap mb-1': true, 'admin': message?.messageType == 'admin', 'user-message': message?.sender?.userId == getUserId()}">
+        <p class="user">{{ message?.sender?.nickname ?? 'Administrator' }}</p>
+        <div class="message">{{ message?.message }}</div>
+    </div>
 </div>

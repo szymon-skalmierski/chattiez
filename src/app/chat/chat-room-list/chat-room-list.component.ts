@@ -13,13 +13,14 @@ export class ChatRoomListComponent implements OnInit {
   constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
-    this.fetchGroupChannels()
+    this.fetchGroupChannels();
   }
 
   fetchGroupChannels(){
     this.chatService.getMyGroupChannels((channels: any)=>{
       this.channels = channels
-    });
+      // console.log(channels)
+    })
   }
 
 }

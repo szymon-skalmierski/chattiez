@@ -19,14 +19,14 @@ export class ChatRoomComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.groupUrl = params['url'];
-      this.channel = this.authService.sb.GroupChannel.getChannel(this.groupUrl);
-      clearInterval(this.msgInterval)
-      this.channel.then((channel:any)=>{
-        this.chatService.getMessagesFromChannel(channel, (messages:any)=>{this.messages = messages; console.log(messages)})
+      this.authService.sb.GroupChannel.getChannel(this.groupUrl).then((channel:any)=>{
+        this.channel = channel
+        this.chatService.getMessagesFromChannel(channel, (messages:any)=>{this.messages = messages})
         // this.msgInterval = setInterval(()=>{
         //   this.chatService.getMessagesFromChannel(channel, (messages:any)=>this.messages = messages)
         // }, 1000)
-      })
+      });
+      clearInterval(this.msgInterval);
     });
   }
 

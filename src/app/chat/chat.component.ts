@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChatService } from './chat.service';
 
 @Component({
@@ -8,7 +8,6 @@ import { ChatService } from './chat.service';
     class: 'chat-component',
   },
   styleUrls: ['./chat.component.css'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class ChatComponent implements OnInit {
 

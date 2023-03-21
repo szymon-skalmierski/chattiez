@@ -9,4 +9,8 @@
             <div class="message">{{ message?.message }}</div>
         </div>
     </div>
+    <div>
+        <input type="text" class="input-group w-75" #msg>
+        <button (click)="sendMsg(channel, msg.value)">Send</button>
+    </div>
 </div>

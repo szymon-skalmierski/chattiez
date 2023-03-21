@@ -33,4 +33,8 @@ export class ChatRoomComponent implements OnInit {
   getUserId(){
     this.authService.isConnected();
   }
+
+  sendMsg(channel:any, msg:any){
+    this.chatService.sendMessage(channel, msg, (msg:any)=>{console.log(msg)});
+  }
 }

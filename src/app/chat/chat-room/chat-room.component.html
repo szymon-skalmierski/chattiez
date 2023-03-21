@@ -3,9 +3,9 @@
         <img [src]="channel?.coverUrl" alt="cover" />
         <span>{{ channel?.name }}</span>
     </div>
-    <div class="container-fluid p-3">
+    <div class="container-fluid d-flex flex-column p-3">
         <div *ngFor="let message of messages" [ngClass]="{'message-wrap mb-1': true, 'admin': message?.messageType == 'admin', 'user-message': message?.sender?.userId == getUserId()}">
-            <p class="user">{{ message?.sender?.nickname ?? 'Administrator' }}</p>
+            <p class="user">{{ message?.sender?.nickname ?? '=ADMIN=' }}</p>
             <div class="message">{{ message?.message }}</div>
         </div>
     </div>

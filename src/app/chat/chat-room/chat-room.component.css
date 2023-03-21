@@ -1,18 +1,33 @@
 .admin {
-    color: red;
+    color: rgb(205, 0, 0);
+    font-weight: bolder;
 }
 .user {
     font-size: 0.7rem;
     margin: 0;
     padding-left: 5px;
 }
-.message {
+.user-message {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    align-self: flex-end;
+}
+.user-message div {
+    background-color:  rgb(205, 0, 0);
+    color: white;
+}
+.message-wrap {
     max-width: 50%;
+}
+.message {
     font-size: 1.15rem;
     background-color: rgb(222, 222, 222);
     border-radius: 15px;
     padding: 5px 10px;
     display: inline-block;
+    font-family: Helvetica, sans-serif;
+    font-weight: 100;
 }
 img[alt='cover'] {
   width: 50px;

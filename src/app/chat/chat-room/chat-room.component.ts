@@ -21,7 +21,7 @@ export class ChatRoomComponent implements OnInit {
       this.groupUrl = params['url'];
       this.authService.sb.GroupChannel.getChannel(this.groupUrl).then((channel:any)=>{
         this.channel = channel
-        this.chatService.getMessagesFromChannel(channel, (messages:any)=>{this.messages = messages})
+        this.chatService.getMessagesFromChannel(channel, (messages:any)=>{this.messages = messages; console.log(messages)})
         // this.msgInterval = setInterval(()=>{
         //   this.chatService.getMessagesFromChannel(channel, (messages:any)=>this.messages = messages)
         // }, 1000)
@@ -31,7 +31,7 @@ export class ChatRoomComponent implements OnInit {
   }
 
   getUserId(){
-    this.authService.isConnected();
+    return this.authService.isConnected();
   }
 
   sendMsg(channel:any, msg:any){

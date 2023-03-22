@@ -1,16 +1,16 @@
-<div class="container-fluid p-0 w-100 h-100">
+<div class="chat-content-wrap container-fluid p-0 w-100">
     <div class="label">
         <img [src]="channel?.coverUrl" alt="cover" />
         <span>{{ channel?.name }}</span>
     </div>
-    <div class="container-fluid d-flex flex-column p-3">
+    <div class="container-fluid messages-wrap d-flex flex-column p-3">
         <div *ngFor="let message of messages" [ngClass]="{'message-wrap mb-1': true, 'admin': message?.messageType == 'admin', 'user-message': message?.sender?.userId == getUserId()}">
             <p class="user">{{ message?.sender?.nickname ?? '=ADMIN=' }}</p>
             <div class="message">{{ message?.message }}</div>
         </div>
     </div>
-    <div>
-        <input type="text" class="input-group w-75" #msg>
-        <button (click)="sendMsg(channel, msg.value)">Send</button>
+    <div class="input-group p-3 msg-form">
+        <input type="text" class="form-control w-75" #msg>
+        <button class="btn btn-outline-secondary" (click)="sendMsg(channel, msg.value); msg.value=''">Send</button>
     </div>
 </div>

@@ -9,3 +9,8 @@
 :host :is(.left, .right) {
   background-color: rgb(246, 246, 246);
 }
+
+.left, .right {
+  height: 100%;
+  overflow: hidden;
+}

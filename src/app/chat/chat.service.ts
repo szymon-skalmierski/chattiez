@@ -27,7 +27,7 @@ export class ChatService {
     callback: Function
   ) {
     const listQuery = groupChannel.createPreviousMessageListQuery();
-    listQuery.limit = 10;
+    listQuery.limit = 25;
     listQuery.includeMetaArray = true;
     listQuery.load((messages, error) => {
       callback(messages);

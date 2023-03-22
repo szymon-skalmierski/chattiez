@@ -1,43 +1,50 @@
 .admin {
-    color: rgb(205, 0, 0);
-    font-weight: bolder;
+  color: rgb(205, 0, 0);
+  font-weight: bolder;
 }
 .user {
-    font-size: 0.7rem;
-    margin: 0;
-    padding-left: 5px;
+  font-size: 0.7rem;
+  margin: 0;
+  padding-left: 5px;
 }
 .user-message {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  align-self: flex-end;
 }
 .user-message div {
-    background-color:  rgb(205, 0, 0);
-    color: white;
+  background-color: rgb(205, 0, 0);
+  color: white;
 }
 .message-wrap {
-    max-width: 50%;
+  max-width: 50%;
 }
 .message {
-    font-size: 1.15rem;
-    background-color: rgb(222, 222, 222);
-    border-radius: 15px;
-    padding: 5px 10px;
-    display: inline-block;
-    font-family: Helvetica, sans-serif;
-    font-weight: 100;
+  font-size: 1.15rem;
+  background-color: rgb(222, 222, 222);
+  border-radius: 15px;
+  padding: 5px 10px;
+  display: inline-block;
+  font-family: Helvetica, sans-serif;
+  font-weight: 100;
 }
-img[alt='cover'] {
+img[alt="cover"] {
   width: 50px;
   margin: 0 5px;
   clip-path: circle();
 }
 .label {
-    position: sticky;
-    top: 0;
-    padding: 5px;
-    box-shadow: 0px 0 10px 0px rgb(171, 171, 171);
-    clip-path: inset(0px 0px -10px 0px);
+  padding: 5px;
+  border-bottom: 1px solid rgb(213, 213, 213);
+}
+.chat-content-wrap {
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.messages-wrap {
+  max-height: 85%;
+  overflow-y: scroll;
+  box-sizing: border-box;
 }

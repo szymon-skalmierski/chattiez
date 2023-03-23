@@ -3,9 +3,9 @@
         <img [src]="channel?.coverUrl" alt="cover" />
         <span>{{ channel?.name }}</span>
     </div>
-    <div class="container-fluid messages-wrap d-flex flex-column p-3">
-        <div *ngFor="let message of messages" [ngClass]="{'message-wrap mb-1': true, 'admin': message?.messageType == 'admin', 'user-message': message?.sender?.userId == getUserId()}">
-            <p class="user">{{ message?.sender?.nickname ?? '=ADMIN=' }}</p>
+    <div class="container-fluid messages-wrap d-flex flex-column-reverse p-3">
+        <div *ngFor="let message of messages.slice().reverse()" [ngClass]="{'message-wrap mb-1': true, 'admin': message?.messageType == 'admin', 'user-message': message?.sender?.userId == getUserId()}">
+            <p class="user m-0 px-2">{{ message?.sender?.nickname ?? '=ADMIN=' }}</p>
             <div class="message">{{ message?.message }}</div>
         </div>
     </div>

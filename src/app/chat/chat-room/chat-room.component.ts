@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Observable, of, Subject } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ChatService } from '../chat.service';
 
@@ -37,4 +38,5 @@ export class ChatRoomComponent implements OnInit {
   sendMsg(channel:any, msg:any){
     this.chatService.sendMessage(channel, msg, (msg:any)=>{console.log(msg)});
   }
+  
 }

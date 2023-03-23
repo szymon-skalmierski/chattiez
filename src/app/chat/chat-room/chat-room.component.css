@@ -4,8 +4,6 @@
 }
 .user {
   font-size: 0.7rem;
-  margin: 0;
-  padding-left: 5px;
 }
 .user-message {
   display: flex;
@@ -35,16 +33,16 @@ img[alt="cover"] {
   clip-path: circle();
 }
 .label {
+  display: flex;
+  align-items: center;
   padding: 5px;
   border-bottom: 1px solid rgb(213, 213, 213);
 }
 .chat-content-wrap {
   height: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-rows: 7% 84% 9%;
 }
 .messages-wrap {
-  max-height: 85%;
   overflow-y: scroll;
-  box-sizing: border-box;
 }

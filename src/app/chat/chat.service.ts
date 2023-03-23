@@ -24,10 +24,11 @@ export class ChatService {
 
   getMessagesFromChannel(
     groupChannel: SendBird.GroupChannel,
+    limit: number,
     callback: Function
   ) {
     const listQuery = groupChannel.createPreviousMessageListQuery();
-    listQuery.limit = 15;
+    listQuery.limit = limit;
     listQuery.includeMetaArray = true;
     listQuery.load((messages, error) => {
       callback(messages);

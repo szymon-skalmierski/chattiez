@@ -6,13 +6,15 @@ import { ChatComponent } from './chat.component';
 import { ChatRoomListComponent } from './chat-room-list/chat-room-list.component';
 import { ChatRoomComponent } from './chat-room/chat-room.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ChatRoomRenderingDirective } from './chat-room/chat-room-rendering.directive';
 
 
 @NgModule({
   declarations: [
     ChatComponent,
     ChatRoomListComponent,
-    ChatRoomComponent
+    ChatRoomComponent,
+    ChatRoomRenderingDirective
   ],
   imports: [
     CommonModule,

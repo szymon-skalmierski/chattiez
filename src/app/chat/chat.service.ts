@@ -28,6 +28,7 @@ export class ChatService {
     callback: Function
   ) {
     const listQuery = groupChannel.createPreviousMessageListQuery();
+    listQuery.reverse = true;
     listQuery.limit = limit;
     listQuery.includeMetaArray = true;
     listQuery.load((messages, error) => {

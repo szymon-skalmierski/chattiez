@@ -12,8 +12,7 @@ import { ChatService } from '../chat.service';
 export class ChatRoomComponent implements OnInit {
   msgInterval: any;
   channel: any;
-  msgs = new BehaviorSubject<any[]>([]);
-  messages: any;
+  messages: any[] = [];
   groupUrl: any;
   limit = 15;
 
@@ -43,11 +42,7 @@ export class ChatRoomComponent implements OnInit {
     this.chatService.getMessagesFromChannel(
       this.channel,
       limit,
-      (messages: any) => {
-        
-        this.msgs.next(messages);
-        console.log(messages);
-      }
+      (messages:any)=>this.messages = messages
     );
   }
 
@@ -61,14 +56,8 @@ export class ChatRoomComponent implements OnInit {
     });
   }
 
-  // getPosts(offset: number) {
-  //   this.loading = true;
-  //   this.blogService
-  //     .getPosts(offset, 5)
-  //     .then((posts) => {
-  //       this.posts = this.posts.concat(posts);
-  //       this.loading = false;
-  //     })
-  //     .catch(this.handleError);
-  // }
+  
+  trackById(index: number, item: any): number {
+    return item.id;
+  }
 }

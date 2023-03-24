@@ -4,7 +4,7 @@
         <span>{{ channel?.name }}</span>
     </div>
     <div class="container-fluid messages-wrap d-flex flex-column-reverse p-3" appChatRoomRendering>
-        <div *ngFor="let message of msgs | async" [ngClass]="{'message-wrap mb-1': true, 'admin': message?.messageType == 'admin', 'user-message': message?.sender?.userId == getUserId()}">
+        <div *ngFor="let message of messages; trackBy: trackById" [ngClass]="{'message-wrap mb-1': true, 'admin': message?.messageType == 'admin', 'user-message': message?.sender?.userId == getUserId()}">
             <p class="user m-0 px-2">{{ message?.sender?.nickname ?? '=ADMIN=' }}</p>
             <div class="message">{{ message?.message }}</div>
         </div>

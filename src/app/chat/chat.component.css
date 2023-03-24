@@ -14,3 +14,11 @@
   height: 100%;
   overflow: hidden;
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #666; 
+}

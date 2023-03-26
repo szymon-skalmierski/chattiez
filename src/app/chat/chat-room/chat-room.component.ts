@@ -10,7 +10,7 @@ import { ChatService } from '../chat.service';
   styleUrls: ['./chat-room.component.css'],
 })
 export class ChatRoomComponent implements OnInit {
-  msgInterval: any;
+  channelHandler = new this.authService.sb.ChannelHandler();
   channel: any;
   messages: any[] = [];
   groupUrl: any;
@@ -34,8 +34,11 @@ export class ChatRoomComponent implements OnInit {
           // }, 1000)
         }
       );
-      clearInterval(this.msgInterval);
     });
+    this.channelHandler.onMessageReceived = (channel, message) => {
+      this.messages.unshift(message)
+    };
+    this.authService.sb.addChannelHandler('6f688da4e9a446de', this.channelHandler);
   }
 
   reloadMsg(limit: any) {
@@ -50,10 +53,13 @@ export class ChatRoomComponent implements OnInit {
     return this.authService.isConnected();
   }
 
-  sendMsg(channel: any, msg: any) {
-    this.chatService.sendMessage(channel, msg, (msg: any) => {
-      console.log(msg);
+  handleSendForm(form: any){
+    if(!form.valid) return;
+    const message = form.value.message;
+    this.chatService.sendMessage(this.channel, message, (msg: any) => {
+      this.messages.unshift(msg);
     });
+    form.reset();
   }
 
   

@@ -10,7 +10,7 @@ export class ChatRoomRenderingDirective implements OnInit {
   @HostListener('scroll', ['$event']) scrollEnd(eventData: Event) {
     const chatEl = (eventData.target as HTMLDivElement);
     if(chatEl.scrollTop === chatEl.clientHeight - chatEl.scrollHeight){
-        this.chat.reloadMsg(this.msgLimit+=5);
+        this.chat.reloadMsg(this.msgLimit+=10);
     }
   }
 

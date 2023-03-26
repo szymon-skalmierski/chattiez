@@ -46,7 +46,5 @@ export class AuthComponent implements OnInit {
         this.router.navigate(['/chat'])
       })
     }
-
-    form.reset();
   }
 }

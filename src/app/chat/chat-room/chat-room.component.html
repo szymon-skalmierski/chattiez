@@ -10,7 +10,9 @@
         </div>
     </div>
     <div class="input-group p-3 msg-form">
-        <input type="text" class="form-control w-75" #msg>
-        <button class="btn btn-outline-secondary" (click)="sendMsg(channel, msg.value); msg.value=''">Send</button>
+        <form #sendForm="ngForm" class="w-100 d-flex" (ngSubmit)="handleSendForm(sendForm)">
+            <input type="text" class="form-control" name="message" id="text-input" ngModel>
+            <button type="submit" class="btn btn-outline-secondary">Send</button>
+        </form>
     </div>
 </div>

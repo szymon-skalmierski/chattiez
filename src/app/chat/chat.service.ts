@@ -1,22 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({ providedIn: 'root' })
-export class ChatService {
-  listQuery: any;
+export class ChatService{
 
   constructor(private authService: AuthService) {
-    this.listQuery =
-      this.authService.sb.GroupChannel.createMyGroupChannelListQuery();
   }
 
   getMyGroupChannels(callback: Function) {
-    this.listQuery.includeEmpty = true;
-    this.listQuery.memberStateFilter = 'joined_only';
-    this.listQuery.order = 'latest_last_message';
-    this.listQuery.limit = 15;
-    if (this.listQuery.hasNext) {
-      this.listQuery.next((groupChannel: any, error: any) => {
+    const listQuery = this.authService.sb.GroupChannel.createMyGroupChannelListQuery();
+    listQuery.includeEmpty = true;
+    listQuery.memberStateFilter = 'joined_only';
+    listQuery.order = 'latest_last_message';
+    listQuery.limit = 15;
+    if (listQuery.hasNext) {
+      listQuery.next((groupChannel: any, error: any) => {
         callback(groupChannel);
       });
     }

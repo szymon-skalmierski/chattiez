@@ -7,7 +7,6 @@ import { ChatService } from '../chat.service';
   styleUrls: ['./chat-room-list.component.css']
 })
 export class ChatRoomListComponent implements OnInit {
-  // channelHandler  = new this.authService.sb.ChannelHandler()
   channels: any
 
   constructor(private chatService: ChatService) { }
@@ -18,8 +17,7 @@ export class ChatRoomListComponent implements OnInit {
 
   fetchGroupChannels(){
     this.chatService.getMyGroupChannels((channels: any)=>{
-      this.channels = channels
-      // console.log(channels)
+      this.channels = channels;
     })
   }
 

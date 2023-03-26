@@ -22,13 +22,12 @@ export class AuthService {
   }
 
   connect(userId: string, token: any) {
-    this.sb.connect(userId, token, (user: any, error: any) => {
+    return this.sb.connect(userId, token, (user: any, error: any) => {
       if (user) {
         const expirationDate = new Date(new Date().getTime() + 60 * 60 * 1000);
         const userData = new User(userId, token, expirationDate);
 
         if (!localStorage.getItem('userData')) {
-          this.router.navigate(['/chat']);
           localStorage.setItem('userData', JSON.stringify(userData));
           this.user.next(userData);
         }

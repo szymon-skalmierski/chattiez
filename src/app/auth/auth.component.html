@@ -4,37 +4,34 @@
       <p class="alert alert-danger text-center" *ngIf="connectionError">
         {{ connectionError }}
       </p>
-      <form #form="ngForm">
+      <form #form="ngForm" (ngSubmit)="onSubmit(form)">
         <div class="form__group field">
           <input
             class="form__field"
             type="text"
-            name="userid"
-            id="useid"
+            name="userId"
+            id="userId"
             placeholder="userid"
             required
             ngModel
-            #userid
           />
-          <label class="form__label" for="userid">UserID</label>
+          <label class="form__label" for="userId">UserID</label>
         </div>
         <div class="form__group field">
           <input
             class="form__field"
             type="password"
-            name="password"
-            id="password"
-            placeholder="Password"
+            name="accessToken"
+            id="accessToken"
+            placeholder="accessToken"
             required
             ngModel
-            #token
           />
-          <label class="form__label" for="password">Access Token</label>
+          <label class="form__label" for="accessToken">Access Token</label>
         </div>
         <button
           class="btn btn-success my-4"
-          type="button"
-          (click)="login(userid.value, token.value)"
+          type="submit"
         >
           {{ authType | uppercase }}
         </button>

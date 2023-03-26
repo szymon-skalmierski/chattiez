@@ -1,13 +1,14 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { AuthService } from "../auth/auth.service";
 
 @Injectable({providedIn: 'root'})
-export class ChatGuard implements CanActivate {
+export class ChatGuard implements CanActivate, OnDestroy {
+    sub: Subscription
     isLoggedIn!: boolean
     constructor(private authService:AuthService, private router: Router){
-        this.authService.user.subscribe((user:any)=>{
+        this.sub = this.authService.user.subscribe((user:any)=>{
             this.isLoggedIn = !!user
         })
     }
@@ -18,5 +19,8 @@ export class ChatGuard implements CanActivate {
         }
         this.router.navigate(['/auth'])
         return false;
+    }
+    ngOnDestroy(): void {
+        this.sub.unsubscribe();
     }
 }

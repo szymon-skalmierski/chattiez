@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
@@ -32,5 +33,20 @@ export class AuthComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+  }
+
+  onSubmit(form: NgForm) {
+    if(!form.valid) return;
+    const email = form.value.userId;
+    const accessToken = form.value.accessToken;
+    
+    if (this.authType === 'login') {
+      const connection = this.authService.connect(email, accessToken);
+      connection.then(()=>{
+        this.router.navigate(['/chat'])
+      })
+    }
+
+    form.reset();
   }
 }

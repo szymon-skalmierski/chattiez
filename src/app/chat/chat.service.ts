@@ -3,6 +3,7 @@ import { AuthService } from '../auth/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService{
+  channelHandler = new this.authService.sb.ChannelHandler();
 
   constructor(private authService: AuthService) {
   }
@@ -46,4 +47,11 @@ export class ChatService{
     });
   }
   
+  registerEventHandlers(messagesList:any){
+    this.channelHandler.onMessageReceived = (channel, message) => {
+      messagesList.unshift(message)
+    };
+
+    this.authService.sb.addChannelHandler('6f688da4e9a446de', this.channelHandler);
+  }
 }

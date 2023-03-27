@@ -10,7 +10,6 @@ import { ChatService } from '../chat.service';
   styleUrls: ['./chat-room.component.css'],
 })
 export class ChatRoomComponent implements OnInit {
-  channelHandler = new this.authService.sb.ChannelHandler();
   channel: any;
   messages: any[] = [];
   groupUrl: any;
@@ -32,7 +31,7 @@ export class ChatRoomComponent implements OnInit {
         }
       );
     });
-    this.registerEventHandlers();
+    this.chatService.registerEventHandlers(this.messages);
   }
 
   reloadMsg(limit: any) {
@@ -56,13 +55,6 @@ export class ChatRoomComponent implements OnInit {
     form.reset();
   }
 
-  registerEventHandlers(){
-    this.channelHandler.onMessageReceived = (channel, message) => {
-      this.messages.unshift(message)
-    };
-
-    this.authService.sb.addChannelHandler('6f688da4e9a446de', this.channelHandler);
-  }
   
   trackById(index: number, item: any): number {
     return item.id;

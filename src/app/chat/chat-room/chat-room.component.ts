@@ -29,16 +29,10 @@ export class ChatRoomComponent implements OnInit {
         (channel: any) => {
           this.channel = channel;
           this.reloadMsg(this.limit);
-          // this.msgInterval = setInterval(()=>{
-          //   this.chatService.getMessagesFromChannel(channel, (messages:any)=>this.messages = messages)
-          // }, 1000)
         }
       );
     });
-    this.channelHandler.onMessageReceived = (channel, message) => {
-      this.messages.unshift(message)
-    };
-    this.authService.sb.addChannelHandler('6f688da4e9a446de', this.channelHandler);
+    this.registerEventHandlers();
   }
 
   reloadMsg(limit: any) {
@@ -62,6 +56,13 @@ export class ChatRoomComponent implements OnInit {
     form.reset();
   }
 
+  registerEventHandlers(){
+    this.channelHandler.onMessageReceived = (channel, message) => {
+      this.messages.unshift(message)
+    };
+
+    this.authService.sb.addChannelHandler('6f688da4e9a446de', this.channelHandler);
+  }
   
   trackById(index: number, item: any): number {
     return item.id;

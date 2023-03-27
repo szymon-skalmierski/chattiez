@@ -16,7 +16,7 @@ export class AuthService {
   user = new BehaviorSubject<User | null>(null);
 
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private router: Router) {
     this.sb = new SendBird({ appId: environment.APP_ID });
     SendBird.setLogLevel(SendBird.LogLevel.ERROR);
   }

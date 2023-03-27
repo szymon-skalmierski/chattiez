@@ -9,7 +9,7 @@ export class ChatGuard implements CanActivate, OnDestroy {
     isLoggedIn!: boolean
     constructor(private authService:AuthService, private router: Router){
         this.sub = this.authService.user.subscribe((user:any)=>{
-            this.isLoggedIn = !!user
+            this.isLoggedIn = !!user;
         })
     }
 
@@ -20,6 +20,7 @@ export class ChatGuard implements CanActivate, OnDestroy {
         this.router.navigate(['/auth'])
         return false;
     }
+    
     ngOnDestroy(): void {
         this.sub.unsubscribe();
     }

@@ -34,7 +34,7 @@ export class AuthService {
     });
   }
 
-  isConnected() {
+  getConnectedUserId() {
     return this.sb && this.sb.currentUser && this.sb.currentUser.userId;
   }
 

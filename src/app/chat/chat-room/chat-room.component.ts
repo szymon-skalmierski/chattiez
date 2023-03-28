@@ -43,7 +43,7 @@ export class ChatRoomComponent implements OnInit {
   }
 
   getUserId() {
-    return this.authService.isConnected();
+    return this.authService.getConnectedUserId();
   }
 
   handleSendForm(form: any){

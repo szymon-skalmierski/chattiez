@@ -54,4 +54,21 @@ export class ChatService{
 
     this.authService.sb.addChannelHandler('6f688da4e9a446de', this.channelHandler);
   }
+
+  // createGroupChannel(
+  //   channelName: string,
+  //   userIds: Array<string>,
+  //   callback: any
+  // ) {
+  //   const params = new this.authService.sb.GroupChannelParams();
+  //   params.addUserIds();
+  //   params.addUserIds(userIds);
+  //   params.name = channelName;
+  //     this.authService.sb.GroupChannel.createChannel(
+  //       params,
+  //       (groupChannel: SendBird.GroupChannel, error: SendBird.SendBirdError) => {
+  //         callback(error, groupChannel);
+  //       }
+  //     );
+  //   }
 }

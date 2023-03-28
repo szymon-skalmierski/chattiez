@@ -5,6 +5,7 @@
 :host>.container-fluid {
   display: grid;
   grid-template-columns: minmax(270px, 320px) 1fr;
+  padding: 0;
 }
 :host :is(.left, .right) {
   background-color: rgb(246, 246, 246);

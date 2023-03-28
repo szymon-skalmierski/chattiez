@@ -4,7 +4,7 @@
       <p class="alert alert-danger text-center" *ngIf="connectionError">
         {{ connectionError }}
       </p>
-      <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+      <form #form="ngForm" class="form-check" (ngSubmit)="onSubmit(form)">
         <div class="form__group field">
           <input
             class="form__field"
@@ -32,6 +32,7 @@
         <button
           class="btn btn-success my-4"
           type="submit"
+          [disabled]="form.invalid"
         >
           {{ authType | uppercase }}
         </button>

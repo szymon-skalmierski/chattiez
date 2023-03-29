@@ -54,6 +54,9 @@ export class ChatService {
     this.channelHandler.onMessageReceived = (channel, message) => {
       messagesList.unshift(message)
     };
+    this.channelHandler.onChannelDeleted = ()=>{
+      this.getMyGroupChannels();
+    }
 
     this.authService.sb.addChannelHandler('6f688da4e9a446de', this.channelHandler);
 

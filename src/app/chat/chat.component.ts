@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { ChatService } from './chat.service';
 
@@ -21,10 +22,18 @@ export class ChatComponent implements OnInit {
           this.groupUsersAdded.push(user?.userId)
         }
       })
+    this.chatService.getMyGroupChannels();
   }
 
-  addUserToGroup(userId:any){
-    this.groupUsersAdded.push(userId.value);
+  addUserToGroup(channelForm: NgForm){
+    const userId = channelForm.value['userId'];
+    this.groupUsersAdded.push(userId);
   }
 
+  onChannelCreate(channelForm: NgForm){
+    const channelName = channelForm.value['channelName'];
+    this.chatService.createGroupChannel(channelName, this.groupUsersAdded, ()=>{this.chatService.getMyGroupChannels();});
+    this.groupUsersAdded = [];
+    channelForm.reset();
+  }
 }

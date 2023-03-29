@@ -1,46 +1,48 @@
 <div class="container-fluid bg-body w-100 h-100">
-  <div class="left p-3 w-100" style="overflow-y: scroll">
-    <div class="chat-group-list">
-      <app-chat-room-list></app-chat-room-list>
-    </div>
+  <div class="left p-3 w-100 d-flex flex-column" style="overflow-y: scroll">
     <div class="chat-buttons">
       <!-- Button trigger modal -->
       <div
         class="container-fluid d-flex justify-content-center w-100"
       >
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-          Open modal
+        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#myModal">
+          Create Channel
         </button>
         <div class="modal" id="myModal">
           <div class="modal-dialog">
-            <div class="modal-content">
+            <!-- <div class="modal-content"> -->
+              <form action="" class="modal-content" #channelForm="ngForm" (ngSubmit)="onChannelCreate(channelForm)">
 
-              <!-- Chat name -->
-              <div class="modal-header">
-                <input type="text" class="input-group input-group-text" placeholder="Choose group chat name">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-
-              <!-- Adding users -->
-              <div class="modal-body">
-                <div class="d-flex">
-                  <input type="text" class="input-group input-group-text" placeholder="User IDs" #userId>
-                  <button type="button" class="btn fs-4 px-1 py-0" (click)="addUserToGroup(userId)">+</button>
+                <!-- Chat name -->
+                <div class="modal-header">
+                  <input type="text" class="input-group input-group-text" name="channelName" placeholder="Choose group chat name" ngModel>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item" *ngFor="let userId of groupUsersAdded">{{ userId }}</li>
-                </ul>
-              </div>
 
-              <!-- Confirm button -->
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Create chat</button>
-              </div>
+                <!-- Adding users -->
+                <div class="modal-body">
+                  <div class="d-flex">
+                    <input type="text" class="input-group input-group-text" placeholder="User IDs" name="userId" ngModel>
+                    <button type="button" class="btn fs-4 px-1 py-0" (click)="addUserToGroup(channelForm)">+</button>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item" *ngFor="let userId of groupUsersAdded">{{ userId }}</li>
+                  </ul>
+                </div>
 
-            </div>
+                <!-- Confirm button -->
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Create chat</button>
+                </div>
+              </form>
+            <!-- </div> -->
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="chat-group-list">
+      <app-chat-room-list></app-chat-room-list>
     </div>
   </div>
   <div class="right w-100">

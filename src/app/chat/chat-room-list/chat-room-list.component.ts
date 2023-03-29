@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { ChatService } from '../chat.service';
 
 @Component({
@@ -7,17 +8,15 @@ import { ChatService } from '../chat.service';
   styleUrls: ['./chat-room-list.component.css']
 })
 export class ChatRoomListComponent implements OnInit {
-  channels: any
+  channels: any = new BehaviorSubject<any[]>([])
 
   constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
-    this.fetchGroupChannels();
-  }
-
-  fetchGroupChannels(){
-    this.chatService.getMyGroupChannels((channels: any)=>{
-      this.channels = channels;
+    this.chatService.chatGroups.subscribe({
+      next: (channels)=>{
+        this.channels.next(channels)
+      }
     })
   }
 

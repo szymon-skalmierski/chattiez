@@ -1,4 +1,4 @@
-<div class="channel align-items-center" *ngFor="let channel of channels" [routerLink]="channel.url">
+<div class="channel align-items-center" *ngFor="let channel of channels | async" [routerLink]="channel.url">
   <img [src]="channel.coverUrl" alt="cover" />
   <div class="m-0 d-flex flex-column">
     <span class="title fw-bold">{{ channel.name }}</span>

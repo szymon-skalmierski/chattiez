@@ -1,14 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable,  } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import * as SendBird from 'sendbird';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({ providedIn: 'root' })
-export class ChatService{
+export class ChatService {
+  chatGroups = new BehaviorSubject<SendBird.GroupChannelCollection | null>(null);
   channelHandler = new this.authService.sb.ChannelHandler();
 
   constructor(private authService: AuthService) {
   }
 
-  getMyGroupChannels(callback: Function) {
+  getMyGroupChannels() {
     const listQuery = this.authService.sb.GroupChannel.createMyGroupChannelListQuery();
     listQuery.includeEmpty = true;
     listQuery.memberStateFilter = 'joined_only';
@@ -16,7 +19,7 @@ export class ChatService{
     listQuery.limit = 15;
     if (listQuery.hasNext) {
       listQuery.next((groupChannel: any, error: any) => {
-        callback(groupChannel);
+        this.chatGroups.next(groupChannel);
       });
     }
   }
@@ -53,22 +56,22 @@ export class ChatService{
     };
 
     this.authService.sb.addChannelHandler('6f688da4e9a446de', this.channelHandler);
+
   }
 
-  // createGroupChannel(
-  //   channelName: string,
-  //   userIds: Array<string>,
-  //   callback: any
-  // ) {
-  //   const params = new this.authService.sb.GroupChannelParams();
-  //   params.addUserIds();
-  //   params.addUserIds(userIds);
-  //   params.name = channelName;
-  //     this.authService.sb.GroupChannel.createChannel(
-  //       params,
-  //       (groupChannel: SendBird.GroupChannel, error: SendBird.SendBirdError) => {
-  //         callback(error, groupChannel);
-  //       }
-  //     );
-  //   }
+  createGroupChannel(
+    channelName: string,
+    userIds: Array<string>,
+    callback: any
+  ) {
+    const params = new this.authService.sb.GroupChannelParams();
+    params.addUserIds(userIds);
+    params.name = channelName;
+      this.authService.sb.GroupChannel.createChannel(
+        params,
+        (groupChannel: SendBird.GroupChannel, error: SendBird.SendBirdError) => {
+          callback(error, groupChannel);
+        }
+      );
+    }
 }

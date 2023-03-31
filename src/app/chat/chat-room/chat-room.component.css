@@ -49,6 +49,14 @@ img[alt="cover"] {
   box-shadow: red !important;
   outline: red !important;
 }
+.members-count{
+  font-size: 1.1rem;
+  padding: 5px 15px;
+  margin-left: auto;
+}
+.channel-name{
+  padding: 5px 10px;
+}
 
 ::-webkit-scrollbar-track
 {

@@ -1,6 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject, Subscription } from 'rxjs';
+import * as SendBird from 'sendbird';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ChatService } from '../chat.service';
 
@@ -10,7 +11,7 @@ import { ChatService } from '../chat.service';
   styleUrls: ['./chat-room.component.css'],
 })
 export class ChatRoomComponent implements OnInit {
-  channel: any;
+  channel!: SendBird.GroupChannel | any;
   messages: any[] = [];
   groupUrl: any;
   limit = 15;
@@ -26,8 +27,10 @@ export class ChatRoomComponent implements OnInit {
       this.groupUrl = params['url'];
       this.authService.sb.GroupChannel.getChannel(this.groupUrl).then(
         (channel: any) => {
-          this.channel = channel;
-          this.reloadMsg(this.limit);
+          if(channel){
+            this.channel = channel;
+            this.reloadMsg(this.limit);
+          }
         }
       );
     });

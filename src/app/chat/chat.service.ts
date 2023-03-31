@@ -18,8 +18,8 @@ export class ChatService {
     listQuery.order = 'latest_last_message';
     listQuery.limit = 15;
     if (listQuery.hasNext) {
-      listQuery.next((groupChannel: any, error: any) => {
-        this.chatGroups.next(groupChannel);
+      listQuery.next((groupChannels: any, error: any) => {
+        this.chatGroups.next(groupChannels);
       });
     }
   }
@@ -70,11 +70,11 @@ export class ChatService {
     const params = new this.authService.sb.GroupChannelParams();
     params.addUserIds(userIds);
     params.name = channelName;
-      this.authService.sb.GroupChannel.createChannel(
-        params,
-        (groupChannel: SendBird.GroupChannel, error: SendBird.SendBirdError) => {
-          callback(error, groupChannel);
-        }
-      );
+    this.authService.sb.GroupChannel.createChannel(
+      params,
+      (groupChannel: SendBird.GroupChannel, error: SendBird.SendBirdError) => {
+        callback(error, groupChannel);
+      }
+    );
     }
 }

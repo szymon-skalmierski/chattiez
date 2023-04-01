@@ -2,14 +2,14 @@
   font-size: 1.3rem;
   font-family: Verdana, Tahoma, sans-serif;
 }
-nav {
-  height: 6%;
-}
-.container-fluid {
+.container-fluid.abra {
   padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-rows: clamp(45px, 7%, 805px) 1fr;
 }
 .content {
-  height: 94%;
+  padding: 0;
 }
 .nav-item.dropdown a span {
   display: block;
@@ -19,10 +19,6 @@ nav {
   margin: 4px 0;
   transition: 0.1s;
 }
-/* .nav-item.dropdown a div {
-  position: absolute;
-  right: calc(100%);
-} */
 .nav-item.dropdown ul li a {
   font-size: 1rem;
 }

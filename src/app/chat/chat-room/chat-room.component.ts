@@ -14,7 +14,7 @@ export class ChatRoomComponent implements OnInit {
   channel!: SendBird.GroupChannel | any;
   messages: any[] = [];
   groupUrl: any;
-  limit = 15;
+  limit = 13;
 
   constructor(
     private route: ActivatedRoute,

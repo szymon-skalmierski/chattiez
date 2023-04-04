@@ -40,9 +40,10 @@ img[alt="cover"] {
 .chat-content-wrap {
   height: 100%;
   display: grid;
-  grid-template-rows: 7% 84% 9%;
+  grid-template-rows: 7% 1fr 9%;
 }
 .messages-wrap {
+  height: 100%;
   overflow-y: scroll;
 }
 #text-input {

@@ -60,6 +60,6 @@ export class ChatRoomComponent implements OnInit {
 
   
   trackById(index: number, item: any): number {
-    return item.id;
+    return item.messageId;
   }
 }

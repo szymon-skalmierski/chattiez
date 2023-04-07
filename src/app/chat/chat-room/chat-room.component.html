@@ -1,19 +1,54 @@
 <div class="chat-content-wrap container-fluid p-0 w-100">
-    <div class="label">
-        <img [src]="channel?.coverUrl" alt="cover" />
-        <span class="channel-name">{{ channel?.name }}</span>
-        <span class="members-count">{{ channel?.memberCount }}/100</span>
-    </div>
-    <div class="container-fluid messages-wrap d-flex flex-column-reverse p-3" appChatRoomRendering>
-        <div *ngFor="let message of messages; trackBy: trackById" [ngClass]="{'message-wrap mb-1': true, 'admin': message?.messageType == 'admin', 'user-message': message?.sender?.userId == getUserId()}">
-            <p class="user m-0 px-2">{{ message?.sender?.nickname ?? '=ADMIN=' }}</p>
-            <div class="message">{{ message?.message }}</div>
+  <div class="label">
+    <img [src]="channel?.coverUrl" alt="cover" />
+    <span class="channel-name">{{ channel?.name }}</span>
+    <span class="members-count">{{ channel?.memberCount }}/100</span>
+  </div>
+  <div
+    class="container-fluid messages-wrap d-flex flex-column-reverse p-3"
+    appChatRoomRendering
+  >
+    <div
+      *ngFor="let message of messages; trackBy: trackById"
+      [ngClass]="{
+        'message-wrap mb-1': true,
+        admin: message?.messageType == 'admin',
+        'user-message': message?.sender?.userId == getUserId()
+      }"
+    >
+      <p class="user m-0 px-2">{{ message?.sender?.nickname ?? "=ADMIN=" }}</p>
+      <div class="message-text-wrap d-flex">
+        <div class="message">{{ message?.message }}</div>
+        <div class="dropdown">
+          <a
+            class="nav-link"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            ><span></span><span></span><span></span
+            ></a>
+          <ul class="dropdown-menu dropdown-menu-sm-start dropdown-menu-sm-end">
+            <li class="dropdown-item">Delete</li>
+            <li class="dropdown-item">Answer</li>
+          </ul>
         </div>
+      </div>
     </div>
-    <div class="input-group p-3 msg-form">
-        <form #sendForm="ngForm" class="w-100 d-flex" (ngSubmit)="handleSendForm(sendForm)">
-            <input type="text" class="form-control" name="message" id="text-input" ngModel>
-            <button type="submit" class="btn btn-outline-secondary">Send</button>
-        </form>
-    </div>
+  </div>
+  <div class="input-group p-3 msg-form">
+    <form
+      #sendForm="ngForm"
+      class="w-100 d-flex"
+      (ngSubmit)="handleSendForm(sendForm)"
+    >
+      <input
+        type="text"
+        class="form-control"
+        name="message"
+        id="text-input"
+        ngModel
+      />
+      <button type="submit" class="btn btn-outline-secondary">Send</button>
+    </form>
+  </div>
 </div>

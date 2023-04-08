@@ -35,6 +35,9 @@
   border-radius: 50%;
   background-color: #39383a;
 }
+.dropdown-item:active{
+  background-color: rgb(183, 62, 62);
+}
 .message-wrap {
   max-width: 50%;
 }

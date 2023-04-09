@@ -19,7 +19,7 @@
       <p class="user m-0 px-2">{{ message?.sender?.nickname ?? "=ADMIN=" }}</p>
       <div class="message-text-wrap d-flex">
         <div class="message">{{ message?.message }}</div>
-        <div class="dropdown">
+        <div class="dropdown" *ngIf="message?.sender?.userId == getUserId()">
           <a
             class="nav-link"
             role="button"

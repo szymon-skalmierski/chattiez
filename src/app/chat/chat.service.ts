@@ -16,7 +16,7 @@ export class ChatService {
     listQuery.includeEmpty = true;
     listQuery.memberStateFilter = 'joined_only';
     listQuery.order = 'latest_last_message';
-    listQuery.limit = 15;
+    listQuery.limit = 10;
     if (listQuery.hasNext) {
       listQuery.next((groupChannels: any, error: any) => {
         this.chatGroups.next(groupChannels);
@@ -34,6 +34,7 @@ export class ChatService {
     listQuery.limit = limit;
     listQuery.includeMetaArray = true;
     listQuery.load((messages, error) => {
+      console.log(messages)
       callback(messages);
     });
   }

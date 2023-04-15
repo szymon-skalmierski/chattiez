@@ -16,7 +16,6 @@ export class ChatRoomRenderingDirective implements OnInit {
 
     if(this.scrollPos <=1 && lastReloadTimeDiff > 100){
       this.latestMsgUpdate = new Date().getTime()
-      console.log(this.latestMsgUpdate)
       this.chat.reloadMsg(this.msgLimit+=8);
     }
   }

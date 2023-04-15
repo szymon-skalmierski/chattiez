@@ -58,6 +58,11 @@ export class ChatRoomComponent implements OnInit {
     form.reset();
   }
 
+  onMessageDelete(message:SendBird.UserMessage, index:number){
+    this.chatService.deleteMessage(this.channel, message, ()=>{});
+    this.messages.splice(index, 1);
+  }
+
   
   trackById(index: number, item: any): number {
     return item.messageId;

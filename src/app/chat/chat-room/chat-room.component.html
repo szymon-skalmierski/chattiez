@@ -9,7 +9,7 @@
     appChatRoomRendering
   >
     <div
-      *ngFor="let message of messages; trackBy: trackById"
+      *ngFor="let message of messages; let i = index; trackBy: trackById"
       [ngClass]="{
         'message-wrap mb-1': true,
         admin: message?.messageType == 'admin',
@@ -28,7 +28,7 @@
             ><span></span><span></span><span></span
             ></a>
           <ul class="dropdown-menu dropdown-menu-sm-start dropdown-menu-sm-end">
-            <li class="dropdown-item">Delete</li>
+            <li class="dropdown-item" (click)="onMessageDelete(message, i)">Delete</li>
             <li class="dropdown-item">Answer</li>
           </ul>
         </div>

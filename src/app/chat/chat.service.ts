@@ -1,18 +1,20 @@
-import { Injectable,  } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import * as SendBird from 'sendbird';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
-  chatGroups = new BehaviorSubject<SendBird.GroupChannelCollection | null>(null);
+  chatGroups = new BehaviorSubject<SendBird.GroupChannelCollection | null>(
+    null
+  );
   channelHandler = new this.authService.sb.ChannelHandler();
 
-  constructor(private authService: AuthService) {
-  }
+  constructor(private authService: AuthService) {}
 
   getMyGroupChannels() {
-    const listQuery = this.authService.sb.GroupChannel.createMyGroupChannelListQuery();
+    const listQuery =
+      this.authService.sb.GroupChannel.createMyGroupChannelListQuery();
     listQuery.includeEmpty = true;
     listQuery.memberStateFilter = 'joined_only';
     listQuery.order = 'latest_last_message';
@@ -34,7 +36,6 @@ export class ChatService {
     listQuery.limit = limit;
     listQuery.includeMetaArray = true;
     listQuery.load((messages, error) => {
-      console.log(messages)
       callback(messages);
     });
   }
@@ -50,17 +51,28 @@ export class ChatService {
       callback(userMessage);
     });
   }
-  
-  registerEventHandlers(messagesList:any){
+  deleteMessage(
+    channel: SendBird.GroupChannel | SendBird.OpenChannel,
+    message: SendBird.UserMessage,
+    callback: any
+  ) {
+    channel.deleteMessage(message, (userMessage, error) => {
+      callback(userMessage);
+    });
+  }
+
+  registerEventHandlers(messagesList: any) {
     this.channelHandler.onMessageReceived = (channel, message) => {
-      messagesList.unshift(message)
+      messagesList.unshift(message);
     };
-    this.channelHandler.onChannelDeleted = ()=>{
+    this.channelHandler.onChannelDeleted = () => {
       this.getMyGroupChannels();
-    }
+    };
 
-    this.authService.sb.addChannelHandler('6f688da4e9a446de', this.channelHandler);
-
+    this.authService.sb.addChannelHandler(
+      '6f688da4e9a446de',
+      this.channelHandler
+    );
   }
 
   createGroupChannel(
@@ -77,5 +89,5 @@ export class ChatService {
         callback(error, groupChannel);
       }
     );
-    }
+  }
 }

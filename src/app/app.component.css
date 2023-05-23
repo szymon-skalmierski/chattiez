@@ -6,39 +6,7 @@
   padding: 0;
   margin: 0;
 }
-nav {
-  height: 6%;
-}
 .content {
   height: 94%;
   padding: 0;
-}
-.nav-item.dropdown a span {
-  display: block;
-  width: 30px;
-  height: 4px;
-  background-color: black;
-  margin: 4px 0;
-  transition: 0.1s;
-}
-.nav-item.dropdown ul li a {
-  font-size: 1rem;
-}
-.nav-link.show span:nth-of-type(1) {
-  transform: translate(0, 8px) rotate(-45deg);
-}
-
-.nav-link.show span:nth-of-type(2) {
-  opacity: 0;
-}
-
-.nav-link.show span:nth-of-type(3) {
-  transform: translate(0, -8px) rotate(45deg);
-}
-.nav-item.dropdown{
-  display: flex;
-  align-items: center;
-}
-.dropdown-item:active{
-  background-color: rgb(212, 55, 55);
 }

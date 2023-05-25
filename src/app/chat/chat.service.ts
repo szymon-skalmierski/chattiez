@@ -10,7 +10,8 @@ export class ChatService {
   );
   channelHandler = new this.authService.sb.ChannelHandler();
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+  }
 
   getMyGroupChannels() {
     const listQuery =
@@ -60,6 +61,11 @@ export class ChatService {
       callback(userMessage);
     });
   }
+  leaveChat(channel: SendBird.GroupChannel){
+      channel.leave().then(()=>{
+        this.getMyGroupChannels();
+      });
+  }
 
   registerEventHandlers(messagesList: any) {
     this.channelHandler.onMessageReceived = (channel, message) => {
@@ -67,6 +73,9 @@ export class ChatService {
     };
     this.channelHandler.onChannelDeleted = () => {
       this.getMyGroupChannels();
+    };
+    this.channelHandler.onUserLeft = () => {
+      console.log("User left the chat")
     };
 
     this.authService.sb.addChannelHandler(

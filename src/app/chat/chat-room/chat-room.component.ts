@@ -44,6 +44,10 @@ export class ChatRoomComponent implements OnInit {
       (messages:any)=>this.messages = messages
     );
   }
+  leaveGroupChat(channel:any){
+    this.chatService.leaveChat(channel);
+    this.channel = null
+  }
 
   getUserId() {
     return this.authService.getConnectedUserId();

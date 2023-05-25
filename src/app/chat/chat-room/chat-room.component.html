@@ -1,7 +1,20 @@
-<div class="chat-content-wrap container-fluid p-0 w-100">
+<div class="chat-content-wrap container-fluid p-0 w-100" *ngIf="channel">
   <div class="label">
     <img [src]="channel?.coverUrl" alt="cover" />
     <span class="channel-name">{{ channel?.name }}</span>
+    <div class="dropdown">
+      <a
+        class="nav-link"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+        ><span></span><span></span><span></span
+        ></a>
+      <ul class="dropdown-menu dropdown-menu-sm-start dropdown-menu-sm-end">
+        <li class="dropdown-item" (click)="leaveGroupChat(channel)">Leave chat</li>
+        <li class="dropdown-item">Add a friend</li>
+      </ul>
+    </div>
     <span class="members-count">{{ channel?.memberCount }}/100</span>
   </div>
   <div

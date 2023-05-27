@@ -27,45 +27,6 @@ export class ChatService {
     }
   }
 
-  getMessagesFromChannel(
-    groupChannel: SendBird.GroupChannel,
-    limit: number,
-    callback: Function
-  ) {
-    const listQuery = groupChannel.createPreviousMessageListQuery();
-    listQuery.reverse = true;
-    listQuery.limit = limit;
-    listQuery.includeMetaArray = true;
-    listQuery.load((messages, error) => {
-      callback(messages);
-    });
-  }
-
-  sendMessage(
-    channel: SendBird.GroupChannel | SendBird.OpenChannel,
-    message: string,
-    callback: any
-  ) {
-    const params = new this.authService.sb.UserMessageParams();
-    params.message = message;
-    channel.sendUserMessage(params, (userMessage, error) => {
-      callback(userMessage);
-    });
-  }
-  deleteMessage(
-    channel: SendBird.GroupChannel | SendBird.OpenChannel,
-    message: SendBird.UserMessage,
-    callback: any
-  ) {
-    channel.deleteMessage(message, (userMessage, error) => {
-      callback(userMessage);
-    });
-  }
-  leaveChat(channel: SendBird.GroupChannel){
-      channel.leave().then(()=>{
-        this.getMyGroupChannels();
-      });
-  }
 
   registerEventHandlers(messagesList: any) {
     this.channelHandler.onMessageReceived = (channel, message) => {
@@ -81,22 +42,6 @@ export class ChatService {
     this.authService.sb.addChannelHandler(
       '6f688da4e9a446de',
       this.channelHandler
-    );
-  }
-
-  createGroupChannel(
-    channelName: string,
-    userIds: Array<string>,
-    callback: any
-  ) {
-    const params = new this.authService.sb.GroupChannelParams();
-    params.addUserIds(userIds);
-    params.name = channelName;
-    this.authService.sb.GroupChannel.createChannel(
-      params,
-      (groupChannel: SendBird.GroupChannel, error: SendBird.SendBirdError) => {
-        callback(error, groupChannel);
-      }
     );
   }
 }

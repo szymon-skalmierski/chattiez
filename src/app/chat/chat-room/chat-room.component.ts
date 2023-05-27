@@ -1,6 +1,5 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { BehaviorSubject, Observable, of, Subject, Subscription } from 'rxjs';
 import * as SendBird from 'sendbird';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ChatService } from '../chat.service';
@@ -37,16 +36,44 @@ export class ChatRoomComponent implements OnInit {
     this.chatService.registerEventHandlers(this.messages);
   }
 
+  getMessagesFromChannel(
+    groupChannel: SendBird.GroupChannel,
+    limit: number,
+    callback: Function
+  ) {
+    const listQuery = groupChannel.createPreviousMessageListQuery();
+    listQuery.reverse = true;
+    listQuery.limit = limit;
+    listQuery.includeMetaArray = true;
+    listQuery.load((messages, error) => {
+      callback(messages);
+    });
+  }
+
   reloadMsg(limit: any) {
-    this.chatService.getMessagesFromChannel(
+    this.getMessagesFromChannel(
       this.channel,
       limit,
       (messages:any)=>this.messages = messages
     );
   }
-  leaveGroupChat(channel:any){
-    this.chatService.leaveChat(channel);
-    this.channel = null
+
+  sendMessage(
+    channel: SendBird.GroupChannel | SendBird.OpenChannel,
+    message: string,
+    callback: any
+  ) {
+    const params = new this.authService.sb.UserMessageParams();
+    params.message = message;
+    channel.sendUserMessage(params, (userMessage, error) => {
+      callback(userMessage);
+    });
+  }
+
+  leaveChat(channel: SendBird.GroupChannel){
+      channel.leave().then(()=>{
+        this.chatService.getMyGroupChannels();
+      });
   }
 
   getUserId() {
@@ -56,15 +83,16 @@ export class ChatRoomComponent implements OnInit {
   handleSendForm(form: any){
     if(!form.valid) return;
     const message = form.value.message;
-    this.chatService.sendMessage(this.channel, message, (msg: any) => {
+    this.sendMessage(this.channel, message, (msg: any) => {
       this.messages.unshift(msg);
     });
     form.reset();
   }
 
-  onMessageDelete(message:SendBird.UserMessage, index:number){
-    this.chatService.deleteMessage(this.channel, message, ()=>{});
-    this.messages.splice(index, 1);
+  onMessageDelete(channel:SendBird.GroupChannel | SendBird.OpenChannel, message:SendBird.UserMessage){
+    channel.deleteMessage(message, ()=>{
+      this.reloadMsg(this.limit);
+    })
   }
 
   

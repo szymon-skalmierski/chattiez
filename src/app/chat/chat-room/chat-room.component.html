@@ -11,7 +11,7 @@
         ><span></span><span></span><span></span
         ></a>
       <ul class="dropdown-menu dropdown-menu-sm-start dropdown-menu-sm-end">
-        <li class="dropdown-item" (click)="leaveGroupChat(channel)">Leave chat</li>
+        <li class="dropdown-item" (click)="leaveChat(channel)">Leave chat</li>
         <li class="dropdown-item">Add a friend</li>
       </ul>
     </div>
@@ -41,7 +41,7 @@
             ><span></span><span></span><span></span
             ></a>
           <ul class="dropdown-menu dropdown-menu-sm-start dropdown-menu-sm-end">
-            <li class="dropdown-item" (click)="onMessageDelete(message, i)">Delete</li>
+            <li class="dropdown-item" (click)="onMessageDelete(channel, message)">Delete</li>
             <li class="dropdown-item">Answer</li>
           </ul>
         </div>

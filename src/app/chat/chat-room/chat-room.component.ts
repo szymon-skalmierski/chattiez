@@ -76,10 +76,6 @@ export class ChatRoomComponent implements OnInit {
       });
   }
 
-  getUserId() {
-    return this.authService.getConnectedUserId();
-  }
-
   handleSendForm(form: any){
     if(!form.valid) return;
     const message = form.value.message;
@@ -88,13 +84,6 @@ export class ChatRoomComponent implements OnInit {
     });
     form.reset();
   }
-
-  onMessageDelete(channel:SendBird.GroupChannel | SendBird.OpenChannel, message:SendBird.UserMessage){
-    channel.deleteMessage(message, ()=>{
-      this.reloadMsg(this.limit);
-    })
-  }
-
   
   trackById(index: number, item: any): number {
     return item.messageId;

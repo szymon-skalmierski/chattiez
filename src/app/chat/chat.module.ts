@@ -8,6 +8,7 @@ import { ChatRoomComponent } from './chat-room/chat-room.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ChatRoomRenderingDirective } from './chat-room/chat-room-rendering.directive';
 import { FormsModule } from '@angular/forms';
+import { ChatRoomMessageComponent } from './chat-room/chat-room-message/chat-room-message.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
     ChatComponent,
     ChatRoomListComponent,
     ChatRoomComponent,
-    ChatRoomRenderingDirective
+    ChatRoomRenderingDirective,
+    ChatRoomMessageComponent
   ],
   imports: [
     CommonModule,

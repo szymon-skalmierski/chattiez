@@ -8,7 +8,6 @@ export class ChatService {
   chatGroups = new BehaviorSubject<SendBird.GroupChannelCollection | null>(
     null
   );
-  channelHandler = new this.authService.sb.ChannelHandler();
 
   constructor(private authService: AuthService) {
   }
@@ -25,23 +24,5 @@ export class ChatService {
         this.chatGroups.next(groupChannels);
       });
     }
-  }
-
-
-  registerEventHandlers(messagesList: any) {
-    this.channelHandler.onMessageReceived = (channel, message) => {
-      messagesList.unshift(message);
-    };
-    this.channelHandler.onChannelDeleted = () => {
-      this.getMyGroupChannels();
-    };
-    this.channelHandler.onUserLeft = () => {
-      console.log("User left the chat")
-    };
-
-    this.authService.sb.addChannelHandler(
-      '6f688da4e9a446de',
-      this.channelHandler
-    );
   }
 }

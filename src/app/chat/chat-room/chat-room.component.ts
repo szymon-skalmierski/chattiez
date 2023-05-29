@@ -10,6 +10,7 @@ import { ChatService } from '../chat.service';
   styleUrls: ['./chat-room.component.css'],
 })
 export class ChatRoomComponent implements OnInit {
+  channelHandler = new this.authService.sb.ChannelHandler();
   channel!: SendBird.GroupChannel | any;
   messages: any[] = [];
   groupUrl: any;
@@ -33,7 +34,24 @@ export class ChatRoomComponent implements OnInit {
         }
       );
     });
-    this.chatService.registerEventHandlers(this.messages);
+    this.registerEventHandlers(this.messages);
+  }
+  
+  registerEventHandlers(messagesList: any) {
+    this.channelHandler.onMessageReceived = (channel, message) => {
+      messagesList.unshift(message);
+    };
+    this.channelHandler.onChannelDeleted = () => {
+      this.chatService.getMyGroupChannels();
+    };
+    this.channelHandler.onUserLeft = () => {
+      console.log("User left the chat")
+    };
+
+    this.authService.sb.addChannelHandler(
+      '6f688da4e9a446de',
+      this.channelHandler
+    );
   }
 
   getMessagesFromChannel(

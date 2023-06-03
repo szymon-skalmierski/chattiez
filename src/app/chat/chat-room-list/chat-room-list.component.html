@@ -1,4 +1,4 @@
-<ng-container  *ngIf="channels; else noGroups">
+<ng-container *ngIf="numberOfMessages; else noGroups">
   <div class="channel align-items-center" *ngFor="let channel of channels | async" [routerLink]="channel.url">
     <img [src]="channel.coverUrl" alt="cover" />
     <div class="m-0 d-flex flex-column">

@@ -17,7 +17,6 @@ img[alt='cover'] {
   background-color: rgba(0, 0, 0, 0.067);
 }
 .channel span {
-  /* font-size: clamp(0.7rem, 0.8vw, 2rem); */
   font-family: Arial, Helvetica, sans-serif;
   overflow: hidden;
   white-space: nowrap;
@@ -30,4 +29,8 @@ div:has(.title){
 
 .channel .last-message {
   font-size: 0.9rem;
+}
+p{
+  text-align: center;
+  padding: 5px;
 }

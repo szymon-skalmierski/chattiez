@@ -8,16 +8,17 @@ import { ChatService } from '../chat.service';
   styleUrls: ['./chat-room-list.component.css']
 })
 export class ChatRoomListComponent implements OnInit {
-  channels: any = new BehaviorSubject<any[]>([])
+  numberOfMessages = 0;
+  channels: any = new BehaviorSubject<any[]>([]);
 
   constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
     this.chatService.chatGroups.subscribe({
-      next: (channels)=>{
-        this.channels.next(channels)
+      next: (channels: any)=>{
+        this.numberOfMessages = channels === null ? 0 : channels.length;
+        this.channels.next(channels);
       }
     })
   }
-
 }

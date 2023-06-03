@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import * as SendBird from 'sendbird';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ChatService } from '../chat.service';
@@ -17,6 +17,7 @@ export class ChatRoomComponent implements OnInit {
   limit = 15;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private chatService: ChatService,
     private authService: AuthService
@@ -39,7 +40,7 @@ export class ChatRoomComponent implements OnInit {
   
   registerEventHandlers(messagesList: any) {
     this.channelHandler.onMessageReceived = (channel, message) => {
-      messagesList.unshift(message);
+      this.reloadMsg(this.limit)
     };
     this.channelHandler.onChannelDeleted = () => {
       this.chatService.getMyGroupChannels();
@@ -91,6 +92,7 @@ export class ChatRoomComponent implements OnInit {
   leaveChat(channel: SendBird.GroupChannel){
       channel.leave().then(()=>{
         this.chatService.getMyGroupChannels();
+        this.router.navigate(['/chat']);
       });
   }
 

@@ -1,7 +1,12 @@
-<div class="channel align-items-center" *ngFor="let channel of channels | async" [routerLink]="channel.url">
-  <img [src]="channel.coverUrl" alt="cover" />
-  <div class="m-0 d-flex flex-column">
-    <span class="title fw-bold">{{ channel.name }}</span>
-    <span class="last-message fw-light">{{ channel.lastMessage?.message }}</span>
+<ng-container  *ngIf="channels; else noGroups">
+  <div class="channel align-items-center" *ngFor="let channel of channels | async" [routerLink]="channel.url">
+    <img [src]="channel.coverUrl" alt="cover" />
+    <div class="m-0 d-flex flex-column">
+      <span class="title fw-bold">{{ channel.name }}</span>
+      <span class="last-message fw-light">{{ channel.lastMessage?.message }}</span>
+    </div>
   </div>
-</div>
+</ng-container>
+<ng-template #noGroups>
+  <p>No group chats found</p>
+</ng-template>

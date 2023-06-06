@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import * as SendBird from 'sendbird';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../auth/auth.service';import { NgForm } from '@angular/forms';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
@@ -10,6 +10,21 @@ export class ChatService {
   );
 
   constructor(private authService: AuthService) {
+  }
+  createGroupChannel(
+    channelName: string,
+    userIds: Array<string>,
+    callback: any
+  ) {
+    const params = new this.authService.sb.GroupChannelParams();
+    params.addUserIds(userIds);
+    params.name = channelName;
+    this.authService.sb.GroupChannel.createChannel(
+      params,
+      (groupChannel: SendBird.GroupChannel, error: SendBird.SendBirdError) => {
+        callback(groupChannel, error);
+      }
+    );
   }
 
   getMyGroupChannels() {

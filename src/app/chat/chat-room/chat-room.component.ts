@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import * as SendBird from 'sendbird';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ChatService } from '../chat.service';
+import { ChatRoomService } from './chat-room.service';
 
 @Component({
   selector: 'app-chat-room',
@@ -20,6 +21,7 @@ export class ChatRoomComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private chatService: ChatService,
+    private chatRoomService: ChatRoomService,
     private authService: AuthService
   ) {}
 
@@ -42,11 +44,14 @@ export class ChatRoomComponent implements OnInit {
     this.channelHandler.onMessageReceived = (channel, message) => {
       this.reloadMsg(this.limit)
     };
+    this.channelHandler.onUserReceivedInvitation = (channel, message) => {
+      this.chatService.getMyGroupChannels();
+    };
     this.channelHandler.onChannelDeleted = () => {
       this.chatService.getMyGroupChannels();
     };
     this.channelHandler.onUserLeft = () => {
-      console.log("User left the chat")
+      console.log("User left the chat");
     };
 
     this.authService.sb.addChannelHandler(
@@ -55,39 +60,14 @@ export class ChatRoomComponent implements OnInit {
     );
   }
 
-  getMessagesFromChannel(
-    groupChannel: SendBird.GroupChannel,
-    limit: number,
-    callback: Function
-  ) {
-    const listQuery = groupChannel.createPreviousMessageListQuery();
-    listQuery.reverse = true;
-    listQuery.limit = limit;
-    listQuery.includeMetaArray = true;
-    listQuery.load((messages, error) => {
-      callback(messages);
-    });
-  }
-
   reloadMsg(limit: any) {
-    this.getMessagesFromChannel(
+    this.chatRoomService.getMessagesFromChannel(
       this.channel,
       limit,
       (messages:any)=>this.messages = messages
     );
   }
 
-  sendMessage(
-    channel: SendBird.GroupChannel | SendBird.OpenChannel,
-    message: string,
-    callback: any
-  ) {
-    const params = new this.authService.sb.UserMessageParams();
-    params.message = message;
-    channel.sendUserMessage(params, (userMessage, error) => {
-      callback(userMessage);
-    });
-  }
 
   leaveChat(channel: SendBird.GroupChannel){
       channel.leave().then(()=>{
@@ -99,7 +79,7 @@ export class ChatRoomComponent implements OnInit {
   handleSendForm(form: any){
     if(!form.valid) return;
     const message = form.value.message;
-    this.sendMessage(this.channel, message, (msg: any) => {
+    this.chatRoomService.sendMessage(this.channel, message, this.authService.sb, (msg: any) => {
       this.messages.unshift(msg);
     });
     form.reset();

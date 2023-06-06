@@ -30,25 +30,10 @@ export class ChatComponent implements OnInit {
     const userId = channelForm.value['userId'];
     this.groupUsersAdded.push(userId);
   }
-  createGroupChannel(
-    channelName: string,
-    userIds: Array<string>,
-    callback: any
-  ) {
-    const params = new this.authService.sb.GroupChannelParams();
-    params.addUserIds(userIds);
-    params.name = channelName;
-    this.authService.sb.GroupChannel.createChannel(
-      params,
-      (groupChannel: SendBird.GroupChannel, error: SendBird.SendBirdError) => {
-        callback(groupChannel, error);
-      }
-    );
-  }
 
   onChannelCreate(channelForm: NgForm){
     const channelName = channelForm.value['channelName'];
-    this.createGroupChannel(channelName, this.groupUsersAdded, 
+    this.chatService.createGroupChannel(channelName, this.groupUsersAdded, 
       (groupChannel: SendBird.GroupChannel, error: SendBird.SendBirdError)=>{
         this.chatService.getMyGroupChannels();
         this.router.navigate([groupChannel.url], {relativeTo: this.route})
@@ -56,4 +41,6 @@ export class ChatComponent implements OnInit {
     this.groupUsersAdded = [];
     channelForm.reset();
   }
+
+ 
 }

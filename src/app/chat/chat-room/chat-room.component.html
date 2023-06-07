@@ -19,10 +19,10 @@
   </div>
   <div
     class="container-fluid messages-wrap d-flex flex-column-reverse p-3"
-    appChatRoomRendering
+    appChatRoomRendering [channel]="channel"
   >
     
-  <app-chat-room-message *ngFor="let message of messages; let i = index; trackBy: trackById" [channel]="channel" [message]="message"></app-chat-room-message>
+  <app-chat-room-message *ngFor="let message of getMessages(); let i = index; trackBy: trackById" [channel]="channel" [message]="message"></app-chat-room-message>
 
   </div>
   <div class="input-group p-3 msg-form">

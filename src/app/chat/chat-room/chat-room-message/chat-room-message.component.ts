@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
-import { ChatRoomComponent } from '../chat-room.component';
+import { ChatRoomService } from '../chat-room.service';
 
 @Component({
   selector: 'app-chat-room-message',
@@ -11,7 +11,7 @@ export class ChatRoomMessageComponent implements OnInit {
   @Input() message: any;
   @Input() channel: any;
 
-  constructor(private authService: AuthService, private chatRoomComponent: ChatRoomComponent) { }
+  constructor(private authService: AuthService, private chatRoomService: ChatRoomService) { }
 
   ngOnInit(): void {
   }
@@ -22,7 +22,11 @@ export class ChatRoomMessageComponent implements OnInit {
 
   onMessageDelete(channel:SendBird.GroupChannel | SendBird.OpenChannel, message:SendBird.UserMessage){
     channel.deleteMessage(message, ()=>{
-      this.chatRoomComponent.reloadMsg(this.chatRoomComponent.limit);
+      this.chatRoomService.messages.splice(this.chatRoomService.messages.indexOf(message), 1);
+      if(this.chatRoomService.messages.length<=15){
+        this.chatRoomService.limit=7;
+        this.chatRoomService.setFetchedChannels(channel, this.chatRoomService.limit+=8)
+      }
     })
   }
 }

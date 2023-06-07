@@ -5,6 +5,8 @@ import * as SendBird from 'sendbird';
   providedIn: 'root'
 })
 export class ChatRoomService {
+  messages: any[] = [];
+  limit = 15;
 
   constructor() { }
 
@@ -20,6 +22,12 @@ export class ChatRoomService {
     listQuery.load((messages, error) => {
       callback(messages);
     });
+  }
+
+  setFetchedChannels(groupChannel:any, limit:number){
+    this.getMessagesFromChannel(groupChannel, limit, (messages: any)=>{
+      this.messages = messages;
+    })
   }
 
   sendMessage(

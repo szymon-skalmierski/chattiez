@@ -12,10 +12,8 @@ import { ChatRoomService } from './chat-room.service';
 })
 export class ChatRoomComponent implements OnInit {
   channelHandler = new this.authService.sb.ChannelHandler();
-  channel!: SendBird.GroupChannel | any;
-  messages: any[] = [];
+  channel!: SendBird.GroupChannel | any;  
   groupUrl: any;
-  limit = 15;
 
   constructor(
     private router: Router,
@@ -32,17 +30,17 @@ export class ChatRoomComponent implements OnInit {
         (channel: any) => {
           if(channel){
             this.channel = channel;
-            this.reloadMsg(this.limit);
+            this.reloadMsg(this.chatRoomService.limit);
           }
         }
       );
     });
-    this.registerEventHandlers(this.messages);
+    this.registerEventHandlers(this.chatRoomService.messages);
   }
   
   registerEventHandlers(messagesList: any) {
     this.channelHandler.onMessageReceived = (channel, message) => {
-      this.reloadMsg(this.limit)
+      this.chatRoomService.messages.unshift(message);
     };
     this.channelHandler.onUserReceivedInvitation = (channel, message) => {
       this.chatService.getMyGroupChannels();
@@ -60,14 +58,17 @@ export class ChatRoomComponent implements OnInit {
     );
   }
 
+  getMessages(){
+    return this.chatRoomService.messages;
+  }
+
   reloadMsg(limit: any) {
     this.chatRoomService.getMessagesFromChannel(
       this.channel,
       limit,
-      (messages:any)=>this.messages = messages
+      (messages:any)=>this.chatRoomService.messages = messages
     );
   }
-
 
   leaveChat(channel: SendBird.GroupChannel){
       channel.leave().then(()=>{
@@ -80,7 +81,7 @@ export class ChatRoomComponent implements OnInit {
     if(!form.valid) return;
     const message = form.value.message;
     this.chatRoomService.sendMessage(this.channel, message, this.authService.sb, (msg: any) => {
-      this.messages.unshift(msg);
+      this.chatRoomService.messages.unshift(msg);
     });
     form.reset();
   }

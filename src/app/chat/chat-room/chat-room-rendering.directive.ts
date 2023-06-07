@@ -1,10 +1,12 @@
-import { Directive, HostListener, OnInit } from '@angular/core';
-import { ChatRoomComponent } from './chat-room.component';
+import { Directive, HostListener, Input, OnInit } from '@angular/core';
+import { ChatRoomService } from './chat-room.service';
+import * as SendBird from 'sendbird';
 
 @Directive({
   selector: '[appChatRoomRendering]',
 })
 export class ChatRoomRenderingDirective implements OnInit {
+  @Input() channel!: SendBird.GroupChannel 
   latestMsgUpdate = new Date().getTime()
   scrollPos = 0
 
@@ -15,11 +17,13 @@ export class ChatRoomRenderingDirective implements OnInit {
 
     if(this.scrollPos <=1 && lastReloadTimeDiff > 100){
       this.latestMsgUpdate = new Date().getTime()
-      this.chat.reloadMsg(this.chat.limit+=8);
+      this.chatRoomService.getMessagesFromChannel(this.channel, this.chatRoomService.limit+=8, (messages: any)=>{
+        this.chatRoomService.messages = messages;
+      });
     }
   }
 
-  constructor(private chat: ChatRoomComponent) {}
+  constructor(private chatRoomService: ChatRoomService) {}
   ngOnInit(): void {}
 }
  

@@ -42,6 +42,11 @@ export class ChatRoomComponent implements OnInit {
     this.channelHandler.onMessageReceived = (channel, message) => {
       this.chatRoomService.messages.unshift(message);
     };
+    this.channelHandler.onMessageDeleted = (channel, messageId) => {
+      const indexOfMsg = this.chatRoomService.messages.map(message=>message.messageId).indexOf(messageId);
+      console.log('delete msg:', indexOfMsg);
+      this.chatRoomService.messages.splice(indexOfMsg, 1);
+    }
     this.channelHandler.onUserReceivedInvitation = (channel, message) => {
       this.chatService.getMyGroupChannels();
     };

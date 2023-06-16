@@ -6,6 +6,7 @@
   align-items: center;
   padding: 20px;
 }
+
 .box {
   min-width: 300px;
   width: 60vw;
@@ -19,9 +20,11 @@
   justify-content: center;
   align-items: center;
 }
+
 .form-box {
   width: 50%;
 }
+
 form {
   display: grid;
 }
@@ -72,6 +75,7 @@ form {
   border-image: linear-gradient(to right, #1c7aaa, #388def);
   border-image-slice: 1;
 }
+
 .form__field:focus ~ .form__label {
   position: absolute;
   top: 0;
@@ -86,6 +90,7 @@ form {
 .form__field:invalid {
   box-shadow: none;
 }
+
 .btn.btn-success {
   place-self: end;
   width: 30%;

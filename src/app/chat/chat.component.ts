@@ -7,9 +7,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  host: {
-    class: 'chat-component',
-  },
   styleUrls: ['./chat.component.css'],
 })
 export class ChatComponent implements OnInit {

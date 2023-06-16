@@ -2,23 +2,28 @@
   color: rgb(205, 0, 0);
   font-weight: bolder;
 }
+
 .user {
   font-size: 0.7rem;
   align-self: flex-end;
 }
+
 .user-message {
   display: flex;
   flex-direction: column;
   align-self: flex-end;
 }
+
 .user-message .message {
   background-color: rgb(205, 0, 0);
   color: white;
 }
+
 .user-message .message-text-wrap {
   flex-direction: row-reverse;
 }
-.dropdown{
+
+.dropdown {
   margin: 5px;
   padding: 0px;
   display: flex;
@@ -26,6 +31,7 @@
   justify-content: center;
   user-select: none;
 }
+
 .dropdown .nav-link span::after {
   content: "";
   display: block;
@@ -35,15 +41,19 @@
   border-radius: 50%;
   background-color: #39383a;
 }
-.dropdown-item:active{
+
+.dropdown-item:active {
   background-color: rgb(183, 62, 62);
 }
+
 .message {
   max-width: 50%;
 }
-.message-text-wrap{
+
+.message-text-wrap {
   max-width: 100%;
 }
+
 .message {
   font-size: 1.15rem;
   background-color: rgb(222, 222, 222);

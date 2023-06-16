@@ -1,5 +1,5 @@
 <ng-container *ngIf="numberOfMessages; else noGroups">
-  <div class="channel align-items-center" *ngFor="let channel of channels | async" [routerLink]="channel.url">
+  <div class="channel align-items-center" *ngFor="let channel of channels | async" [routerLink]="channel.url" routerLinkActive="active">
     <img [src]="channel.coverUrl" alt="cover" />
     <div class="m-0 d-flex flex-column">
       <span class="title fw-bold">{{ channel.name }}</span>

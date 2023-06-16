@@ -1,11 +1,12 @@
-img[alt='cover'] {
+img[alt="cover"] {
   width: clamp(40px, 15%, 90px);
-  margin: 0 5px;
+  margin: 0 10px;
   clip-path: circle();
 }
+
 .channel {
   display: flex;
-  margin-bottom: 5px;
+  margin-top: 5px;
   background-color: rgba(0, 0, 0, 0.048);
   padding: 8px;
   line-height: 1.25;
@@ -13,9 +14,11 @@ img[alt='cover'] {
   user-select: none;
   cursor: pointer;
 }
+
 .channel:hover {
   background-color: rgba(0, 0, 0, 0.067);
 }
+
 .channel span {
   font-family: Arial, Helvetica, sans-serif;
   overflow: hidden;
@@ -23,14 +26,19 @@ img[alt='cover'] {
   text-overflow: ellipsis;
 }
 
-div:has(.title){
+div:has(.title) {
   overflow: hidden;
 }
 
 .channel .last-message {
   font-size: 0.9rem;
 }
-p{
+
+p {
   text-align: center;
   padding: 5px;
+}
+
+.channel.active {
+  background-color: rgba(0, 0, 0, 0.15);
 }

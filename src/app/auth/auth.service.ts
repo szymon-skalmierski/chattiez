@@ -15,7 +15,6 @@ export class AuthService {
   private tokenExpiratonTimer: any;
   authError: any = new BehaviorSubject(null);
   user = new BehaviorSubject<User | null>(null);
-  userInfo: any = {}
 
 
   constructor(private router: Router, private http: HttpClient) {
@@ -67,26 +66,33 @@ export class AuthService {
     if (!localStorage.getItem('userData')) {
       return;
     }
-    const userData = JSON.parse(localStorage.getItem('userData')!);
+    let userData;
+    try {
+      userData = JSON.parse(localStorage.getItem('userData')!);
+    } catch (e:any) {
+        this.logout();
+        return
+    }
+    
     const loadedUser = new User(
       userData.userId,
       userData._token,
       new Date(userData._tokenExpirationDate)
-    );
+      );
 
     if (loadedUser.token) {
+      this.connect(loadedUser.userId, '');
+      this.user.next(loadedUser);
+
+      const expirationDuration = new Date(userData._tokenExpirationDate).getTime()-new Date().getTime()
+      this.autoLogout(+expirationDuration);
+
       this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${env.firebase_key}`, {
         idToken: loadedUser.token
       }).subscribe((res:any)=>{
-        if (loadedUser.userId===res.users[0].displayName){
-          this.connect(loadedUser.userId, '');
-          this.user.next(loadedUser);
-    
-          const expirationDuration = new Date(userData._tokenExpirationDate).getTime()-new Date().getTime()
-          this.autoLogout(+expirationDuration);
-        } else {
+        if (loadedUser.userId!==res.users[0].displayName){
           this.logout();
-        }
+        } 
       })
     } else {
       this.logout();

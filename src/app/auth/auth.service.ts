@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import * as SendBird from 'sendbird';
-import { environment } from 'src/environments/environment';
+import { environment as env } from 'src/environments/environment';
 import { User } from './user.model';
 import { HttpClient } from '@angular/common/http';
 
@@ -19,12 +19,12 @@ export class AuthService {
 
 
   constructor(private router: Router, private http: HttpClient) {
-    this.sb = new SendBird({ appId: environment.APP_ID });
+    this.sb = new SendBird({ appId: env.APP_ID });
     SendBird.setLogLevel(SendBird.LogLevel.ERROR);
   }
 
   connect1(userId: string, token: any) {
-    return this.http.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDNJ8jCQxV7yM94iN4TyF8vJy6rJpH-E4o', {
+    return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${env.firebase_key}`, {
       email: userId,
       password: token
     })

@@ -7,6 +7,7 @@ export const environment = {
   APP_ID: 'C1F300B2-59F1-4A71-B833-D1375D7358D3',
   API_KEY: '718e04b1d4bd54ba9ca74d01f5b2029ae0e28fd2',
   user_id: 'sendbird_desk_agent_id_401c463d-80fe-460e-8ce9-88e8da4fd89b',
+  firebase_key: 'AIzaSyDvGsRz48UN_hmoonJxslkCVUoxYl3A_is'
 };
 
 /*

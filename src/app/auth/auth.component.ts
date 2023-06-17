@@ -33,24 +33,19 @@ export class AuthComponent implements OnInit {
     })
   }
 
-  login(userid: any, token: any) {
-    this.authService.connect(userid, token);
-  }
-
   logout() {
     this.authService.logout();
   }
 
   onSubmit(form: NgForm) {
     if(!form.valid) return;
-    const email = form.value.userId;
-    const accessToken = form.value.accessToken;
+    const email = form.value.email;
+    const password = form.value.password;
     
     if (this.authType === 'login') {
-      const connection = this.authService.connect1(email, accessToken);
+      const connection = this.authService.login(email, password);
       connection.subscribe((res: any)=>{
-        this.authService.connect(res.displayName, '').then(()=>{
-          console.log('successful logged in')
+        this.authService.connect(res.displayName, res.idToken).then(()=>{
           this.router.navigate(['/chat'])
         })
       })

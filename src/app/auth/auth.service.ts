@@ -23,15 +23,15 @@ export class AuthService {
     SendBird.setLogLevel(SendBird.LogLevel.ERROR);
   }
 
-  connect1(userId: string, token: any) {
+  login(email: string, password: string) {
     return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${env.firebase_key}`, {
-      email: userId,
-      password: token
+      email: email,
+      password: password
     })
   }
 
-  connect(userId: string, token: any) {
-    return this.sb.connect(userId, token, (user: SendBird.User, error: SendBird.SendBirdError) => {
+  connect(userId: string, token: string) {
+    return this.sb.connect(userId, '', (user: SendBird.User, error: SendBird.SendBirdError) => {
       if (user) {
         const expirationDate = new Date(new Date().getTime() + 60 * 60 * 1000);
         const userData = new User(userId, token, expirationDate);
@@ -66,6 +66,7 @@ export class AuthService {
     if (!localStorage.getItem('userData')) {
       return;
     }
+    console.log('autologin authservice prev')
 
     const userData = JSON.parse(localStorage.getItem('userData')!);
     const loadedUser = new User(
@@ -75,7 +76,7 @@ export class AuthService {
     );
 
     if (loadedUser.token) {
-      this.connect(loadedUser.userId, loadedUser.token);
+      this.connect(loadedUser.userId, '');
       this.user.next(loadedUser);
 
       const expirationDuration = new Date(

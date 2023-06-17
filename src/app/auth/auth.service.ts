@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import * as SendBird from 'sendbird';
 import { environment } from 'src/environments/environment';
 import { User } from './user.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +15,19 @@ export class AuthService {
   private tokenExpiratonTimer: any;
   authError: any = new BehaviorSubject(null);
   user = new BehaviorSubject<User | null>(null);
+  userInfo: any = {}
 
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private http: HttpClient) {
     this.sb = new SendBird({ appId: environment.APP_ID });
     SendBird.setLogLevel(SendBird.LogLevel.ERROR);
+  }
+
+  connect1(userId: string, token: any) {
+    return this.http.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDNJ8jCQxV7yM94iN4TyF8vJy6rJpH-E4o', {
+      email: userId,
+      password: token
+    })
   }
 
   connect(userId: string, token: any) {
@@ -42,7 +51,7 @@ export class AuthService {
         }
         this.authError.next(error);
       }
-    }).catch(()=>undefined);
+    }).catch((err)=>console.log(err));
   }
 
   getConnectedUserId() {

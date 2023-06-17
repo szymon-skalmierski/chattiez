@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { AboutComponent } from './about/about.component';
 import { AuthGuard } from './auth/auth.guard';
 import { HeaderComponent } from './header/header.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { HeaderComponent } from './header/header.component';
     AppRoutingModule,
     ChatModule,
     CommonModule,
+    HttpClientModule
   ],
   providers: [ChatGuard, AuthGuard],
   bootstrap: [AppComponent],

@@ -47,9 +47,12 @@ export class AuthComponent implements OnInit {
     const accessToken = form.value.accessToken;
     
     if (this.authType === 'login') {
-      const connection = this.authService.connect(email, accessToken);
-      connection.then(()=>{
-        this.router.navigate(['/chat'])
+      const connection = this.authService.connect1(email, accessToken);
+      connection.subscribe((res: any)=>{
+        this.authService.connect(res.displayName, '').then(()=>{
+          console.log('successful logged in')
+          this.router.navigate(['/chat'])
+        })
       })
     }
   }

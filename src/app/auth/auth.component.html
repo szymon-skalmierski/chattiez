@@ -1,8 +1,8 @@
 <div class="_container">
   <div class="box">
     <div class="form-box">
-      <p class="alert alert-danger text-center" *ngIf="connectionError">
-        {{ connectionError }}
+      <p class="alert alert-danger text-center" *ngIf="connectionError | async">
+        {{ connectionError.value.message }}
       </p>
       <form #form="ngForm" class="form-check" (ngSubmit)="onSubmit(form)">
         <div class="form__group field">

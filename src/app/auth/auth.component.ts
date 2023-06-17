@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from './auth.service';
+import { BehaviorSubject } from 'rxjs';
+import { SendBirdError } from 'sendbird';
 
 @Component({
   selector: 'app-auth',
@@ -10,7 +12,7 @@ import { AuthService } from './auth.service';
 })
 export class AuthComponent implements OnInit {
   authType = 'login';
-  connectionError = false;
+  connectionError: any = new BehaviorSubject(null);
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -25,6 +27,10 @@ export class AuthComponent implements OnInit {
         this.authType = params.get('type') || 'login';
       }
     });
+
+    this.authService.authError.subscribe((error: SendBirdError)=>{
+      this.connectionError.next(error);
+    })
   }
 
   login(userid: any, token: any) {

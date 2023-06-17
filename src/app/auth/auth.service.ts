@@ -12,6 +12,7 @@ export class AuthService {
   sb: SendBird.SendBirdInstance;
   
   private tokenExpiratonTimer: any;
+  authError: any = new BehaviorSubject(null);
   user = new BehaviorSubject<User | null>(null);
 
 
@@ -21,17 +22,27 @@ export class AuthService {
   }
 
   connect(userId: string, token: any) {
-    return this.sb.connect(userId, token, (user: any, error: any) => {
+    return this.sb.connect(userId, token, (user: SendBird.User, error: SendBird.SendBirdError) => {
       if (user) {
         const expirationDate = new Date(new Date().getTime() + 60 * 60 * 1000);
         const userData = new User(userId, token, expirationDate);
 
+        if (this.authError.value) {
+          this.authError.next(null);
+        }
+
         if (!localStorage.getItem('userData')) {
           localStorage.setItem('userData', JSON.stringify(userData));
           this.user.next(userData);
+          this.autoLogout(new Date(+expirationDate).getTime() - new Date().getTime());
         }
+      } else if (error) {
+        if (this.user.value){
+          this.logout();
+        }
+        this.authError.next(error);
       }
-    });
+    }).catch(()=>undefined);
   }
 
   getConnectedUserId() {

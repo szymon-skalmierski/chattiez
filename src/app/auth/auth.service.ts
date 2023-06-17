@@ -62,12 +62,11 @@ export class AuthService {
     return this.sb && this.sb.currentUser ? this.sb.currentUser : null;
   }
 
+
   autoLogin() {
     if (!localStorage.getItem('userData')) {
       return;
     }
-    console.log('autologin authservice prev')
-
     const userData = JSON.parse(localStorage.getItem('userData')!);
     const loadedUser = new User(
       userData.userId,
@@ -76,13 +75,19 @@ export class AuthService {
     );
 
     if (loadedUser.token) {
-      this.connect(loadedUser.userId, '');
-      this.user.next(loadedUser);
-
-      const expirationDuration = new Date(
-        new Date(userData._tokenExpirationDate).getTime() - new Date().getTime()
-      );
-      this.autoLogout(+expirationDuration);
+      this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${env.firebase_key}`, {
+        idToken: loadedUser.token
+      }).subscribe((res:any)=>{
+        if (loadedUser.userId===res.users[0].displayName){
+          this.connect(loadedUser.userId, '');
+          this.user.next(loadedUser);
+    
+          const expirationDuration = new Date(userData._tokenExpirationDate).getTime()-new Date().getTime()
+          this.autoLogout(+expirationDuration);
+        } else {
+          this.logout();
+        }
+      })
     } else {
       this.logout();
     }

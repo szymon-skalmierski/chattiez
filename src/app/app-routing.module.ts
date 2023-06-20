@@ -13,17 +13,13 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    redirectTo: 'auth/login',
-  },
-  {
-    path: 'auth/:type',
-    component: AuthComponent,
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
     canActivate: [AuthGuard],
   },
   {
     path: 'chat',
-    canActivate: [ChatGuard],
     loadChildren: () => import('./chat/chat.module').then((m) => m.ChatModule),
+    canActivate: [ChatGuard],
   },
   { path: 'about', component: AboutComponent },
 ];

@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthComponent } from './auth.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
-
+import { AuthRoutingModule } from './auth-routing.module';
 
 
 @NgModule({
@@ -15,7 +14,7 @@ import { BrowserModule } from '@angular/platform-browser';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    BrowserModule
+    AuthRoutingModule
   ]
 })
 export class AuthModule { }

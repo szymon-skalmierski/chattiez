@@ -22,10 +22,8 @@ export class ChatRoomMessageComponent implements OnInit {
 
   onMessageDelete(channel:SendBird.GroupChannel | SendBird.OpenChannel, message:SendBird.UserMessage){
     channel.deleteMessage(message, ()=>{
-      this.chatRoomService.messages.splice(this.chatRoomService.messages.indexOf(message), 1);
       if(this.chatRoomService.messages.length<=15){
         this.chatRoomService.limit=7;
-        this.chatRoomService.setFetchedChannels(channel, this.chatRoomService.limit+=8)
       }
     })
   }

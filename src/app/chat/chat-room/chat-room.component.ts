@@ -91,7 +91,7 @@ export class ChatRoomComponent implements OnInit {
     form.reset();
   }
   
-  trackById(index: number, item: any): number {
+  trackById(index: number, item: SendBird.UserMessage): number {
     return item.messageId;
   }
 }

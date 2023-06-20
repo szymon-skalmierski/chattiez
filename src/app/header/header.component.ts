@@ -10,13 +10,10 @@ import { AuthService } from '../auth/auth.service';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   title = 'angular-chat';
-  isConnected: BehaviorSubject<boolean>;
+  isConnected = new BehaviorSubject<boolean>(false);;
   user!: Subscription;
 
-  constructor(private authService: AuthService) {
-    this.authService.autoLogin();
-    this.isConnected = new BehaviorSubject<boolean>(false);
-  }
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
     this.user = this.authService.user.subscribe((user: any) => {
@@ -32,6 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   getUsername() {
     return this.authService.getConnectedUser()?.nickname;
   }
+  
   ngOnDestroy(): void {
     this.user.unsubscribe();
   }

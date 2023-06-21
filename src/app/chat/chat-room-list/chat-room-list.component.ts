@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ChatService } from '../chat.service';
 
 @Component({
@@ -7,18 +7,21 @@ import { ChatService } from '../chat.service';
   templateUrl: './chat-room-list.component.html',
   styleUrls: ['./chat-room-list.component.css']
 })
-export class ChatRoomListComponent implements OnInit {
-  numberOfMessages = 0;
-  channels: any = new BehaviorSubject<any[]>([]);
+export class ChatRoomListComponent implements OnInit, OnDestroy {
+  chatGroupsSub!: Subscription
+  channels: any;
 
   constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
-    this.chatService.chatGroups.subscribe({
+    this.chatGroupsSub = this.chatService.chatGroups.subscribe({
       next: (channels: any)=>{
-        this.numberOfMessages = channels === null ? 0 : channels.length;
-        this.channels.next(channels);
+        this.channels = channels;
       }
     })
+  }
+
+  ngOnDestroy(): void {
+    this.chatGroupsSub.unsubscribe();
   }
 }

@@ -6,7 +6,7 @@ import * as SendBird from 'sendbird';
 })
 export class ChatRoomService {
   messages: any[] = [];
-  limit = 15;
+  limit = 20;
 
   constructor() { }
 

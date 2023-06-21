@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ChatRoomService } from '../chat-room.service';
 
@@ -7,14 +7,11 @@ import { ChatRoomService } from '../chat-room.service';
   templateUrl: './chat-room-message.component.html',
   styleUrls: ['./chat-room-message.component.css']
 })
-export class ChatRoomMessageComponent implements OnInit {
+export class ChatRoomMessageComponent {
   @Input() message: any;
   @Input() channel: any;
 
   constructor(private authService: AuthService, private chatRoomService: ChatRoomService) { }
-
-  ngOnInit(): void {
-  }
 
   getUserId() {
     return this.authService.getConnectedUserId();

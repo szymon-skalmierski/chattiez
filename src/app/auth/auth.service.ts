@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import * as SendBird from 'sendbird';
 import { environment as env } from 'src/environments/environment';
 import { User } from './user.model';
@@ -15,6 +15,7 @@ export class AuthService {
   private tokenExpiratonTimer: any;
   authError: any = new BehaviorSubject(null);
   user = new BehaviorSubject<User | null>(null);
+  authenticated = new BehaviorSubject<boolean | null>(null);
 
 
   constructor(private router: Router, private http: HttpClient) {
@@ -81,9 +82,6 @@ export class AuthService {
       );
 
     if (loadedUser.token) {
-      this.connect(loadedUser.userId, '');
-      this.user.next(loadedUser);
-
       const expirationDuration = new Date(userData._tokenExpirationDate).getTime()-new Date().getTime()
       this.autoLogout(+expirationDuration);
 
@@ -92,7 +90,11 @@ export class AuthService {
       }).subscribe((res:any)=>{
         if (loadedUser.userId!==res.users[0].displayName){
           this.logout();
-        } 
+        } else {
+          this.authenticated.next(true);
+          this.connect(loadedUser.userId, '');
+          this.user.next(loadedUser);    
+        }
       })
     } else {
       this.logout();

@@ -1,0 +1,38 @@
+<div class="form-box">
+    <p class="alert alert-danger text-center" *ngIf="connectionError | async">
+    {{ connectionError.value.message }}
+    </p>
+    <form #form="ngForm" class="form-check" (ngSubmit)="onSubmit(form)">
+    <div class="form__group field">
+        <input
+        class="form__field"
+        type="text"
+        name="email"
+        id="email"
+        placeholder="email"
+        required
+        ngModel
+        />
+        <label class="form__label" for="email">Email</label>
+    </div>
+    <div class="form__group field">
+        <input
+        class="form__field"
+        type="password"
+        name="password"
+        id="password"
+        placeholder="accessToken"
+        required
+        ngModel
+        />
+        <label class="form__label" for="accessToken">Password</label>
+    </div>
+    <button
+        class="btn btn-success my-4"
+        type="submit"
+        [disabled]="form.invalid"
+    >
+        Login
+    </button>
+    </form>
+</div>

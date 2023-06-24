@@ -14,8 +14,7 @@ export class AuthService {
   
   private tokenExpiratonTimer: any;
   authError: any = new BehaviorSubject(null);
-  user = new BehaviorSubject<User | null>(null);
-  authenticated = new BehaviorSubject<boolean | null>(null);
+  user = new BehaviorSubject<User | null | undefined>(undefined);
 
 
   constructor(private router: Router, private http: HttpClient) {
@@ -65,6 +64,7 @@ export class AuthService {
 
   autoLogin() {
     if (!localStorage.getItem('userData')) {
+      this.logout();
       return;
     }
     let userData;
@@ -72,7 +72,7 @@ export class AuthService {
       userData = JSON.parse(localStorage.getItem('userData')!);
     } catch (e:any) {
         this.logout();
-        return
+        return;
     }
     
     const loadedUser = new User(
@@ -82,7 +82,7 @@ export class AuthService {
       );
 
     if (loadedUser.token) {
-      const expirationDuration = new Date(userData._tokenExpirationDate).getTime()-new Date().getTime()
+      const expirationDuration = new Date(userData._tokenExpirationDate).getTime()-new Date().getTime();
       this.autoLogout(+expirationDuration);
 
       this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${env.firebase_key}`, {
@@ -91,7 +91,6 @@ export class AuthService {
         if (loadedUser.userId!==res.users[0].displayName){
           this.logout();
         } else {
-          this.authenticated.next(true);
           this.connect(loadedUser.userId, '');
           this.user.next(loadedUser);    
         }

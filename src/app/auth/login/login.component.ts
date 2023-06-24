@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
 
     const connection = this.authService.login(email, password);
     connection.subscribe((res: any) => {
-      this.authService.authenticated.next(true);
       this.authService.connect(res.displayName, res.idToken).then(() => {
         this.router.navigate(['/chat']);
       });

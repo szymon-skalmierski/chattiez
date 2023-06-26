@@ -19,7 +19,7 @@
   </div>
   <div
     class="container-fluid messages-wrap d-flex flex-column-reverse p-3"
-    appChatRoomRendering [channel]="channel"
+    appChatRoomRendering [queryList]="queryList"
   >
     
   <app-chat-room-message *ngFor="let message of getMessages(); trackBy: trackById" [channel]="channel" [message]="message"></app-chat-room-message>
@@ -41,5 +41,6 @@
       />
       <button type="submit" class="btn btn-outline-secondary">Send</button>
     </form>
+    <button type="button" class="btn btn-outline-secondary" (click)="reloadMsg(queryList)">load more</button>
   </div>
 </div>

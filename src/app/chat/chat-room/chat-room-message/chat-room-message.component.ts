@@ -18,10 +18,6 @@ export class ChatRoomMessageComponent {
   }
 
   onMessageDelete(channel:SendBird.GroupChannel | SendBird.OpenChannel, message:SendBird.UserMessage){
-    channel.deleteMessage(message, ()=>{
-      if(this.chatRoomService.messages.length<=15){
-        this.chatRoomService.limit=7;
-      }
-    })
+    channel.deleteMessage(message, ()=>{})
   }
 }

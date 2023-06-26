@@ -6,7 +6,7 @@ import * as SendBird from 'sendbird';
   selector: '[appChatRoomRendering]',
 })
 export class ChatRoomRenderingDirective implements OnInit {
-  @Input() channel!: SendBird.GroupChannel 
+  @Input() queryList!: SendBird.PreviousMessageListQuery
   latestMsgUpdate = new Date().getTime()
   scrollPos = 0
 
@@ -17,8 +17,8 @@ export class ChatRoomRenderingDirective implements OnInit {
 
     if(this.scrollPos <=1 && lastReloadTimeDiff > 100){
       this.latestMsgUpdate = new Date().getTime()
-      this.chatRoomService.getMessagesFromChannel(this.channel, this.chatRoomService.limit+=8, (messages: any)=>{
-        this.chatRoomService.messages = messages;
+      this.chatRoomService.getMessagesFromChannel(this.queryList, 10, (messages: any)=>{
+        this.chatRoomService.messages.push(messages);
       });
     }
   }

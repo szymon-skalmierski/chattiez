@@ -12,8 +12,10 @@ import { ChatRoomService } from './chat-room.service';
 })
 export class ChatRoomComponent implements OnInit {
   channelHandler = new this.authService.sb.ChannelHandler();
+  queryList!:any
   channel!: SendBird.GroupChannel | any;  
   groupUrl: any;
+  messages:any = []
 
   constructor(
     private router: Router,
@@ -30,12 +32,13 @@ export class ChatRoomComponent implements OnInit {
         (channel: any) => {
           if(channel){
             this.channel = channel;
-            this.reloadMsg(this.chatRoomService.limit);
+            this.queryList = channel.createPreviousMessageListQuery();
+            this.reloadMsg(20);
           }
         }
-      );
-    });
-    this.registerEventHandlers(this.chatRoomService.messages);
+        );
+      });
+      this.registerEventHandlers(this.chatRoomService.messages);
   }
   
   registerEventHandlers(messagesList: any) {
@@ -69,7 +72,7 @@ export class ChatRoomComponent implements OnInit {
 
   reloadMsg(limit: any) {
     this.chatRoomService.getMessagesFromChannel(
-      this.channel,
+      this.queryList,
       limit,
       (messages:any)=>this.chatRoomService.messages = messages
     );

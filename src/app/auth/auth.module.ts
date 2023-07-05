@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { AuthLoadingSpinnerComponent } from '../shared/auth-loading-spinner.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { SignupComponent } from './signup/signup.component';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    AuthLoadingSpinnerComponent
   ]
 })
 export class AuthModule { }

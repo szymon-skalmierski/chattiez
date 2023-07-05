@@ -12,6 +12,7 @@ import { SendBirdError } from 'sendbird';
 })
 export class LoginComponent implements OnInit {
   connectionError: any = new BehaviorSubject(null);
+  submitted = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -19,11 +20,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  ngOnInit(): void {
-    this.authService.authError.subscribe((error: SendBirdError)=>{
-      this.connectionError.next(error);
-    })
-  }
+  ngOnInit(): void {}
 
   logout() {
     this.authService.logout();
@@ -31,14 +28,33 @@ export class LoginComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (!form.valid) return;
+    this.connectionError.next(null)
     const email = form.value.email;
     const password = form.value.password;
 
     const connection = this.authService.login(email, password);
-    connection.subscribe((res: any) => {
-      this.authService.connect(res.displayName, res.idToken).then(() => {
-        this.router.navigate(['/chat']);
-      });
+    connection.subscribe({
+      next: (res: any) => {
+        this.authService.connect(res.displayName, res.idToken).then(() => {
+          this.router.navigate(['/chat']);
+        });
+      },
+      error: err => {
+        let errorMsg = '';
+        switch (err.error.error.message) {
+          case 'EMAIL_NOT_FOUND':
+          case 'INVALID_EMAIL':
+            errorMsg = 'This email is invalid';
+            break;
+          case 'INVALID_PASSWORD':
+            errorMsg = 'This password is invalid';
+            break;
+          default:
+            errorMsg = 'Some error occured';
+            break;
+        }
+        this.connectionError.next(errorMsg);
+      }
     });
   }
 }

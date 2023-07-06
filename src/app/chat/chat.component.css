@@ -3,13 +3,14 @@
   height: 100%;
 }
 
-:host>.container-fluid {
+:host > .container-fluid {
   display: grid;
   grid-template-columns: minmax(270px, 320px) 1fr;
   padding: 0;
 }
 
-.left, .right {
+.left,
+.right {
   background-color: rgb(246, 246, 246);
   height: 100%;
   overflow: hidden;
@@ -23,7 +24,7 @@
 ::-webkit-scrollbar {
   width: 5px;
 }
- 
+
 ::-webkit-scrollbar-thumb {
-  background: #666; 
+  background: #666;
 }

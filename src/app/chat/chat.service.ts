@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+
 import * as SendBird from 'sendbird';
+import { BehaviorSubject } from 'rxjs';
+
 import { AuthService } from '../auth/auth.service';
+
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
   chatGroups = new BehaviorSubject<SendBird.GroupChannelCollection | null>(null);
 
-  constructor(private authService: AuthService) {
-  }
+  constructor(private authService: AuthService) {}
 
   createGroupChannel(
     channelName: string,

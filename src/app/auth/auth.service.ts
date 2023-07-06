@@ -1,21 +1,22 @@
-import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import * as SendBird from 'sendbird';
-import { environment as env } from 'src/environments/environment';
-import { User } from './user.model';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
+import * as SendBird from 'sendbird';
+import { BehaviorSubject } from 'rxjs';
+import { environment as env } from 'src/environments/environment';
+
+import { User } from './user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   sb: SendBird.SendBirdInstance;
-  
+
   private tokenExpiratonTimer: any;
   authError: any = new BehaviorSubject(null);
   user = new BehaviorSubject<User | null | undefined>(undefined);
-
 
   constructor(private router: Router, private http: HttpClient) {
     this.sb = new SendBird({ appId: env.APP_ID });
@@ -23,34 +24,47 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${env.firebase_key}`, {
-      email: email,
-      password: password
-    })
+    return this.http.post(
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${env.firebase_key}`,
+      {
+        email: email,
+        password: password,
+      }
+    );
   }
 
   connect(userId: string, token: string) {
-    return this.sb.connect(userId, '', (user: SendBird.User, error: SendBird.SendBirdError) => {
-      if (user) {
-        const expirationDate = new Date(new Date().getTime() + 60 * 60 * 1000);
-        const userData = new User(userId, token, expirationDate);
+    return this.sb
+      .connect(
+        userId,
+        '',
+        (user: SendBird.User, error: SendBird.SendBirdError) => {
+          if (user) {
+            const expirationDate = new Date(
+              new Date().getTime() + 60 * 60 * 1000
+            );
+            const userData = new User(userId, token, expirationDate);
 
-        if (this.authError.value) {
-          this.authError.next(null);
-        }
+            if (this.authError.value) {
+              this.authError.next(null);
+            }
 
-        if (!localStorage.getItem('userData')) {
-          localStorage.setItem('userData', JSON.stringify(userData));
-          this.user.next(userData);
-          this.autoLogout(new Date(+expirationDate).getTime() - new Date().getTime());
+            if (!localStorage.getItem('userData')) {
+              localStorage.setItem('userData', JSON.stringify(userData));
+              this.user.next(userData);
+              this.autoLogout(
+                new Date(+expirationDate).getTime() - new Date().getTime()
+              );
+            }
+          } else if (error) {
+            if (this.user.value) {
+              this.logout();
+            }
+            this.authError.next(error);
+          }
         }
-      } else if (error) {
-        if (this.user.value){
-          this.logout();
-        }
-        this.authError.next(error);
-      }
-    }).catch((err)=>console.log(err));
+      )
+      .catch((err) => console.log(err));
   }
 
   getConnectedUserId() {
@@ -61,7 +75,6 @@ export class AuthService {
     return this.sb && this.sb.currentUser ? this.sb.currentUser : null;
   }
 
-
   autoLogin() {
     if (!localStorage.getItem('userData')) {
       this.logout();
@@ -70,31 +83,38 @@ export class AuthService {
     let userData;
     try {
       userData = JSON.parse(localStorage.getItem('userData')!);
-    } catch (e:any) {
-        this.logout();
-        return;
+    } catch (e: any) {
+      this.logout();
+      return;
     }
-    
+
     const loadedUser = new User(
       userData.userId,
       userData._token,
       new Date(userData._tokenExpirationDate)
-      );
+    );
 
     if (loadedUser.token) {
-      const expirationDuration = new Date(userData._tokenExpirationDate).getTime()-new Date().getTime();
+      const expirationDuration =
+        new Date(userData._tokenExpirationDate).getTime() -
+        new Date().getTime();
       this.autoLogout(+expirationDuration);
 
-      this.http.post(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${env.firebase_key}`, {
-        idToken: loadedUser.token
-      }).subscribe((res:any)=>{
-        if (loadedUser.userId!==res.users[0].displayName){
-          this.logout();
-        } else {
-          this.connect(loadedUser.userId, '');
-          this.user.next(loadedUser);    
-        }
-      })
+      this.http
+        .post(
+          `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${env.firebase_key}`,
+          {
+            idToken: loadedUser.token,
+          }
+        )
+        .subscribe((res: any) => {
+          if (loadedUser.userId !== res.users[0].displayName) {
+            this.logout();
+          } else {
+            this.connect(loadedUser.userId, '');
+            this.user.next(loadedUser);
+          }
+        });
     } else {
       this.logout();
     }

@@ -1,35 +1,36 @@
 import { Injectable } from '@angular/core';
+
 import * as SendBird from 'sendbird';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChatRoomService {
   messages: any[] = [];
 
-  constructor() { }
+  constructor() {}
 
   getMessagesFromChannel(
     queryList: SendBird.PreviousMessageListQuery,
     limit: number,
     callback: Function
   ) {
-    if(queryList.hasMore) {
+    if (queryList.hasMore) {
       queryList.reverse = true;
       queryList.limit = limit;
       queryList.includeMetaArray = true;
-      queryList.load((messages:any, error:any) => {
-        console.log(messages)
-        this.messages.push(...messages)
+      queryList.load((messages: any, error: any) => {
+        console.log(messages);
+        this.messages.push(...messages);
         callback(messages);
       });
     }
-}
+  }
 
-  setFetchedChannels(groupChannel:any, limit:number){
-    this.getMessagesFromChannel(groupChannel, limit, (messages: any)=>{
+  setFetchedChannels(groupChannel: any, limit: number) {
+    this.getMessagesFromChannel(groupChannel, limit, (messages: any) => {
       this.messages = messages;
-    })
+    });
   }
 
   sendMessage(

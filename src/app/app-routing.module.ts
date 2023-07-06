@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AboutComponent } from './about/about.component';
+
 import { AuthGuard } from './auth/auth.guard';
 import { ChatGuard } from './chat/chat.guard';
+import { AboutComponent } from './about/about.component';
 import { HomePageComponent } from './home-page/home-page.component';
 
 const routes: Routes = [

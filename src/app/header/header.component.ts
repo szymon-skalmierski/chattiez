@@ -1,16 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+
 import { BehaviorSubject, Subscription } from 'rxjs';
+
 import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-
-  title = 'angular-chat';
-  isConnected = new BehaviorSubject<boolean>(false);;
+  isConnected = new BehaviorSubject<boolean>(false);
   user!: Subscription;
 
   constructor(private authService: AuthService) {}
@@ -29,9 +29,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   getUsername() {
     return this.authService.getConnectedUser()?.nickname;
   }
-  
+
   ngOnDestroy(): void {
     this.user.unsubscribe();
   }
-
 }

@@ -92,13 +92,12 @@ form {
 }
 
 @media screen and (max-width: 1000px) {
-    :host {
-        width: 75%;
-    }
-    
-    .form-box {
-        width: 75%;
-        min-width: 200px;
-    }
-    
+  :host {
+    width: 75%;
+  }
+
+  .form-box {
+    width: 75%;
+    min-width: 200px;
+  }
 }

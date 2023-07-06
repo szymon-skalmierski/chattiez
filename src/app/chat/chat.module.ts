@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { ChatRoutingModule } from './chat-routing.module';
-import { ChatComponent } from './chat.component';
-import { ChatRoomListComponent } from './chat-room-list/chat-room-list.component';
-import { ChatRoomComponent } from './chat-room/chat-room.component';
-import { HttpClientModule } from '@angular/common/http';
-import { ChatRoomRenderingDirective } from './chat-room/chat-room-rendering.directive';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+
+import { ChatComponent } from './chat.component';
+import { ChatRoutingModule } from './chat-routing.module';
+import { ChatRoomComponent } from './chat-room/chat-room.component';
+import { ChatRoomListComponent } from './chat-room-list/chat-room-list.component';
+import { ChatRoomRenderingDirective } from './chat-room/chat-room-rendering.directive';
 import { ChatRoomMessageComponent } from './chat-room/chat-room-message/chat-room-message.component';
 
 
@@ -17,13 +17,13 @@ import { ChatRoomMessageComponent } from './chat-room/chat-room-message/chat-roo
     ChatRoomListComponent,
     ChatRoomComponent,
     ChatRoomRenderingDirective,
-    ChatRoomMessageComponent
+    ChatRoomMessageComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ChatRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ]
 })
 export class ChatModule { }

@@ -1,84 +1,87 @@
 <nav class="navbar navbar-expand navbar-light bg-light p-0">
-    <div class="container-fluid">
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav w-100 align-items-center">
-          <li class="nav-item mx-3">
-            <a
-              class="nav-link"
-              aria-current="page"
-              [routerLink]="['/']"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav w-100 align-items-center">
+        <li class="nav-item mx-3">
+          <a
+            class="nav-link"
+            aria-current="page"
+            [routerLink]="['/']"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <img
+              src="/assets/images/chattiez-logo.png"
+              alt=""
+              style="height: 40px"
+            />
+          </a>
+        </li>
+        <li class="nav-item mx-3">
+          <a
+            class="nav-link"
+            aria-current="page"
+            [routerLink]="['/']"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item mx-3">
+          <a
+            class="nav-link"
+            [routerLink]="['/about']"
+            routerLinkActive="active"
+            >About</a
+          >
+        </li>
+        <li class="nav-item mx-3">
+          <a
+            *ngIf="(isConnected | async) == true"
+            class="nav-link"
+            routerLink="/chat"
+            routerLinkActive="active"
+            >Chat</a
+          >
+        </li>
+        <li class="nav-item dropdown ms-auto mx-3 position-relative">
+          <div *ngIf="isConnected | async">{{ getUsername() }}</div>
+          <a
+            class="nav-link"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            ><span></span><span></span><span></span
+          ></a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a
+                class="dropdown-item"
+                [routerLink]="['auth', 'login']"
+                *ngIf="(isConnected | async) !== true"
+                >Login</a
               >
-              <img src="/assets/images/chattiez-logo.png" alt="" style="height: 40px;">
-              </a
-            >
-          </li>
-          <li class="nav-item mx-3">
-            <a
-              class="nav-link"
-              aria-current="page"
-              [routerLink]="['/']"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              >Home</a
-            >
-          </li>
-          <li class="nav-item mx-3">
-            <a
-              class="nav-link"
-              [routerLink]="['/about']"
-              routerLinkActive="active"
-              >About</a
-            >
-          </li>
-          <li class="nav-item mx-3">
-            <a
-              *ngIf="(isConnected | async) == true"
-              class="nav-link"
-              routerLink="/chat"
-              routerLinkActive="active"
-              >Chat</a
-            >
-          </li>
-          <li class="nav-item dropdown ms-auto mx-3 position-relative">
-            <div *ngIf="isConnected | async">{{ getUsername() }}</div>
-            <a
-              class="nav-link"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              ><span></span><span></span><span></span
-            ></a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li>
-                <a
-                  class="dropdown-item"
-                  [routerLink]="['auth', 'login']"
-                  *ngIf="(isConnected | async) !== true"
-                  >Login</a
-                >
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  [routerLink]="['auth', 'signup']"
-                  *ngIf="(isConnected | async) !== true"
-                  >Sign up</a
-                >
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  [routerLink]="['/']"
-                  (click)="logout()"
-                  *ngIf="isConnected | async"
-                  >Logout</a
-                >
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                [routerLink]="['auth', 'signup']"
+                *ngIf="(isConnected | async) !== true"
+                >Sign up</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                [routerLink]="['/']"
+                (click)="logout()"
+                *ngIf="isConnected | async"
+                >Logout</a
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>

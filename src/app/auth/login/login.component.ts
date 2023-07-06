@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../auth.service';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+
 import { BehaviorSubject } from 'rxjs';
-import { SendBirdError } from 'sendbird';
+
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,11 +15,7 @@ export class LoginComponent implements OnInit {
   connectionError: any = new BehaviorSubject(null);
   submitted = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private authService: AuthService
-  ) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {}
 
@@ -28,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (!form.valid) return;
-    this.connectionError.next(null)
+    this.connectionError.next(null);
     const email = form.value.email;
     const password = form.value.password;
 
@@ -39,7 +36,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/chat']);
         });
       },
-      error: err => {
+      error: (err) => {
         let errorMsg = '';
         switch (err.error.error.message) {
           case 'EMAIL_NOT_FOUND':
@@ -50,11 +47,11 @@ export class LoginComponent implements OnInit {
             errorMsg = 'This password is invalid';
             break;
           default:
-            errorMsg = 'Some error occured';
+            errorMsg = 'Some error occurred';
             break;
         }
         this.connectionError.next(errorMsg);
-      }
+      },
     });
   }
 }

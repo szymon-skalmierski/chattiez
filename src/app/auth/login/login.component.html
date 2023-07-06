@@ -1,10 +1,13 @@
 <div class="form-box">
-    <p class="alert alert-danger text-center" *ngIf="connectionError | async as error">
+  <p
+    class="alert alert-danger text-center"
+    *ngIf="connectionError | async as error"
+  >
     {{ error }}
-    </p>
-    <form #form="ngForm" class="form-check" (ngSubmit)="onSubmit(form)">
+  </p>
+  <form #form="ngForm" class="form-check" (ngSubmit)="onSubmit(form)">
     <div class="form__group field">
-        <input
+      <input
         class="form__field"
         type="text"
         name="email"
@@ -12,11 +15,11 @@
         placeholder="email"
         required
         ngModel
-        />
-        <label class="form__label" for="email">Email</label>
+      />
+      <label class="form__label" for="email">Email</label>
     </div>
     <div class="form__group field">
-        <input
+      <input
         class="form__field"
         type="password"
         name="password"
@@ -24,19 +27,21 @@
         placeholder="accessToken"
         required
         ngModel
-        />
-        <label class="form__label" for="accessToken">Password</label>
+      />
+      <label class="form__label" for="accessToken">Password</label>
     </div>
     <button
-        class="btn btn-success my-4"
-        type="submit"
-        [disabled]="form.invalid"
+      class="btn btn-success my-4"
+      type="submit"
+      [disabled]="form.invalid"
     >
-        <span *ngIf="!(form.submitted && !(connectionError | async)); else spinner">Login</span>
-        <ng-template #spinner>
-            <app-auth-loading-spinner></app-auth-loading-spinner>
-        </ng-template>
+      <span
+        *ngIf="!(form.submitted && !(connectionError | async)); else spinner"
+        >Login</span
+      >
+      <ng-template #spinner>
+        <app-auth-loading-spinner></app-auth-loading-spinner>
+      </ng-template>
     </button>
-    </form>
-    
+  </form>
 </div>

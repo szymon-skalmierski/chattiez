@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import * as SendBird from 'sendbird';
 
 import { AuthService } from 'src/app/auth/auth.service';
 
@@ -8,8 +9,8 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./chat-room-message.component.css'],
 })
 export class ChatRoomMessageComponent {
-  @Input() message: any;
-  @Input() channel: any;
+  @Input() message!: SendBird.UserMessage | SendBird.AdminMessage;
+  @Input() channel!: SendBird.GroupChannel;
 
   constructor(private authService: AuthService) {}
 
@@ -17,10 +18,23 @@ export class ChatRoomMessageComponent {
     return this.authService.getConnectedUserId();
   }
 
+  getSenderId() {
+    if(this.isUser()) {
+      let msg = this.message as SendBird.UserMessage;
+      return msg.sender?.nickname ?? msg.sender?.userId;
+    }
+    return '';
+  }
+
   onMessageDelete(
     channel: SendBird.GroupChannel | SendBird.OpenChannel,
-    message: SendBird.UserMessage
+    message: SendBird.UserMessage | SendBird.AdminMessage
   ) {
-    channel.deleteMessage(message, () => {});
+    channel.deleteMessage(message as SendBird.UserMessage, () => {});
+  }
+
+  isUser() {
+    if(this.message.isAdminMessage()) return false;
+    return true;
   }
 }

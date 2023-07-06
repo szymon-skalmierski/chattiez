@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { AuthService } from '../auth.service';
+import { SignInWithPasswordResponse } from '../firebase-response.model';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  connectionError: any = new BehaviorSubject(null);
+  connectionError = new BehaviorSubject<string | null>(null);
   submitted = false;
 
   constructor(private router: Router, private authService: AuthService) {}
@@ -31,7 +32,8 @@ export class LoginComponent implements OnInit {
 
     const connection = this.authService.login(email, password);
     connection.subscribe({
-      next: (res: any) => {
+      next: (res: SignInWithPasswordResponse) => {
+        console.log(res)
         this.authService.connect(res.displayName, res.idToken).then(() => {
           this.router.navigate(['/chat']);
         });

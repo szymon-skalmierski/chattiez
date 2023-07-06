@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 import { environment as env } from 'src/environments/environment';
 
 import { User } from './user.model';
+import { LookupResponse, SignInWithPasswordResponse } from './firebase-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +15,9 @@ import { User } from './user.model';
 export class AuthService {
   sb: SendBird.SendBirdInstance;
 
-  private tokenExpiratonTimer: any;
-  authError: any = new BehaviorSubject(null);
+  private tokenExpiratonTimer: string | number | NodeJS.Timeout | undefined;
+  
+  authError = new BehaviorSubject<SendBird.SendBirdError | null>(null);
   user = new BehaviorSubject<User | null | undefined>(undefined);
 
   constructor(private router: Router, private http: HttpClient) {
@@ -24,7 +26,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http.post(
+    return this.http.post<SignInWithPasswordResponse>(
       `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${env.firebase_key}`,
       {
         email: email,
@@ -83,7 +85,7 @@ export class AuthService {
     let userData;
     try {
       userData = JSON.parse(localStorage.getItem('userData')!);
-    } catch (e: any) {
+    } catch (error) {
       this.logout();
       return;
     }
@@ -95,19 +97,18 @@ export class AuthService {
     );
 
     if (loadedUser.token) {
-      const expirationDuration =
-        new Date(userData._tokenExpirationDate).getTime() -
-        new Date().getTime();
+      const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
       this.autoLogout(+expirationDuration);
 
       this.http
-        .post(
+        .post<LookupResponse>(
           `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${env.firebase_key}`,
           {
             idToken: loadedUser.token,
           }
         )
-        .subscribe((res: any) => {
+        .subscribe((res: LookupResponse) => {
+          console.log(res)
           if (loadedUser.userId !== res.users[0].displayName) {
             this.logout();
           } else {
@@ -134,6 +135,6 @@ export class AuthService {
     if (this.tokenExpiratonTimer) {
       clearTimeout(this.tokenExpiratonTimer);
     }
-    this.tokenExpiratonTimer = null;
+    this.tokenExpiratonTimer = undefined;
   }
 }

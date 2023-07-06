@@ -19,11 +19,8 @@ export class ChatRoomMessageComponent {
   }
 
   getSenderId() {
-    if(this.isUser()) {
-      let msg = this.message as SendBird.UserMessage;
-      return msg.sender?.nickname ?? msg.sender?.userId;
-    }
-    return '';
+    let msg = this.message as SendBird.UserMessage;
+    return msg.sender?.nickname ? msg.sender?.nickname : msg.sender?.userId;
   }
 
   onMessageDelete(
@@ -31,10 +28,5 @@ export class ChatRoomMessageComponent {
     message: SendBird.UserMessage | SendBird.AdminMessage
   ) {
     channel.deleteMessage(message as SendBird.UserMessage, () => {});
-  }
-
-  isUser() {
-    if(this.message.isAdminMessage()) return false;
-    return true;
   }
 }

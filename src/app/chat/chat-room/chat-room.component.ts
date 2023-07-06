@@ -1,3 +1,4 @@
+import { NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
@@ -13,11 +14,11 @@ import { AuthService } from '../../auth/auth.service';
   styleUrls: ['./chat-room.component.css'],
 })
 export class ChatRoomComponent implements OnInit {
+  groupUrl!: string;
+  channel!: SendBird.GroupChannel;
+  queryList!: SendBird.PreviousMessageListQuery;
   channelHandler = new this.authService.sb.ChannelHandler();
-  queryList!: any;
-  channel!: SendBird.GroupChannel | any;
-  groupUrl: any;
-  messages: any = [];
+  messages: (SendBird.UserMessage | SendBird.AdminMessage)[] = [];
 
   constructor(
     private router: Router,
@@ -31,7 +32,7 @@ export class ChatRoomComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.groupUrl = params['url'];
       this.authService.sb.GroupChannel.getChannel(this.groupUrl).then(
-        (channel: any) => {
+        (channel: SendBird.GroupChannel) => {
           if (channel) {
             this.channel = channel;
             this.queryList = channel.createPreviousMessageListQuery();
@@ -43,12 +44,12 @@ export class ChatRoomComponent implements OnInit {
     this.registerEventHandlers(this.chatRoomService.messages);
   }
 
-  registerEventHandlers(messagesList: any) {
-    this.channelHandler.onMessageReceived = (channel, message) => {
+  registerEventHandlers(messagesList: (SendBird.UserMessage | SendBird.AdminMessage)[]): void {
+    this.channelHandler.onMessageReceived = (channel, message: SendBird.AdminMessage | SendBird.UserMessage) => {
       this.chatRoomService.messages.unshift(message);
     };
 
-    this.channelHandler.onMessageDeleted = (channel, messageId) => {
+    this.channelHandler.onMessageDeleted = (channel, messageId: number) => {
       const indexOfMsg = this.chatRoomService.messages
         .map((message) => message.messageId)
         .indexOf(messageId);
@@ -56,7 +57,7 @@ export class ChatRoomComponent implements OnInit {
       this.chatRoomService.messages.splice(indexOfMsg, 1);
     };
 
-    this.channelHandler.onUserReceivedInvitation = (channel, message) => {
+    this.channelHandler.onUserReceivedInvitation = (channel) => {
       this.chatService.getMyGroupChannels();
     };
 
@@ -78,36 +79,36 @@ export class ChatRoomComponent implements OnInit {
     return this.chatRoomService.messages;
   }
 
-  reloadMsg(limit: any) {
+  reloadMsg(limit: number): void {
     this.chatRoomService.getMessagesFromChannel(
       this.queryList,
       limit,
-      (messages: any) => this.chatRoomService.messages = messages
+      (messages: (SendBird.UserMessage | SendBird.AdminMessage)[]) => this.chatRoomService.messages = messages
     );
   }
 
-  leaveChat(channel: SendBird.GroupChannel) {
+  leaveChat(channel: SendBird.GroupChannel): void {
     channel.leave().then(() => {
       this.chatService.getMyGroupChannels();
       this.router.navigate(['/chat']);
     });
   }
 
-  handleSendForm(form: any) {
+  handleSendForm(form: NgForm): void {
     if (!form.valid) return;
     const message = form.value.message;
     this.chatRoomService.sendMessage(
       this.channel,
       message,
       this.authService.sb,
-      (msg: any) => {
+      (msg: SendBird.AdminMessage | SendBird.UserMessage) => {
         this.chatRoomService.messages.unshift(msg);
       }
     );
     form.reset();
   }
 
-  trackById(index: number, item: SendBird.UserMessage): number {
+  trackById(index: number, item: SendBird.UserMessage | SendBird.AdminMessage): number {
     return item.messageId;
   }
 }

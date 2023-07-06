@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
+import * as SendBird from 'sendbird';
 
 import { ChatService } from '../chat.service';
 
@@ -11,16 +12,21 @@ import { ChatService } from '../chat.service';
 })
 export class ChatRoomListComponent implements OnInit, OnDestroy {
   chatGroupsSub!: Subscription;
-  channels: any;
+  channels!: (SendBird.GroupChannel)[];
 
   constructor(private chatService: ChatService) {}
 
   ngOnInit(): void {
     this.chatGroupsSub = this.chatService.chatGroups.subscribe({
-      next: (channels: any) => {
-        this.channels = channels;
+      next: (channels: SendBird.GroupChannel[] | null) => {
+        if(channels) this.channels = channels;
       },
     });
+  }
+
+  getLastMessage(group: SendBird.GroupChannel) {
+    if(group.lastMessage?.isFileMessage) return 'Sent file'
+    return (group.lastMessage as SendBird.UserMessage | SendBird.AdminMessage).message;
   }
 
   ngOnDestroy(): void {

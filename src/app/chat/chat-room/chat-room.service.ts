@@ -6,7 +6,7 @@ import * as SendBird from 'sendbird';
   providedIn: 'root',
 })
 export class ChatRoomService {
-  messages: any[] = [];
+  messages: (SendBird.AdminMessage | SendBird.UserMessage)[] = [];
 
   constructor() {}
 
@@ -27,17 +27,11 @@ export class ChatRoomService {
     }
   }
 
-  setFetchedChannels(groupChannel: any, limit: number) {
-    this.getMessagesFromChannel(groupChannel, limit, (messages: any) => {
-      this.messages = messages;
-    });
-  }
-
   sendMessage(
     channel: SendBird.GroupChannel | SendBird.OpenChannel,
     message: string,
     user: SendBird.SendBirdInstance,
-    callback: any
+    callback: Function
   ) {
     const params = new user.UserMessageParams();
     params.message = message;

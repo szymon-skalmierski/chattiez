@@ -2,7 +2,7 @@
   [ngClass]="{
     'message-wrap mb-1': true,
     admin: message.messageType === 'admin',
-    'user-message': isUser()
+    'user-message': getSenderId()
   }"
 >
   <p class="user m-0 px-2">{{ getSenderId() ?? "=ADMIN=" }}</p>

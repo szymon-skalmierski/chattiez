@@ -8,7 +8,7 @@ import { AuthService } from '../auth/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
-  chatGroups = new BehaviorSubject<SendBird.GroupChannelCollection | null>(null);
+  chatGroups = new BehaviorSubject<SendBird.GroupChannel[] | null>(null);
 
   constructor(private authService: AuthService) {}
 

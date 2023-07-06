@@ -108,6 +108,10 @@ export class ChatRoomComponent implements OnInit {
     form.reset();
   }
 
+  getLastMessage(index: number) {
+    return this.chatRoomService.getLastMessage(index);
+  }
+
   trackById(index: number, item: SendBird.UserMessage | SendBird.AdminMessage): number {
     return item.messageId;
   }

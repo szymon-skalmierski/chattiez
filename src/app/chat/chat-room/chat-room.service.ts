@@ -25,6 +25,7 @@ export class ChatRoomService {
         callback(messages);
       });
     }
+    return this.messages;
   }
 
   sendMessage(
@@ -38,5 +39,9 @@ export class ChatRoomService {
     channel.sendUserMessage(params, (userMessage, error) => {
       callback(userMessage);
     });
+  }
+
+  getLastMessage(index: number) {
+    return this.messages[index+1<0 ? 0 : index+1];
   }
 }

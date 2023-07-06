@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./chat-room-message.component.css'],
 })
 export class ChatRoomMessageComponent {
+  @Input() lastMessage!: SendBird.UserMessage | SendBird.AdminMessage;
   @Input() message!: SendBird.UserMessage | SendBird.AdminMessage;
   @Input() channel!: SendBird.GroupChannel;
 
@@ -18,9 +19,12 @@ export class ChatRoomMessageComponent {
     return this.authService.getConnectedUserId();
   }
 
-  getSenderId() {
-    let msg = this.message as SendBird.UserMessage;
-    return msg.sender?.nickname ? msg.sender?.nickname : msg.sender?.userId;
+  getSenderId(message: SendBird.UserMessage | SendBird.AdminMessage) {
+    if(message){
+      let msg = message as SendBird.UserMessage;
+      return msg.sender?.nickname ? msg.sender?.nickname : msg.sender?.userId;
+    }
+    return '';
   }
 
   onMessageDelete(

@@ -22,7 +22,7 @@
     appChatRoomRendering [queryList]="queryList"
   >
     
-  <app-chat-room-message *ngFor="let message of getMessages(); trackBy: trackById" [channel]="channel" [message]="message"></app-chat-room-message>
+  <app-chat-room-message *ngFor="let message of getMessages(); let i = index; trackBy: trackById" [channel]="channel" [message]="message" [lastMessage]="getLastMessage(i)"></app-chat-room-message>
 
   </div>
   <div class="input-group p-3 msg-form">

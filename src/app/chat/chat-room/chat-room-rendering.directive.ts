@@ -24,6 +24,7 @@ export class ChatRoomRenderingDirective implements OnInit {
         10,
         (messages: any) => {
           this.chatRoomService.messages.push(messages);
+          this.chatRoomService.messagesChanged.next(true);
         }
       );
     }

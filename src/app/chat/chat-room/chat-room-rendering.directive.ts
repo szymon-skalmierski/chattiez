@@ -18,6 +18,12 @@ export class ChatRoomRenderingDirective implements OnInit {
     const lastReloadTimeDiff = new Date().getTime() - this.latestMsgUpdate;
     this.scrollPos = chatEl.scrollTop - chatEl.clientHeight + chatEl.scrollHeight;
 
+    if(chatEl.scrollTop<-500) {
+      this.scrolled = true;
+    } else if(chatEl.scrollTop===0) {
+      this.scrolled = false;
+    }
+
     if (this.scrollPos <= 1 && lastReloadTimeDiff > 100) {
       this.latestMsgUpdate = new Date().getTime();
       this.chatRoomService.getMessagesFromChannel(

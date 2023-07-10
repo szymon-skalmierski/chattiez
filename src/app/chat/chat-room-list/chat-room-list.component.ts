@@ -12,7 +12,7 @@ import { ChatService } from '../chat.service';
 })
 export class ChatRoomListComponent implements OnInit, OnDestroy {
   chatGroupsSub!: Subscription;
-  channels!: (SendBird.GroupChannel)[];
+  channels!: SendBird.GroupChannel[];
 
   constructor(private chatService: ChatService) {}
 
@@ -25,7 +25,8 @@ export class ChatRoomListComponent implements OnInit, OnDestroy {
   }
 
   getLastMessage(group: SendBird.GroupChannel) {
-    if(group.lastMessage?.isFileMessage) return 'Sent file'
+    if(!group.lastMessage) return ''
+    if(group.lastMessage.messageType==='file') return 'Sent file'
     return (group.lastMessage as SendBird.UserMessage | SendBird.AdminMessage).message;
   }
 

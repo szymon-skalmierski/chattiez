@@ -1,4 +1,4 @@
-import { Directive, HostListener, Input, OnInit } from '@angular/core';
+import { Directive, HostBinding, HostListener, Input, OnInit } from '@angular/core';
 
 import * as SendBird from 'sendbird';
 
@@ -8,6 +8,7 @@ import { ChatRoomService } from './chat-room.service';
   selector: '[appChatRoomRendering]',
 })
 export class ChatRoomRenderingDirective implements OnInit {
+  @HostBinding('class.scrolled') scrolled = false;
   @Input() queryList!: SendBird.PreviousMessageListQuery;
   latestMsgUpdate = new Date().getTime();
   scrollPos = 0;
@@ -25,6 +26,7 @@ export class ChatRoomRenderingDirective implements OnInit {
         (messages: any) => {
           this.chatRoomService.messages.push(messages);
           this.chatRoomService.messagesChanged.next(true);
+          this.scrolled = true;
         }
       );
     }

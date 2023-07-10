@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as SendBird from 'sendbird';
 
 import { AuthService } from 'src/app/auth/auth.service';
@@ -8,23 +8,22 @@ import { AuthService } from 'src/app/auth/auth.service';
   templateUrl: './chat-room-message.component.html',
   styleUrls: ['./chat-room-message.component.css'],
 })
-export class ChatRoomMessageComponent {
-  @Input() lastMessage!: SendBird.UserMessage | SendBird.AdminMessage;
-  @Input() message!: SendBird.UserMessage | SendBird.AdminMessage;
+export class ChatRoomMessageComponent implements OnInit {
+  @Input() sender: any;
   @Input() channel!: SendBird.GroupChannel;
+  @Input() message!: SendBird.UserMessage | SendBird.AdminMessage;
+  adminMessage = false;
+  connectedUserMessage = false;
 
   constructor(private authService: AuthService) {}
 
-  getUserId() {
-    return this.authService.getConnectedUserId();
+  ngOnInit(): void {
+    this.adminMessage = this.message.messageType==='admin';
+    this.connectedUserMessage = this.sender===this.getUserId();
   }
 
-  getSenderId(message: SendBird.UserMessage | SendBird.AdminMessage) {
-    if(message){
-      let msg = message as SendBird.UserMessage;
-      return msg.sender?.nickname ? msg.sender?.nickname : msg.sender?.userId;
-    }
-    return '';
+  getUserId() {
+    return this.authService.getConnectedUserId();
   }
 
   onMessageDelete(

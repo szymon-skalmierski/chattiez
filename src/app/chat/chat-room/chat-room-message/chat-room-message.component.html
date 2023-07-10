@@ -1,14 +1,14 @@
 <div
   [ngClass]="{
     'message-wrap mb-1': true,
-    admin: message.messageType === 'admin',
-    'user-message': getSenderId(message)
+    admin: adminMessage,
+    'user-message': connectedUserMessage
   }"
 >
-  <p class="user m-0 px-2" *ngIf="getSenderId(message) !== getSenderId(lastMessage)">{{ getSenderId(message) ?? "=ADMIN=" }}</p>
+  <p class="user m-0 px-2">{{ adminMessage ? '===ADMIN===' : sender }}</p>
   <div class="message-text-wrap d-flex">
     <div class="message">{{ message.message }}</div>
-    <div class="dropdown" *ngIf="getSenderId(message) === getUserId()">
+    <div class="dropdown" *ngIf="connectedUserMessage">
       <a
         class="nav-link"
         role="button"

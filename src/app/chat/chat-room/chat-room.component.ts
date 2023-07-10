@@ -7,6 +7,7 @@ import * as SendBird from 'sendbird';
 import { ChatService } from '../chat.service';
 import { ChatRoomService } from './chat-room.service';
 import { AuthService } from '../../auth/auth.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-chat-room',
@@ -18,7 +19,7 @@ export class ChatRoomComponent implements OnInit {
   channel!: SendBird.GroupChannel;
   queryList!: SendBird.PreviousMessageListQuery;
   channelHandler = new this.authService.sb.ChannelHandler();
-  messages: (SendBird.UserMessage | SendBird.AdminMessage)[] = [];
+  messages = new BehaviorSubject<any>([]);
 
   constructor(
     private router: Router,
@@ -41,12 +42,18 @@ export class ChatRoomComponent implements OnInit {
         }
       );
     });
+
+    this.chatRoomService.messagesChanged.subscribe(()=>{
+      this.getMessages();
+    })
+
     this.registerEventHandlers(this.chatRoomService.messages);
   }
 
   registerEventHandlers(messagesList: (SendBird.UserMessage | SendBird.AdminMessage)[]): void {
     this.channelHandler.onMessageReceived = (channel, message: SendBird.AdminMessage | SendBird.UserMessage) => {
       this.chatRoomService.messages.unshift(message);
+      this.chatRoomService.messagesChanged.next(true);
     };
 
     this.channelHandler.onMessageDeleted = (channel, messageId: number) => {
@@ -55,6 +62,7 @@ export class ChatRoomComponent implements OnInit {
         .indexOf(messageId);
       console.log('delete msg:', indexOfMsg);
       this.chatRoomService.messages.splice(indexOfMsg, 1);
+      this.chatRoomService.messagesChanged.next(true);
     };
 
     this.channelHandler.onUserReceivedInvitation = (channel) => {
@@ -76,14 +84,17 @@ export class ChatRoomComponent implements OnInit {
   }
 
   getMessages() {
-    return this.chatRoomService.messages;
+    this.messages.next(this.chatRoomService.messages);
   }
 
   reloadMsg(limit: number): void {
     this.chatRoomService.getMessagesFromChannel(
       this.queryList,
       limit,
-      (messages: (SendBird.UserMessage | SendBird.AdminMessage)[]) => this.chatRoomService.messages = messages
+      (messages: (SendBird.UserMessage | SendBird.AdminMessage)[]) => {
+        this.chatRoomService.messages = messages;
+        this.chatRoomService.messagesChanged.next(true);
+      }
     );
   }
 
@@ -114,5 +125,13 @@ export class ChatRoomComponent implements OnInit {
 
   trackById(index: number, item: SendBird.UserMessage | SendBird.AdminMessage): number {
     return item.messageId;
+  }
+
+  getSenderId(message: SendBird.UserMessage | SendBird.AdminMessage | undefined) {
+    if(message){
+      return (message as SendBird.UserMessage).sender?.nickname || (message as SendBird.UserMessage).sender?.userId;
+    }
+    console.log(message, 'asdf')
+    return null;
   }
 }

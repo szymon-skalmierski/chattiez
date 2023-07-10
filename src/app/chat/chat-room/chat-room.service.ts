@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 import * as SendBird from 'sendbird';
 
@@ -6,6 +7,7 @@ import * as SendBird from 'sendbird';
   providedIn: 'root',
 })
 export class ChatRoomService {
+  messagesChanged = new Subject();
   messages: (SendBird.AdminMessage | SendBird.UserMessage)[] = [];
 
   constructor() {}

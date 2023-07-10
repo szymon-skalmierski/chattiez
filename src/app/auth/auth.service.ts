@@ -108,7 +108,6 @@ export class AuthService {
           }
         )
         .subscribe((res: LookupResponse) => {
-          console.log(res)
           if (loadedUser.userId !== res.users[0].displayName) {
             this.logout();
           } else {

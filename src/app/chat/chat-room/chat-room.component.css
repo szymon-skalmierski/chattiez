@@ -16,6 +16,7 @@ img[alt="cover"] {
   height: 100%;
   display: grid;
   grid-template-rows: 7% 1fr 9%;
+  scroll-behavior: smooth;
 }
 
 .messages-wrap {

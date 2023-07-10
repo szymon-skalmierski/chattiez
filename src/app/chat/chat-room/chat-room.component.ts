@@ -1,5 +1,5 @@
 import { NgForm } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import * as SendBird from 'sendbird';
@@ -15,6 +15,7 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./chat-room.component.css'],
 })
 export class ChatRoomComponent implements OnInit {
+  @ViewChild('chatWindow') chatWindow!: ElementRef;
   groupUrl!: string;
   channel!: SendBird.GroupChannel;
   queryList!: SendBird.PreviousMessageListQuery;
@@ -27,6 +28,7 @@ export class ChatRoomComponent implements OnInit {
     private chatService: ChatService,
     private chatRoomService: ChatRoomService,
     private authService: AuthService,
+    private element: ElementRef
   ) {}
 
   ngOnInit(): void {
@@ -131,7 +133,10 @@ export class ChatRoomComponent implements OnInit {
     if(message){
       return (message as SendBird.UserMessage).sender?.nickname || (message as SendBird.UserMessage).sender?.userId;
     }
-    console.log(message, 'asdf')
     return null;
+  }
+
+  scrollToBottom() {
+    (this.chatWindow.nativeElement as HTMLDivElement).scrollTo({top: 0, behavior: 'smooth'});
   }
 }

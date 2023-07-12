@@ -105,25 +105,28 @@ export class AuthService {
         new Date(userData._tokenExpirationDate).getTime() -
         new Date().getTime();
       this.autoLogout(+expirationDuration);
-
-      this.http
-        .post<LookupResponse>(
-          `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${env.firebase_key}`,
-          {
-            idToken: loadedUser.token,
-          }
-        )
-        .subscribe((res: LookupResponse) => {
-          if (loadedUser.userId !== res.users[0].displayName) {
-            this.logout();
-          } else {
-            this.connect(loadedUser.userId, '');
-            this.user.next(loadedUser);
-          }
-        });
+      this.fetchUsername(loadedUser);
     } else {
       this.logout();
     }
+  }
+
+  private fetchUsername(loadedUser: User) {
+    this.http
+      .post<LookupResponse>(
+        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${env.firebase_key}`,
+        {
+          idToken: loadedUser.token,
+        }
+      )
+      .subscribe((res: LookupResponse) => {
+        if (loadedUser.userId !== res.users[0].displayName) {
+          this.logout();
+        } else {
+          this.connect(loadedUser.userId, '');
+          this.user.next(loadedUser);
+        }
+      });
   }
 
   autoLogout(expirationTime: number) {
@@ -172,6 +175,6 @@ export class AuthService {
           }
           return throwError(() => errorMsg);
         })
-      )
+      );
   }
 }

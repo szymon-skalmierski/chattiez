@@ -30,10 +30,9 @@ export class LoginComponent implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
 
-    const connection = this.authService.login(email, password);
-    connection.subscribe({
+    this.authService.login(email, password).subscribe({
       next: (res: SignInWithPasswordResponse) => {
-        console.log(res)
+        console.log(res);
         this.authService.connect(res.displayName, res.idToken).then(() => {
           this.router.navigate(['/chat']);
         });

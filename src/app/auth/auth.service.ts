@@ -3,11 +3,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import * as SendBird from 'sendbird';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, throwError } from 'rxjs';
 import { environment as env } from 'src/environments/environment';
 
 import { User } from './user.model';
-import { LookupResponse, SignInWithPasswordResponse } from './firebase-response.model';
+import {
+  LookupResponse,
+  SignInWithPasswordResponse,
+  SignUpResponse,
+} from './firebase-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +20,7 @@ export class AuthService {
   sb: SendBird.SendBirdInstance;
 
   private tokenExpiratonTimer: string | number | NodeJS.Timeout | undefined;
-  
+
   authError = new BehaviorSubject<SendBird.SendBirdError | null>(null);
   user = new BehaviorSubject<User | null | undefined>(undefined);
 
@@ -97,7 +101,9 @@ export class AuthService {
     );
 
     if (loadedUser.token) {
-      const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+      const expirationDuration =
+        new Date(userData._tokenExpirationDate).getTime() -
+        new Date().getTime();
       this.autoLogout(+expirationDuration);
 
       this.http
@@ -135,5 +141,37 @@ export class AuthService {
       clearTimeout(this.tokenExpiratonTimer);
     }
     this.tokenExpiratonTimer = undefined;
+  }
+
+  signup(email: string, password: string) {
+    return this.http
+      .post<SignUpResponse>(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${env.firebase_key}`,
+        {
+          email: email,
+          password: password,
+          returnSecureToken: true,
+        }
+      )
+      .pipe(
+        catchError((errorRes) => {
+          let errorMsg = 'An error occured';
+          switch (errorRes.error.error.message) {
+            case 'EMAIL_EXISTS':
+              errorMsg = 'This email already exists';
+              break;
+            case 'WEAK_PASSWORD':
+              errorMsg = 'Password should be at least 6 characters';
+              break;
+            case 'EMAIL_NOT_FOUND':
+              errorMsg = 'This email does not exists';
+              break;
+            case 'INVALID_PASSWORD':
+              errorMsg = 'This password is invalid';
+              break;
+          }
+          return throwError(() => errorMsg);
+        })
+      )
   }
 }

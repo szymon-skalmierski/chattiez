@@ -1,5 +1,5 @@
 <div class="form-box">
-  <form #form="ngForm" class="form-check">
+  <form #form="ngForm" class="form-check" (ngSubmit)="onSignup(form)">
     <div class="form__group field">
       <input
         class="form__field"
@@ -39,7 +39,7 @@
     <div class="form__group field">
       <input
         class="form__field"
-        type="confirm_password"
+        type="password"
         name="confirm_password"
         id="confirm_password"
         placeholder="accessToken"

@@ -8,6 +8,12 @@ export interface SignInWithPasswordResponse {
   registered: boolean;
 }
 
+export interface SignUpResponse {
+  email: string;
+  idToken: string;
+  localId: string;
+}
+
 export interface LookupResponse {
   kind: string;
   users: {

@@ -146,6 +146,13 @@ export class AuthService {
     this.tokenExpiratonTimer = undefined;
   }
 
+  updateUsername(userId: string, username: string) {
+    console.log(userId, username)
+    return this.http.patch('https://ng-chat-cbf08-default-rtdb.europe-west1.firebasedatabase.app/users.json', {
+      [userId]: username
+    })
+  }
+
   signup(email: string, password: string) {
     return this.http
       .post<SignUpResponse>(

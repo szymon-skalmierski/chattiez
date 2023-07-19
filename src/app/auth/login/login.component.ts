@@ -33,9 +33,17 @@ export class LoginComponent implements OnInit {
     this.authService.login(email, password).subscribe({
       next: (res: SignInWithPasswordResponse) => {
         console.log(res);
-        this.authService.connect(res.displayName, res.idToken).then(() => {
-          this.router.navigate(['/chat']);
-        });
+        this.authService.fetchUsername().subscribe(
+          (data)=>{
+            const userId = res.localId;
+            console.log(data[userId])
+            if(userId && data[userId]) {
+              this.authService.connect(data[userId], res.localId, res.idToken).then(() => {
+                this.router.navigate(['/chat']);
+              });
+            }
+          }
+        )
       },
       error: (err) => {
         let errorMsg = '';

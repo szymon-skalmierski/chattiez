@@ -14,20 +14,6 @@ export interface SignUpResponse {
   localId: string;
 }
 
-export interface LookupResponse {
-  kind: string;
-  users: {
-    createdAt: string;
-    disabled: boolean;
-    displayName: string;
-    email: string;
-    emailVerified: boolean;
-    lastLoginAt: string;
-    localId: string;
-    passwordHash: string;
-    passwordUpdatedAt: number;
-    photoUrl: string;
-    providerUserInfo: any[];
-    validSince: string;
-  }[];
+export interface UsernamesDTO {
+  [userId: string]: string;
 }

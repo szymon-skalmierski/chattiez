@@ -8,9 +8,9 @@ import { environment as env } from 'src/environments/environment';
 
 import { User } from './user.model';
 import {
-  LookupResponse,
   SignInWithPasswordResponse,
   SignUpResponse,
+  UsernamesDTO,
 } from './firebase-response.model';
 
 @Injectable({
@@ -39,17 +39,17 @@ export class AuthService {
     );
   }
 
-  connect(userId: string, token: string) {
+  connect(username: string, userId: string, token: string) {
     return this.sb
       .connect(
-        userId,
+        username,
         '',
         (user: SendBird.User, error: SendBird.SendBirdError) => {
           if (user) {
             const expirationDate = new Date(
               new Date().getTime() + 60 * 60 * 1000
             );
-            const userData = new User(userId, token, expirationDate);
+            const userData = new User(username, userId, token, expirationDate);
 
             if (this.authError.value) {
               this.authError.next(null);
@@ -86,6 +86,7 @@ export class AuthService {
       this.logout();
       return;
     }
+    
     let userData;
     try {
       userData = JSON.parse(localStorage.getItem('userData')!);
@@ -95,6 +96,7 @@ export class AuthService {
     }
 
     const loadedUser = new User(
+      userData.username,
       userData.userId,
       userData._token,
       new Date(userData._tokenExpirationDate)
@@ -105,28 +107,23 @@ export class AuthService {
         new Date(userData._tokenExpirationDate).getTime() -
         new Date().getTime();
       this.autoLogout(+expirationDuration);
-      this.fetchUsername(loadedUser);
+      this.fetchUsername().subscribe((res: UsernamesDTO) => {
+        if (loadedUser.username !== res[loadedUser.userId]) {
+          this.logout();
+        } else {
+          this.connect(loadedUser.username, loadedUser.userId, '');
+          this.user.next(loadedUser);
+        }
+      });
     } else {
       this.logout();
     }
   }
 
-  private fetchUsername(loadedUser: User) {
-    this.http
-      .post<LookupResponse>(
-        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${env.firebase_key}`,
-        {
-          idToken: loadedUser.token,
-        }
-      )
-      .subscribe((res: LookupResponse) => {
-        if (loadedUser.userId !== res.users[0].displayName) {
-          this.logout();
-        } else {
-          this.connect(loadedUser.userId, '');
-          this.user.next(loadedUser);
-        }
-      });
+  fetchUsername() {
+    return this.http.get<UsernamesDTO>(
+      `https://ng-chat-cbf08-default-rtdb.europe-west1.firebasedatabase.app/users.json`
+    );
   }
 
   autoLogout(expirationTime: number) {
@@ -147,10 +144,13 @@ export class AuthService {
   }
 
   updateUsername(userId: string, username: string) {
-    console.log(userId, username)
-    return this.http.patch('https://ng-chat-cbf08-default-rtdb.europe-west1.firebasedatabase.app/users.json', {
-      [userId]: username
-    })
+    console.log(userId, username);
+    return this.http.patch(
+      'https://ng-chat-cbf08-default-rtdb.europe-west1.firebasedatabase.app/users.json',
+      {
+        [userId]: username,
+      }
+    );
   }
 
   signup(email: string, password: string) {

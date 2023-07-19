@@ -17,15 +17,15 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.authService.user.subscribe({
         next:(user)=>{
-          this.groupUsersAdded.push(user?.userId)
+          this.groupUsersAdded.push(user?.username)
         }
       })
     this.chatService.getMyGroupChannels();
   }
 
   addUserToGroup(channelForm: NgForm){
-    const userId = channelForm.value['userId'];
-    this.groupUsersAdded.push(userId);
+    const username = channelForm.value['username'];
+    this.groupUsersAdded.push(username);
   }
 
   onChannelCreate(channelForm: NgForm){

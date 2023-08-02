@@ -25,7 +25,10 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (!form.valid) return;
+    if (!form.valid) {
+      this.submitted = false;
+    }
+    this.submitted = true;
     this.connectionError.next(null);
     const email = form.value.email;
     const password = form.value.password;
@@ -59,7 +62,9 @@ export class LoginComponent implements OnInit {
             errorMsg = 'Some error occurred';
             break;
         }
+
         this.connectionError.next(errorMsg);
+        this.submitted = false;
       },
     });
   }

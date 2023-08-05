@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { NgForm } from '@angular/forms';
-import { exhaustMap, throwError } from 'rxjs';
+import { BehaviorSubject, exhaustMap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -9,11 +9,18 @@ import { exhaustMap, throwError } from 'rxjs';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
+  signupError = new BehaviorSubject<string | null>(null);
+  submitted = false;
+
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {}
 
   onSignup(form: NgForm) {
+    if (!form.valid) {
+      this.submitted = false;
+    }
+    this.submitted = true;
     const email = form.controls['email'].value;
     const username = form.controls['username'].value;
     const password = form.controls['password'].value;
@@ -23,7 +30,7 @@ export class SignupComponent implements OnInit {
         exhaustMap((res) => {
           const usernames = Object.values(res);
           if (usernames.indexOf(username) !== -1) {
-            return throwError(() => new Error('This username is taken.'));
+            return throwError(() => 'This username is taken');
           }
           return this.authService.signup(email, password).pipe(
             exhaustMap((res) => {
@@ -32,6 +39,12 @@ export class SignupComponent implements OnInit {
           );
         })
       )
-      .subscribe({ error: (err) => console.log(err) });
+      .subscribe({
+        error: (err) => {
+          console.log(err);
+          this.signupError.next(err);
+          this.submitted = false;
+        },
+      });
   }
 }

@@ -19,6 +19,10 @@
   justify-content: center;
 }
 
+.form-box > div {
+  width: 100%;
+}
+
 form {
   display: grid;
 }

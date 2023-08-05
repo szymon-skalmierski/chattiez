@@ -9,7 +9,6 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { SignupComponent } from './signup/signup.component';
 import { AuthLoadingSpinnerComponent } from '../shared/auth-loading-spinner.component';
 
-
 @NgModule({
   declarations: [
     AuthComponent,
@@ -17,11 +16,11 @@ import { AuthLoadingSpinnerComponent } from '../shared/auth-loading-spinner.comp
     SignupComponent,
   ],
   imports: [
-    CommonModule,
     FormsModule,
+    CommonModule,
     HttpClientModule,
     AuthRoutingModule,
     AuthLoadingSpinnerComponent,
-  ]
+  ],
 })
 export class AuthModule { }

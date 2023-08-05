@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
@@ -11,18 +12,18 @@ const routes: Routes = [
     component: AuthComponent,
     children: [
       {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full',
+        path: 'signup',
+        component: SignupComponent,
       },
       {
         path: 'login',
         component: LoginComponent,
       },
-      {
-        path: 'signup',
-        component: SignupComponent,
-      },
+      // {
+      //   path: '**',
+      //   redirectTo: 'login',
+      //   pathMatch: 'full',
+      // },
     ],
   },
 ];

@@ -6,6 +6,10 @@ import { HomePageComponent } from './home-page/home-page.component';
 
 const routes: Routes = [
   {
+    path: 'home',
+    component: HomePageComponent,
+  },
+  {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
@@ -16,7 +20,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   {
     path: '',
-    component: HomePageComponent,
+    redirectTo: 'home',
     pathMatch: 'full'
   },
 ];

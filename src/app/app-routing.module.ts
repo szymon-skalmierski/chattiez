@@ -6,10 +6,6 @@ import { HomePageComponent } from './home-page/home-page.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: HomePageComponent,
-  },
-  {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
@@ -18,6 +14,11 @@ const routes: Routes = [
     loadChildren: () => import('./chat/chat.module').then((m) => m.ChatModule),
   },
   { path: 'about', component: AboutComponent },
+  {
+    path: '',
+    component: HomePageComponent,
+    pathMatch: 'full'
+  },
 ];
 
 @NgModule({

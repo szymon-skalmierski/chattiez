@@ -44,9 +44,8 @@ h5 {
 }
 
 .btn-code:active {
-  --color: rgb(235, 235, 235);
   background-color: rgb(212, 55, 55);
-  color: var(--color);
-  border-color: var(--color);
+  color: rgb(235, 235, 235);
+  border-color: rgb(168, 32, 32);
   border-style: solid;
 }

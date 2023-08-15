@@ -24,7 +24,7 @@ export class ChatComponent implements OnInit {
   }
 
   addUserToGroup(channelForm: NgForm){
-    const username = channelForm.value['username'];
+    const username = channelForm.value['userId'];
     this.groupUsersAdded.push(username);
   }
 
@@ -35,9 +35,7 @@ export class ChatComponent implements OnInit {
         this.chatService.getMyGroupChannels();
         this.router.navigate([groupChannel.url], {relativeTo: this.route})
       });
-    this.groupUsersAdded = [];
+    this.groupUsersAdded = [this.authService.user.value?.username];
     channelForm.reset();
   }
-
- 
 }

@@ -91,7 +91,7 @@ form {
   box-shadow: none;
 }
 
-.btn.btn-success {
+.btn.btn-outline-danger {
   place-self: end;
   width: 30%;
   min-width: 90px;

@@ -19,7 +19,15 @@ export class SignupComponent implements OnInit {
   onSignup(form: NgForm) {
     if (!form.valid) {
       this.submitted = false;
+      return;
     }
+
+    if (form.controls['password'].value !== form.controls['confirm_password'].value) {
+      this.submitted = false;
+      this.signupError.next('Passwords are not the same');
+      return;
+    }
+
     this.submitted = true;
     const email = form.controls['email'].value;
     const username = form.controls['username'].value;

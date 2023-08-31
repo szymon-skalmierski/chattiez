@@ -72,7 +72,7 @@ form {
   padding-bottom: 6px;
   font-weight: 700;
   border-width: 3px;
-  border-image: linear-gradient(to right, #1c7aaa, #388def);
+  border-image: linear-gradient(to right, #aa1c1c, #ef3838);
   border-image-slice: 1;
 }
 
@@ -82,7 +82,7 @@ form {
   display: block;
   transition: 0.2s;
   font-size: 1rem;
-  color: #1c7aaa;
+  color: #aa1c1c;
   font-weight: 700;
 }
 

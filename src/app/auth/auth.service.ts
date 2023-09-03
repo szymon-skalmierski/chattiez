@@ -183,10 +183,4 @@ export class AuthService {
         })
       );
   }
-
-  getUsernames() {
-    return this.http.get<{[key: string]: string}>(
-      'https://ng-chat-cbf08-default-rtdb.europe-west1.firebasedatabase.app/users.json'
-    );
-  }
 }

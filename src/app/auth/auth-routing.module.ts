@@ -5,6 +5,7 @@ import { AuthGuard } from './auth.guard';
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { usernamesResolver } from './signup/usernames.resolver';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
       {
         path: 'signup',
         component: SignupComponent,
+        resolve: [usernamesResolver]
       },
       {
         path: 'login',

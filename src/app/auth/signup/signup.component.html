@@ -6,6 +6,12 @@
     >
       {{ error }}
     </p>
+    <p
+      class="alert alert-success text-center"
+      *ngIf="signupSuccess | async as success"
+    >
+      {{ success }}
+    </p>
     <form #form="ngForm" class="form-check" (ngSubmit)="onSignup(form)">
       <div class="form__group field">
         <input

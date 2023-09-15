@@ -100,8 +100,8 @@ export class ChatRoomComponent implements OnInit {
     );
   }
 
-  leaveChat(channel: SendBird.GroupChannel): void {
-    channel.leave().then(() => {
+  leaveChat(): void {
+    this.channel.leave().then(() => {
       this.chatService.getMyGroupChannels();
       this.router.navigate(['/chat']);
     });
@@ -109,7 +109,7 @@ export class ChatRoomComponent implements OnInit {
 
   addUser(user: string) {
     this.channel.inviteWithUserIds([user]).then(()=>{
-      console.log('User has been added to chat')
+      console.log('User has been added to the chat')
     });
   }
 

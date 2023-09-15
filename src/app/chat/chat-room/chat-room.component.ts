@@ -107,6 +107,12 @@ export class ChatRoomComponent implements OnInit {
     });
   }
 
+  addUser(user: string) {
+    this.channel.inviteWithUserIds([user]).then(()=>{
+      console.log('User has been added to chat')
+    });
+  }
+
   handleSendForm(form: NgForm): void {
     if (!form.valid) return;
     const message = form.value.message;

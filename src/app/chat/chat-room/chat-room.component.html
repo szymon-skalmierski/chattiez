@@ -10,7 +10,7 @@
         aria-expanded="false"
         ><span></span><span></span><span></span
       ></a>
-      <ul class="dropdown-menu dropdown-menu-sm-start dropdown-menu-sm-end">
+      <ul class="dropdown-menu dropdown-menu-sm-start dropdown-menu-sm-end text-center">
         <li class="dropdown-item" (click)="leaveChat()">Leave chat</li>
         <li class="dropdown-item" ><a type="button" data-bs-toggle="modal" data-bs-target="#addingFriendModal">Add friend</a></li>
       </ul>
@@ -35,13 +35,27 @@
       </div>
     </div>
 
-    <span class="members-count">{{ channel.memberCount }}/100</span>
+    <div class="members-count">
+      <div class="dropdown">
+        <a
+          class="nav-link"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          >{{ channel.memberCount }}/100</a>
+        <ul class="dropdown-menu dropdown-menu-sm-start dropdown-menu-sm-end text-center">
+          <li class="dropdown-item" *ngFor="let user of channel?.members">{{user.userId}}</li>
+        </ul>
+      </div>
+    </div>
+
     <span class="scroll-down" (click)="scrollToBottom()">
       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
       </svg>
     </span>
   </div>
+
   <div
     class="container-fluid messages-wrap d-flex flex-column-reverse p-3"
     appChatRoomRendering

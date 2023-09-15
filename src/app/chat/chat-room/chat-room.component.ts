@@ -87,6 +87,7 @@ export class ChatRoomComponent implements OnInit {
 
   getMessages() {
     this.messages.next(this.chatRoomService.messages);
+    console.log(this.channel.members)
   }
 
   reloadMsg(limit: number): void {

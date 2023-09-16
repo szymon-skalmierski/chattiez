@@ -11,12 +11,12 @@ import { AuthService } from '../auth/auth.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isConnected = new BehaviorSubject<boolean>(false);
-  user!: Subscription;
+  userSub!: Subscription;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.user = this.authService.user.subscribe((user: any) => {
+    this.userSub = this.authService.user.subscribe((user: any) => {
       if (user) this.isConnected.next(true);
       else this.isConnected.next(false);
     });
@@ -31,6 +31,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.user.unsubscribe();
+    this.userSub.unsubscribe();
   }
 }

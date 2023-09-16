@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   getUsername() {
-    return this.authService.getConnectedUser()?.nickname;
+    return this.authService.getConnectedUser()?.nickname || this.authService.getConnectedUser()?.userId;
   }
 
   ngOnDestroy(): void {

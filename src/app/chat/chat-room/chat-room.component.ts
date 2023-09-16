@@ -102,10 +102,8 @@ export class ChatRoomComponent implements OnInit {
   }
 
   leaveChat(): void {
-    this.channel.leave().then(() => {
-      this.chatService.getMyGroupChannels();
-      this.router.navigate(['/chat']);
-    });
+    this.chatService.leaveChat(this.channel);
+    this.router.navigate(['/chat']);
   }
 
   addUser(user: string) {

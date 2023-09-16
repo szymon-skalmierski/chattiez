@@ -41,4 +41,10 @@ export class ChatService {
       });
     }
   }
+
+  leaveChat(channel: SendBird.GroupChannel) {
+    channel.leave().then(()=>{
+      this.getMyGroupChannels();
+    });
+  }
 }

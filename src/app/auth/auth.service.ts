@@ -31,7 +31,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     return this.http.post<SignInWithPasswordResponse>(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${env.firebase_key}`,
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${env.FIREBASE_KEY}`,
       {
         email: email,
         password: password,
@@ -155,7 +155,7 @@ export class AuthService {
   signup(email: string, password: string) {
     return this.http
       .post<SignUpResponse>(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${env.firebase_key}`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${env.FIREBASE_KEY}`,
         {
           email: email,
           password: password,

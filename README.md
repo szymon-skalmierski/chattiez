@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Demo
 
-The demo version is held on [chattiez](https://chattiez.vercel.app). Feel free to test it.
+The demo version is held on [chattiez.vercel.app](https://chattiez.vercel.app). Feel free to test it.
 
 ## Preview
 Here are some screenshots of AstroChess layout.

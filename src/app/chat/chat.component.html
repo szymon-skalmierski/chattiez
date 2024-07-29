@@ -25,7 +25,7 @@
                     <input type="text" class="input-group input-group-text" placeholder="User IDs" name="userId" ngModel>
                     <button type="button" class="btn fs-4 px-1 py-0" (click)="addUserToGroup(channelForm)">+</button>
                   </div>
-                  <ul class="list-group list-group-flush">
+                  <ul class="list-group list-group-horizontal p-2">
                     <li class="list-group-item" *ngFor="let userId of groupUsersAdded">{{ userId }}</li>
                   </ul>
                 </div>

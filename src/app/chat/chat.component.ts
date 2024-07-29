@@ -25,7 +25,7 @@ export class ChatComponent implements OnInit {
 
   addUserToGroup(channelForm: NgForm){
     const username = channelForm.value['userId'];
-    if(username != "" ) {
+    if(username != "" && this.groupUsersAdded.indexOf(username)==-1) {
       this.groupUsersAdded.push(username);
     }
   }

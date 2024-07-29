@@ -40,4 +40,8 @@ export class ChatComponent implements OnInit {
     this.groupUsersAdded = [this.authService.user.value?.username];
     channelForm.reset();
   }
+
+  removeUserFromGroup(userId: string) {
+    this.groupUsersAdded.splice(this.groupUsersAdded.indexOf(userId), 1);
+  }
 }

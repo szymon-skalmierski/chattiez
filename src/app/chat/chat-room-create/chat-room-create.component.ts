@@ -30,6 +30,7 @@ export class ChatRoomCreateComponent {
   }
 
   onChannelCreate(channelForm: NgForm){
+    if(!channelForm.valid) return;
     const channelName = channelForm.value['channelName'];
     this.chatService.createGroupChannel(channelName, this.groupUsersAdded, 
       (groupChannel: SendBird.GroupChannel, error: SendBird.SendBirdError)=>{

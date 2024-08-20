@@ -13,14 +13,14 @@
 
               <!-- Chat name -->
               <div class="modal-header">
-                <input type="text" class="input-group input-group-text" name="channelName" placeholder="Choose group chat name" ngModel>
+                <input type="text" class="input-group input-group-text" name="channelName" placeholder="Choose group chat name" ngModel required>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
 
               <!-- Adding users -->
               <div class="modal-body">
                 <div class="d-flex">
-                  <input type="text" class="input-group input-group-text" placeholder="User IDs" name="userId" ngModel>
+                  <input type="text" class="input-group input-group-text" placeholder="User IDs" name="userId" ngModel required>
                   <button type="button" class="btn fs-4 px-1 py-0" (click)="addUserToGroup(channelForm)">+</button>
                 </div>
                 <ul class="list-group p-2">

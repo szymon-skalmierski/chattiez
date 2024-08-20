@@ -1,0 +1,40 @@
+<div class="chat-buttons">
+    <!-- Button trigger modal -->
+    <div
+      class="container-fluid d-flex justify-content-center w-100"
+    >
+      <button type="button" class="btn btn-outline-secondary w-100" data-bs-toggle="modal" data-bs-target="#myModal2">
+        Create Channel
+      </button>
+      <div class="modal" id="myModal2">
+        <div class="modal-dialog">
+          <!-- <div class="modal-content"> -->
+            <form action="" class="modal-content" #channelForm="ngForm" (ngSubmit)="onChannelCreate(channelForm)">
+
+              <!-- Chat name -->
+              <div class="modal-header">
+                <input type="text" class="input-group input-group-text" name="channelName" placeholder="Choose group chat name" ngModel>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+
+              <!-- Adding users -->
+              <div class="modal-body">
+                <div class="d-flex">
+                  <input type="text" class="input-group input-group-text" placeholder="User IDs" name="userId" ngModel>
+                  <button type="button" class="btn fs-4 px-1 py-0" (click)="addUserToGroup(channelForm)">+</button>
+                </div>
+                <ul class="list-group p-2">
+                  <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let userId of groupUsersAdded">{{ userId }} <button *ngIf="userId != groupUsersAdded[0]" type="button" class="btn btn-close px-3 rounded-0" (click)="removeUserFromGroup(userId)"></button></li>
+                </ul>
+              </div>
+
+              <!-- Confirm button -->
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Create chat</button>
+              </div>
+            </form>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+  </div>

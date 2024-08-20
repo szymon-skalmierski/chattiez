@@ -9,39 +9,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
 })
-export class ChatComponent implements OnInit {
-  groupUsersAdded: any[] = []
+export class ChatComponent {
 
-  constructor(private chatService: ChatService, private authService: AuthService, private router: Router, private route: ActivatedRoute) {}
-
-  ngOnInit(): void {
-    this.authService.user.subscribe({
-        next:(user)=>{
-          this.groupUsersAdded.push(user?.username)
-        }
-      })
-    this.chatService.getMyGroupChannels();
-  }
-
-  addUserToGroup(channelForm: NgForm){
-    const username = channelForm.value['userId'];
-    if(username != "" && this.groupUsersAdded.indexOf(username)==-1) {
-      this.groupUsersAdded.push(username);
-    }
-  }
-
-  onChannelCreate(channelForm: NgForm){
-    const channelName = channelForm.value['channelName'];
-    this.chatService.createGroupChannel(channelName, this.groupUsersAdded, 
-      (groupChannel: SendBird.GroupChannel, error: SendBird.SendBirdError)=>{
-        this.chatService.getMyGroupChannels();
-        this.router.navigate([groupChannel.url], {relativeTo: this.route})
-      });
-    this.groupUsersAdded = [this.authService.user.value?.username];
-    channelForm.reset();
-  }
-
-  removeUserFromGroup(userId: string) {
-    this.groupUsersAdded.splice(this.groupUsersAdded.indexOf(userId), 1);
-  }
 }

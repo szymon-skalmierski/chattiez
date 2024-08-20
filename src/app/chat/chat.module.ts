@@ -9,6 +9,7 @@ import { ChatRoomComponent } from './chat-room/chat-room.component';
 import { ChatRoomListComponent } from './chat-room-list/chat-room-list.component';
 import { ChatRoomRenderingDirective } from './chat-room/chat-room-rendering.directive';
 import { ChatRoomMessageComponent } from './chat-room/chat-room-message/chat-room-message.component';
+import { ChatRoomCreateComponent } from './chat-room-create/chat-room-create.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { ChatRoomMessageComponent } from './chat-room/chat-room-message/chat-roo
     ChatRoomComponent,
     ChatRoomRenderingDirective,
     ChatRoomMessageComponent,
+    ChatRoomCreateComponent,
   ],
   imports: [
     CommonModule,

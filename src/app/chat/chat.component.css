@@ -9,16 +9,10 @@
   padding: 0;
 }
 
-.left,
-.right {
+.left, .right {
   background-color: rgb(246, 246, 246);
   height: 100%;
   overflow: hidden;
-}
-
-.chat-buttons button.btn.w-100 {
-  background-color: transparent;
-  border-color: black;
 }
 
 ::-webkit-scrollbar {

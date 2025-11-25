@@ -65,4 +65,4 @@ To run this application locally, you will need to set up the environment variabl
 This project is licensed under the MIT License.
 
 ## Author
-- [szymon-skalmierski](https://github.com/szymon-skalmierski)
+- [xketris](https://github.com/xketris)
